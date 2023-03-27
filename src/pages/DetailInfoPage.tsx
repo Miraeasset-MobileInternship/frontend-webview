@@ -3,6 +3,7 @@ import "./styles.css";
 import styled from 'styled-components';
 
 import MarketStatusBox from '../components/MarketStatusBox';
+import TypeTagBox from "../components/TypeTagBox";
 
 type Props = {
     height : number,
@@ -17,6 +18,13 @@ export default function DetailInfoPage({width, height}:Props) {
                 <div className="stock-title">
                     <TitleText>{stockInfo.stockTitle}</TitleText>
                     <MarketStatusBox isOpen={stockInfo.isOpen}></MarketStatusBox>
+                    <div style={{paddingLeft: 15, paddingTop:8,}}>
+                        <TypeTagBox text={stockInfo.stockType}/>
+                        <TypeTagBox text={stockInfo.marketTitle}/>
+                    </div>
+                </div>
+                <div>
+                    {/*<ViewCard/>*/}
                 </div>
             </div>
             <div className="main-area">
@@ -32,7 +40,7 @@ const stockInfo: StockDetailInfo = {
     currency: "미소", //화폐단위
     stockType:"EQUITY", //타입
     marketTitle:"NasdaqGS", //상장된 시장
-    isOpen: true, //장의 상태
+    isOpen: false, //장의 상태
     change: 5.20, //변동가격
     changePercent: 0.1, //변동 퍼센트
 }
@@ -57,7 +65,7 @@ const ViewCard = styled.div`
 
 const TitleText = styled.text`
   
-
+    
     padding: 15px;
     height: 100vh;
   
