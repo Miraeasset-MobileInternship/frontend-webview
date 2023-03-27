@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import {Routes, Route, BrowserRouter} from "react-router-dom";
+import {debounce} from "lodash";
+
+
+//import pages (for Route)
+import DetailInfoPage from "./pages/DetailInfoPage";
+import TmpPage from "./pages/TmpPage";
+
+
+
+
+
+
+
 
 function App() {
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
+
+    const handleResize = debounce(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+    }, 200);
+
+    useEffect(() => {
+        window.addEventListener("resize", handleResize);
+        return () => {
+            // cleanup
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Test for git
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<DetailInfoPage width={width} height={height}/>}/>
+        <Route path="/tmp" element={<TmpPage/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

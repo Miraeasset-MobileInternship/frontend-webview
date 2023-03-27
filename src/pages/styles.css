@@ -1,0 +1,72 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+
+.container {
+    display: grid;
+    grid-template-areas:
+            "top-area"
+            "none"
+            "main-area";
+
+
+    justify-content: center;
+    align-items: center;
+
+
+    height: 100vh;
+    width: 100vw;
+    background-color: red;
+}
+
+.top-area {
+    grid-area: top-area;
+
+    grid-template-areas:
+            "stock-title"
+            "card-view";
+
+    /*차지하는 공간*/
+    height: 30vh;
+    width: 100vw;
+
+
+    background-color: #61dafb;
+}
+
+.stock-title {
+    grid-area: stock-title;
+
+    /*차지하는 공간*/
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    /*앞부분 부터 시작*/
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: aliceblue;
+}
+
+.card-view {
+
+    grid-area: card-view;
+
+    /*차지하는 공간*/
+    height: 20vh;
+    width: 100vw;
+
+    background-color: olive;
+}
+
+
+.main-area {
+    grid-area: main-area;
+
+    /*차지하는 공간 */
+    height: 70vh;
+    width: 100vw;
+
+    background-color: aquamarine;
+}
