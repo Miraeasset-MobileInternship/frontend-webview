@@ -1,4 +1,4 @@
-import StockDetailInfo from "../types/StockDetailInfo";
+import StockDetailTypes from "../types/StockDetailTypes";
 import styled, {css} from 'styled-components';
 import React from "react";
 import {useEffect} from "react";
@@ -27,19 +27,23 @@ const TextBox = styled.div<Props>`
   
   display: inline-block;
   
-  border-radius: 8px;
+  border-radius: 5px;
   
-  padding:1.5px;
-  padding-bottom:3px;
+  padding: 1.5px;
+  padding-bottom: 3px;
   
   justify-items: center;
   
+  //옆에 글씨랑 띄우기
+  margin-left: 10px;
+  
 
-  background-color: ${(props) => (props.isOpen ? "#FEF0EB":"#E9F3FF")};
+  background-color: ${props => (props.isOpen ? "#FEF0EB":"#E9F3FF")};
 
 
 `;
 
+// @ts-ignore
 const TagText = styled.text<Props>`
   
   font-family: Pretendard;
@@ -48,7 +52,7 @@ const TagText = styled.text<Props>`
   padding-right: 5px;
   font-size: 1.5vh;
 
-  color: ${(props) => (props.isOpen ? "#F56C3B":"#83BBF8")};
+  color: ${(props) => (props.isOpen ? ('#F56C3B'):('#83BBF8'))};
 
 
 `;

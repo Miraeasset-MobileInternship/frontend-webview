@@ -1,4 +1,4 @@
-import StockDetailInfo from "../types/StockDetailInfo";
+import StockDetailTypes from "../types/StockDetailTypes";
 import styled, {css} from 'styled-components';
 import React from "react";
 import {useEffect} from "react";
@@ -26,16 +26,17 @@ const TextBox = styled.div`
   
   border-style: solid;
   border-width: 1px;
-  border-radius: 8px;
+  border-radius: 5px;
   
-  padding:1.5px;
-  padding-bottom:3px;
+  padding:0.5px;
+  //padding-bottom:3px;
   
-  justify-items: center;
   
-  border-color: "#E9E9E9";
-  background-color: "white";
-  
+  border-color: #E9E9E9;
+  background-color: white;
+
+  //서로 여백 
+  margin-right: 5px; 
 
 `;
 
@@ -46,9 +47,9 @@ const TagText = styled.text`
   padding-left: 5px;
   padding-right: 5px;
   font-size: 1.5vh;
-
-  color : "#8C8C8C";
   
+  color : #8C8C8C;
+  letter-spacing: -0.01em;
 
 
 `;
