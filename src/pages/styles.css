@@ -25,7 +25,7 @@
             "card-view";
 
     /*차지하는 공간*/
-    height: 30vh;
+    height: 25vh;
     width: 100vw;
 
 
@@ -39,14 +39,20 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    padding-top: 10px;
-    padding-bottom: 10px;
+    height: 35%;
 
     /*앞부분 부터 시작*/
     justify-content: flex-start;
     align-items: center;
 
     background-color: aliceblue;
+
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:8px;
+    padding-bottom:8px;
+
 }
 
 .card-view {
@@ -54,8 +60,18 @@
     grid-area: card-view;
 
     /*차지하는 공간*/
-    height: 20vh;
-    width: 100vw;
+    height: 65%;
+    /*width: 100vw;*/
+
+    /*패딩이 (외부가 아닌)내부로 사이즈 조절되도록! */
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:8px;
+    padding-bottom:8px;
+
+    justify-content: center;
+    align-items: center;
 
     background-color: olive;
 }
@@ -65,8 +81,8 @@
     grid-area: main-area;
 
     /*차지하는 공간 */
-    height: 70vh;
+    height: 75vh;
     width: 100vw;
 
-    background-color: aquamarine;
+    /*background-color: aquamarine;*/
 }
