@@ -1,9 +1,14 @@
 import "./styles.css";
 import styled from 'styled-components';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+
 
 import MarketStatusBox from '../components/MarketStatusBox';
 import TypeTagBox from "../components/TypeTagBox";
 import StockDetailInfo from '../types/StockDetailTypes';
+import React, {useState} from "react";
 
 type Props = {
     height : number,
@@ -12,6 +17,15 @@ type Props = {
 
 
 export default function DetailInfoPage({width, height}:Props) {
+
+    //Tab
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
+
+
     return (
         <div className="container">
             <div className="top-area">
@@ -51,10 +65,33 @@ export default function DetailInfoPage({width, height}:Props) {
                             </div>
                         </div>
                     </ViewCard>
-
                 </div>
             </div>
             <div className="main-area">
+                <div className="tab-nav">
+                    <Box style={{backgroundColor: 'pink'}}>
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
+                            variant="scrollable"
+                            scrollButtons={false}
+                            textColor={'inherit'}
+                            TabIndicatorProps={{
+                                style: {
+                                    backgroundColor: "black",
+                                }
+                            }}
+                        >
+                            <Tab label="HOME" />
+                            <Tab label="차트" />
+                            <Tab label="관련뉴스" />
+                            <Tab label="종목정보" />
+                            <Tab label="종목정보" />
+                            <Tab label="종목정보" />
+                            <Tab label="종목정보" />
+                        </Tabs>
+                    </Box>
+                </div>
             </div>
         </div>
     );

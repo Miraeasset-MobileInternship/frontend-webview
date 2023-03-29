@@ -13,8 +13,9 @@
 
 
     height: 100vh;
-    width: 100vw;
+    max-width: 100vw;
     background-color: red;
+
 }
 
 .top-area {
@@ -84,5 +85,37 @@
     height: 75vh;
     width: 100vw;
 
-    /*background-color: aquamarine;*/
+    display: grid;
+    grid-template-areas:
+            "tab-nav"
+            "none"
+            "chart-area";
+
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:8px;
+    padding-bottom:8px;
+
+
+    background-color: aquamarine;
+    flex-wrap: wrap;
+}
+
+
+.tab-nav {
+    grid-area: tab-nav;
+
+    /*height : 는 내부에 들어간 tab bar 길이에 딱맞게 */
+    height: fit-content;
+    /*width: 100vw;*/
+
+
+    /*tab nav 내에서 스크롤이 가능하도록*/
+    overflow-x: scroll;
+    /* y축 스크롤은 불가능 -> height딱맞게*/
+    overflow-y: hidden;
+
+
+    background-color: antiquewhite;
 }
