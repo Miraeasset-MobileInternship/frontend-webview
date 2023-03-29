@@ -6,6 +6,7 @@ import {useEffect} from "react";
 // @ts-ignore
 import {LineChart, CartesianGrid, Legend, Line, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 import {now} from "lodash";
+import StockPriceGraphData from "../types/StockPriceGraphData";
 
 interface Props {
     period : string;
@@ -34,10 +35,9 @@ export default function PriceLineChart ({period}:Props){
 
     return (
         <ResponsiveContainer>
-        <LineChart width={730} height={250} data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-            {/*<CartesianGrid strokeDasharray="3 3" />*/}
-            <XAxis dataKey="time" hide={true} type="number" domain={[1672324200, 1672929000]}/>
-            <YAxis dataKey="price" type="number" domain={[125,130]} hide={true}/>
+        <LineChart data={stockGraphData.data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+            <XAxis dataKey="time" hide={true} type="number" domain={[stockGraphData.dateInfo.minDate, stockGraphData.dateInfo.maxDate]}/>
+            <YAxis dataKey="price" type="number" domain={[stockGraphData.priceInfo.minPrice, stockGraphData.priceInfo.maxPrice]} hide={true}/>
             <Tooltip
                 separator={""}
                 formatter={(value,name,props) => [value,""]}
@@ -45,7 +45,6 @@ export default function PriceLineChart ({period}:Props){
 
 
             />
-            {/*<Legend />*/}
             <Line type="linear" dataKey="price" stroke="#8884d8" dot={false} strokeWidth={2}/>
         </LineChart>
         </ResponsiveContainer>
@@ -68,36 +67,41 @@ const TagText = styled.text`
 `;
 
 
+const stockGraphData: StockPriceGraphData = {
 
-const data = [
-    {
-        // "time": "Page A",
-        "time": 1672324200,
-        "price": 129.61,
-        "amt": 2400
+    symbol: 'AAPL',
+    period:'1d',
+    dateInfo:{
+        maxDate: 1672929000,
+        minDate: 1672324200,
     },
-    {
-        // "time": "Page B",
-        "time": 1672410600,
-        "price": 129.93,
-        "amt": 2210
+    priceInfo:{
+        maxPrice: 130,
+        minPrice: 125,
     },
-    {
-        // "time": "Page C",
-        "time": 1672756200,
-        "price": 125.07,
-        "amt": 2290
-    },
-    {
-        // "time": "Page D",
-        "time": 1672842600,
-        "price": 126.36,
-        "amt": 2000
-    },
-    {
-        // "time": "Page E",
-        "time": 1672929000,
-        "price": 125.02,
-        "amt": 2181
-    },
-];
+    data : [
+        {
+            "time": 1672324200,
+            "price": 129.61,
+        },
+        {
+            "time": 1672410600,
+            "price": 129.93,
+        },
+        {
+            "time": 1672756200,
+            "price": 125.07,
+        },
+        {
+            "time": 1672842600,
+            "price": 126.36,
+        },
+        {
+            "time": 1672929000,
+            "price": 125.02,
+        },
+    ],
+
+
+
+};
