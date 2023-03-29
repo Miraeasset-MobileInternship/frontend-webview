@@ -1,4 +1,4 @@
-import StockDetailTypes from "../types/StockDetailTypes";
+import StockDetailTypes from "../../../types/StockDetailTypes";
 import styled, {css} from 'styled-components';
 import React from "react";
 import {useEffect} from "react";
@@ -6,7 +6,7 @@ import {useEffect} from "react";
 // @ts-ignore
 import {LineChart, CartesianGrid, Legend, Line, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 import {now} from "lodash";
-import StockPriceGraphData from "../types/StockPriceGraphData";
+import StockPriceGraphData from "../../../types/StockPriceGraphData";
 
 interface Props {
     period : string;
