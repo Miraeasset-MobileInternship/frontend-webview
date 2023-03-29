@@ -10,23 +10,40 @@ import TypeTagBox from "../components/TypeTagBox";
 import StockDetailInfo from '../types/StockDetailTypes';
 import React, {useState} from "react";
 import PriceLineChart from "../components/PriceLineChart";
+import ChartPage from "./ChartPage";
+import NewsPage from "./NewsPage";
+import {Link, Route, Routes} from "react-router-dom";
+import TmpPage from "./ChartPage";
+import {forEach} from "lodash";
+import HomePage from "./HomePage";
+import StockInfoPage from "./StockInfoPage";
 
-type Props = {
-    height : number,
-    width: number,
+const sections: sectionType[] = [
+    { value: '0', component: <HomePage/> },
+    { value: '1', component: <ChartPage/> },
+    { value: '2', component: <NewsPage/> },
+    { value: '3', component: <StockInfoPage/> },
+    { value: '4', component: <NewsPage/> },
+];
+
+type sectionType = {
+    value:string,
+    component: JSX.Element,
+
 }
 
 
-export default function DetailInfoPage({width, height}:Props) {
+export default function DetailInfoPage() {
 
     //Tab
-    const [value, setValue] = useState(0);
+    const [value, setValue] = React.useState('1');
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
+        console.log(value);
     };
 
-
+    // @ts-ignore
     return (
         <div className="container">
             <div className="top-area">
@@ -70,7 +87,7 @@ export default function DetailInfoPage({width, height}:Props) {
             </div>
             <div className="main-area">
                 <div className="tab-nav">
-                    <Box style={{backgroundColor: 'pink'}}>
+                    <Box>
                         <Tabs
                             value={value}
                             onChange={handleChange}
@@ -80,23 +97,22 @@ export default function DetailInfoPage({width, height}:Props) {
                             TabIndicatorProps={{
                                 style: {
                                     backgroundColor: "black",
+                                    fontFamily: 'Pretendard'
                                 }
                             }}
                         >
-                            <Tab label="HOME" />
-                            <Tab label="차트" />
-                            <Tab label="관련뉴스" />
-                            <Tab label="종목정보" />
-                            <Tab label="종목정보" />
-                            <Tab label="종목정보" />
-                            <Tab label="종목정보" />
+                            <Tab label="HOME" value='0'/>
+                            <Tab label="차트" value='1'/>
+                            <Tab label="관련뉴스" value='2'/>
+                            <Tab label="종목정보"  value='3'/>
+                            <Tab label="종목정보"  value='4'/>
                         </Tabs>
                     </Box>
                 </div>
-                <div>
-                    <Box style={{height: '20vh', backgroundColor:'blue'}}>
-                        <PriceLineChart period={'1d'}/>
-                    </Box>
+                <div className="scroll-view-area">
+                    {sections.map((s) => (
+                        s.value === value ? (s.component):(<div/>)
+                    ))}
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import {debounce} from "lodash";
 
 //import pages (for Route)
 import DetailInfoPage from "./pages/DetailInfoPage";
-import TmpPage from "./pages/TmpPage";
+import TmpPage from "./pages/ChartPage";
 
 
 
@@ -37,7 +37,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DetailInfoPage width={width} height={height}/>}/>
+        <Route path="/" element={<DetailInfoPage/>}/>
         <Route path="/tmp" element={<TmpPage/>}/>
       </Routes>
     </BrowserRouter>
