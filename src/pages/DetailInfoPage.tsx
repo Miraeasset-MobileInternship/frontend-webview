@@ -9,6 +9,7 @@ import MarketStatusBox from '../components/MarketStatusBox';
 import TypeTagBox from "../components/TypeTagBox";
 import StockDetailInfo from '../types/StockDetailTypes';
 import React, {useState} from "react";
+import PriceLineChart from "../components/PriceLineChart";
 
 type Props = {
     height : number,
@@ -90,6 +91,11 @@ export default function DetailInfoPage({width, height}:Props) {
                             <Tab label="종목정보" />
                             <Tab label="종목정보" />
                         </Tabs>
+                    </Box>
+                </div>
+                <div>
+                    <Box style={{height: '20vh', backgroundColor:'blue'}}>
+                        <PriceLineChart period={'1d'}/>
                     </Box>
                 </div>
             </div>
