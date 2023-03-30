@@ -6,6 +6,9 @@ import ToggleButton from "@mui/material/ToggleButton";
 import * as React from "react";
 import SimilarStockTypes from "../../types/SimilarStockTypes";
 import CardView from "./components/CardView";
+import List from "@mui/material/List";
+import {ListItem} from "@mui/material";
+import {ListItemText} from "@mui/material";
 
 export default function StockInfoPage() {
     //투자 트랜드
@@ -23,8 +26,48 @@ export default function StockInfoPage() {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div>
-            {/*    회사 정보*/}
+            <div style={{height: '500px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+                <div style={{height: '30px',}}>
+                    <TitleText>{'기업 정보'}</TitleText>
+                </div>
+                <div style={{padding: 10 ,backgroundColor: 'pink'}}>
+                    <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
+                        {companyInfo.map((v) => (
+                            // v.contents.length <= 26 ? (
+                                <ListItem
+                                    key={v.title}
+                                    disableGutters
+                                    secondaryAction={
+                                        <ListItemText primary={`${v.contents}`} sx={{width: '60%'}} />
+                                    }
+                                >
+                                    <ListItemText secondary={`${v.title}`} />
+                                </ListItem>
+                        //     ):(
+                        //         <List>
+                        //         <ListItem
+                        //             key={v.title}
+                        //             disableGutters
+                        //             // secondaryAction={
+                        //             //     <ListItemText primary={`${v.contents}`} />
+                        //             // }
+                        //         >
+                        //             <ListItemText secondary={`${v.title}`} />
+                        //         </ListItem>
+                        //             <ListItem
+                        //                 key={v.title}
+                        //                 disableGutters
+                        //                 secondaryAction={
+                        //                     <ListItemText primary={`${v.contents}`} />
+                        //                 }
+                        //             >
+                        //                 {/*<ListItemText secondary={`${v.title}`} />*/}
+                        //             </ListItem>
+                        //         </List>
+                        //     )
+                        ))}
+                    </List>
+                </div>
             </div>
             <div style={{height: '330px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'blue'}}>
                 <div style={{height: '30px',}}>
@@ -120,3 +163,26 @@ const similarStocks :SimilarStockTypes = {
         },
     ],
 };
+
+const companyInfo = [
+    {
+        "title": '회사명',
+        "contents":"Apple Inc.",
+    },
+    {
+        "title": '주소',
+        "contents":"abcdefghijklnmopqrstuvwxyzffawefeafe",
+    },
+    {
+        "title": '산업군',
+        "contents":"consumerElectronics",
+    },
+    {
+        "title": '회사명',
+        "contents":"Apple Inc.",
+    },
+    {
+        "title": '회사명',
+        "contents":"Apple Inc.",
+    },
+]
