@@ -9,6 +9,9 @@ import CardView from "./components/CardView";
 import List from "@mui/material/List";
 import {ListItem} from "@mui/material";
 import {ListItemText} from "@mui/material";
+import CompanyInfoTypes from "../../types/CompanyInfoTypes";
+import {Link} from "react-router-dom";
+import StockDetailInfoTypes from "../../types/StockDetailInfoTypes";
 
 export default function StockInfoPage() {
     //투자 트랜드
@@ -26,46 +29,111 @@ export default function StockInfoPage() {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: '500px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
                 <div style={{height: '30px',}}>
-                    <TitleText>{'기업 정보'}</TitleText>
+                    <TitleText>{'종목 상세'}</TitleText>
                 </div>
                 <div style={{padding: 10 ,backgroundColor: 'pink'}}>
                     <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
-                        {companyInfo.map((v) => (
-                            // v.contents.length <= 26 ? (
-                                <ListItem
-                                    key={v.title}
-                                    disableGutters
-                                    secondaryAction={
-                                        <ListItemText primary={`${v.contents}`} sx={{width: '60%'}} />
-                                    }
-                                >
-                                    <ListItemText secondary={`${v.title}`} />
-                                </ListItem>
-                        //     ):(
-                        //         <List>
-                        //         <ListItem
-                        //             key={v.title}
-                        //             disableGutters
-                        //             // secondaryAction={
-                        //             //     <ListItemText primary={`${v.contents}`} />
-                        //             // }
-                        //         >
-                        //             <ListItemText secondary={`${v.title}`} />
-                        //         </ListItem>
-                        //             <ListItem
-                        //                 key={v.title}
-                        //                 disableGutters
-                        //                 secondaryAction={
-                        //                     <ListItemText primary={`${v.contents}`} />
-                        //                 }
-                        //             >
-                        //                 {/*<ListItemText secondary={`${v.title}`} />*/}
-                        //             </ListItem>
-                        //         </List>
-                        //     )
-                        ))}
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.exchangeName} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"Exchange name"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.region} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"Region"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.typeDisp} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"Type"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.financialCurrency} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"Currency"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.epsCurrentYear} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"ESP"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.averageDailyVolume10Day} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"10Day Average Volume"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.averageDailyVolume3Month} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red'}}
+                        >
+                            <ListItemText secondary={"3Month Average Volume"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                        >
+                            <ListItemText secondary={"52Weeks High"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                        >
+                            <ListItemText secondary={"52Weeks High Change"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                        >
+                            <ListItemText secondary={"52Weeks Low"}/>
+                        </ListItem>
+                        <ListItem
+                            disableGutters
+                            secondaryAction={
+                                <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                            }
+                            style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                        >
+                            <ListItemText secondary={"52Weeks Low Change"}/>
+                        </ListItem>
                     </List>
                 </div>
             </div>
@@ -164,25 +232,18 @@ const similarStocks :SimilarStockTypes = {
     ],
 };
 
-const companyInfo = [
-    {
-        "title": '회사명',
-        "contents":"Apple Inc.",
-    },
-    {
-        "title": '주소',
-        "contents":"abcdefghijklnmopqrstuvwxyzffawefeafe",
-    },
-    {
-        "title": '산업군',
-        "contents":"consumerElectronics",
-    },
-    {
-        "title": '회사명',
-        "contents":"Apple Inc.",
-    },
-    {
-        "title": '회사명',
-        "contents":"Apple Inc.",
-    },
-]
+
+const stockInfo: StockDetailInfoTypes  = {
+    "exchangeName": "NasdaqGS",
+    "fiftyTwoWeekHigh": 178.49,
+    "fiftyTwoWeekLow": 124.17,
+    "fiftyTwoWeekHighChange": -17.720001,
+    "fiftyTwoWeekLowChange": 36.600006,
+    "epsCurrentYear": 5.97,
+    "typeDisp": "Equity",
+    "region": "US",
+    "financialCurrency": "USD",
+    "averageDailyVolume10Day": 67475750,
+    "averageDailyVolume3Month": 69210303
+}
+
