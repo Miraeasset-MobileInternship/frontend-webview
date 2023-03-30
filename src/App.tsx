@@ -63,6 +63,7 @@ import NewsPage from "./pages/news/NewsPage";
 import {forEach} from "lodash";
 import HomePage from "./pages/HomePage";
 import StockInfoPage from "./pages/extraInfo/StockInfoPage";
+import MainCardView from "./components/MainCardView";
 
 const sections: sectionType[] = [
     { value: '0', component: <HomePage/> },
@@ -104,31 +105,32 @@ function App() {
                 </div>
                 {/*카드 뷰를 둘러싼 padding*/}
                 <div className="card-view">
-                    <ViewCard>
-                        {/*카드 뷰 내부의 패딩*/}
-                        <div style={{padding:15}}>
-                            <DefaultText>{"오늘 주가"}</DefaultText>
-                            <div style={{paddingTop:5}}>
-                                <MainText>{stockInfo.price}</MainText>
-                                <DefaultText>{"미소"}</DefaultText>
-                            </div>
-                            <div>
-                                {stockInfo.changePrice >=0 ?
-                                    (
-                                        <div>
-                                            <DefaultText style={{color: "#D06464"}}>{"+"}{stockInfo.changePrice}{"미소"}</DefaultText>
-                                            <DefaultText style={{color: "#D06464"}}>{"(+"}{stockInfo.changePercent}{"%)"}</DefaultText>
-                                        </div>
-                                    ):
-                                    (
-                                        <div>
-                                            <DefaultText style={{color: "#5787DE"}}>{"-"}{stockInfo.changePrice}{"미소"}</DefaultText>
-                                            <DefaultText style={{color: "#5787DE"}}>{"(-"}{stockInfo.changePercent}{"%)"}</DefaultText>
-                                        </div>
-                                    )}
-                            </div>
-                        </div>
-                    </ViewCard>
+                    <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"}/>
+                    {/*<ViewCard>*/}
+                    {/*    /!*카드 뷰 내부의 패딩*!/*/}
+                    {/*    <div style={{padding:15}}>*/}
+                    {/*        <DefaultText>{"오늘 주가"}</DefaultText>*/}
+                    {/*        <div style={{paddingTop:5}}>*/}
+                    {/*            <MainText>{stockInfo.price}</MainText>*/}
+                    {/*            <DefaultText>{"미소"}</DefaultText>*/}
+                    {/*        </div>*/}
+                    {/*        <div>*/}
+                    {/*            {stockInfo.changePrice >=0 ?*/}
+                    {/*                (*/}
+                    {/*                    <div>*/}
+                    {/*                        <DefaultText style={{color: "#D06464"}}>{"+"}{stockInfo.changePrice}{"미소"}</DefaultText>*/}
+                    {/*                        <DefaultText style={{color: "#D06464"}}>{"(+"}{stockInfo.changePercent}{"%)"}</DefaultText>*/}
+                    {/*                    </div>*/}
+                    {/*                ):*/}
+                    {/*                (*/}
+                    {/*                    <div>*/}
+                    {/*                        <DefaultText style={{color: "#5787DE"}}>{"-"}{stockInfo.changePrice}{"미소"}</DefaultText>*/}
+                    {/*                        <DefaultText style={{color: "#5787DE"}}>{"(-"}{stockInfo.changePercent}{"%)"}</DefaultText>*/}
+                    {/*                    </div>*/}
+                    {/*                )}*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</ViewCard>*/}
                 </div>
             </div>
             <div className="main-area">
