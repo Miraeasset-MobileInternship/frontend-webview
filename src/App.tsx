@@ -64,13 +64,15 @@ import {forEach} from "lodash";
 import HomePage from "./pages/HomePage";
 import StockInfoPage from "./pages/extraInfo/StockInfoPage";
 import MainCardView from "./components/MainCardView";
+import OptionPage from "./pages/options/OptionPage";
+import CompanyInfoPage from "./pages/companyInfo/CompanyInfoPage";
 
 const sections: sectionType[] = [
     { value: '0', component: <HomePage/> },
     { value: '1', component: <ChartPage/> },
     { value: '2', component: <NewsPage/> },
     { value: '3', component: <StockInfoPage/> },
-    { value: '4', component: <NewsPage/> },
+    { value: '4', component: <CompanyInfoPage/> },
 ];
 
 type sectionType = {
@@ -153,7 +155,7 @@ function App() {
                             <Tab label="차트" value='1'/>
                             <Tab label="관련뉴스" value='2'/>
                             <Tab label="종목정보"  value='3'/>
-                            <Tab label="종목정보"  value='4'/>
+                            <Tab label="회사정보"  value='4'/>
                         </Tabs>
                     </Box>
                 </div>
