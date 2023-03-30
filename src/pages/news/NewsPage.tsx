@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 
 const style = {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: '100%',
     bgcolor: 'background.paper',
 };
 
