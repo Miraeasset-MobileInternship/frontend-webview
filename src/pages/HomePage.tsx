@@ -13,7 +13,13 @@ import PriceLineChart from "./chart/components/PriceLineChart";
 import {Link} from "react-router-dom";
 import StockNewsTypes from "../types/StockNewsTypes";
 
-export default function HomePage() {
+
+type Props = {
+    setTabValue:(index:string) => void;
+}
+
+
+export default function HomePage({setTabValue}:Props) {
     //투자 트랜드
     const [period, setperiod] = useState('0m');
 
@@ -24,6 +30,11 @@ export default function HomePage() {
         setperiod(newperiod);
     };
 
+    const showMoreView = (v:string) => {
+        setTabValue(v);
+    };
+
+
     const style = {
         width: '100%',
         maxWidth: '100%',
@@ -32,12 +43,12 @@ export default function HomePage() {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: '400px', paddingTop: 5, paddingBottom: 50, backgroundColor: 'green'}}>
+            <div style={{height: '400px', paddingTop: 5, paddingBottom: 60, backgroundColor: 'green'}}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
-                    <div style={{justifyContent: 'flex-start', flex:1}}>
+                    <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'차트'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1}}>
+                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('1')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -65,12 +76,12 @@ export default function HomePage() {
                     </div>
                 </div>
                 </div>
-            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 50, backgroundColor: 'blue'}}>
+            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 60, backgroundColor: 'blue'}}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
-                    <div style={{justifyContent: 'flex-start', flex:1}}>
+                    <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'종목 뉴스'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1}}>
+                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('3')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -88,26 +99,16 @@ export default function HomePage() {
                     </List>
                 </div>
             </div>
-            <div style={{height: '330px', paddingTop: 5, paddingBottom: 50, backgroundColor: 'blue'}}>
-                <div style={{height: '30px',}}>
-                    <TitleText>{'최근 투자 트랜드'}</TitleText>
+            <div style={{height: '300px', paddingTop: 5, paddingBottom: 50, backgroundColor: 'blue'}}>
+                <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
+                    <div style={{justifyContent: 'flex-start', flex:6}}>
+                        <TitleText>{'이달의 트랜드'}</TitleText>
+                    </div>
+                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('2')}>
+                        <DefaultText>{"더보기"}</DefaultText>
+                    </div>
                 </div>
-                <div style={{height: '40px', padding:8, backgroundColor: 'red'}}>
-                    <ToggleButtonGroup
-                        color="primary"
-                        value={period}
-                        exclusive
-                        onChange={handleChange}
-                        aria-label="Platform"
-                        size = "small"
-                    >
-                        <ToggleButton value="0m">현재</ToggleButton>
-                        <ToggleButton value="-1m">1달 전</ToggleButton>
-                        <ToggleButton value="-2m">2달 전</ToggleButton>
-                        <ToggleButton value="-3m">3달 전</ToggleButton>
-                    </ToggleButtonGroup>
-                </div>
-                <div style={{height: '260px'}}>
+                <div style={{height: '270px'}}>
                     <TrendPieChart period={period}/>
                 </div>
             </div>

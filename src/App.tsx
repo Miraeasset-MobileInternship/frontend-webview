@@ -68,10 +68,9 @@ import OptionPage from "./pages/options/OptionPage";
 import CompanyInfoPage from "./pages/companyInfo/CompanyInfoPage";
 
 const sections: sectionType[] = [
-    { value: '0', component: <HomePage/> },
     { value: '1', component: <ChartPage/> },
-    { value: '2', component: <NewsPage/> },
-    { value: '3', component: <StockInfoPage/> },
+    { value: '2', component: <StockInfoPage/> },
+    { value: '3', component: <NewsPage/> },
     { value: '4', component: <CompanyInfoPage/> },
 ];
 
@@ -85,12 +84,21 @@ type sectionType = {
 function App() {
 
     //Tab
-    const [value, setValue] = React.useState('1');
+    const [value, setValue] = React.useState('0');
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
-        console.log(value);
+        // console.log(value);
     };
+
+
+    const setTabValue = (index:string): void => {
+
+        console.log("click");
+        setValue(index);
+        console.log(value);
+    }
+
 
     // @ts-ignore
     return (
@@ -108,31 +116,6 @@ function App() {
                 {/*카드 뷰를 둘러싼 padding*/}
                 <div className="card-view">
                     <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"}/>
-                    {/*<ViewCard>*/}
-                    {/*    /!*카드 뷰 내부의 패딩*!/*/}
-                    {/*    <div style={{padding:15}}>*/}
-                    {/*        <DefaultText>{"오늘 주가"}</DefaultText>*/}
-                    {/*        <div style={{paddingTop:5}}>*/}
-                    {/*            <MainText>{stockInfo.price}</MainText>*/}
-                    {/*            <DefaultText>{"미소"}</DefaultText>*/}
-                    {/*        </div>*/}
-                    {/*        <div>*/}
-                    {/*            {stockInfo.changePrice >=0 ?*/}
-                    {/*                (*/}
-                    {/*                    <div>*/}
-                    {/*                        <DefaultText style={{color: "#D06464"}}>{"+"}{stockInfo.changePrice}{"미소"}</DefaultText>*/}
-                    {/*                        <DefaultText style={{color: "#D06464"}}>{"(+"}{stockInfo.changePercent}{"%)"}</DefaultText>*/}
-                    {/*                    </div>*/}
-                    {/*                ):*/}
-                    {/*                (*/}
-                    {/*                    <div>*/}
-                    {/*                        <DefaultText style={{color: "#5787DE"}}>{"-"}{stockInfo.changePrice}{"미소"}</DefaultText>*/}
-                    {/*                        <DefaultText style={{color: "#5787DE"}}>{"(-"}{stockInfo.changePercent}{"%)"}</DefaultText>*/}
-                    {/*                    </div>*/}
-                    {/*                )}*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</ViewCard>*/}
                 </div>
             </div>
             <div className="main-area">
@@ -150,19 +133,31 @@ function App() {
                                     fontFamily: 'Pretendard'
                                 }
                             }}
+                            defaultValue='0'
                         >
                             <Tab label="HOME" value='0'/>
                             <Tab label="차트" value='1'/>
-                            <Tab label="관련뉴스" value='2'/>
-                            <Tab label="종목정보"  value='3'/>
-                            <Tab label="회사정보"  value='4'/>
+                            <Tab label="종목정보" value='2'/>
+                            <Tab label="종목뉴스"  value='3'/>
+                            <Tab label="기업정보"  value='4'/>
                         </Tabs>
                     </Box>
                 </div>
                 <div className="scroll-view-area">
-                    {sections.map((s) => (
-                        s.value === value ? (s.component):(<div/>)
-                    ))}
+                    {
+                        value === '0' ? (
+                            <HomePage setTabValue={setTabValue}/>
+                        )
+                            :
+                        (
+                         <div style={{height: '100%'}}>
+                          {sections.map((s) => (
+                               s.value === value ? (s.component):(<div/>)
+                           ))}
+                         </div>
+                        )
+                    }
+
                 </div>
             </div>
         </div>
