@@ -12,6 +12,7 @@ import CompanyInfoTypes from "../../../types/CompanyInfoTypes";
 import detailInfoService from "../../../services/detailInfoService";
 import Loader from "../../../components/Loader";
 import ErrorView from "../components/ErrorView";
+import ZeroAnswerView from "../components/ZeroAnswerView";
 
 const style = {
     width: '100%',
@@ -84,17 +85,29 @@ export default function NewsTab({symbol}:Props) {
                                (
                                    newsList &&
                                    <>
-                                   <List sx={style} component="nav" aria-label="mailbox folders">
-                                       {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
-                                           <div>
-                                               <ListItem button>
-                                                   <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
-                                                       <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
-                                                   </Link>
-                                               </ListItem>
-                                           </div>
-                                       ))}
-                                   </List>
+                                       {
+                                           newsList.totalData === 0 ?
+                                               (
+                                                   <ZeroAnswerView/>
+                                               )
+                                               :
+                                                   (
+                                                       <>
+                                                           <List sx={style} component="nav" aria-label="mailbox folders">
+                                                               {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
+                                                                   <div>
+                                                                       <ListItem button>
+                                                                           <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
+                                                                               <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
+                                                                           </Link>
+                                                                       </ListItem>
+                                                                   </div>
+                                                               ))}
+                                                           </List>
+                                                       </>
+                                                   )
+
+                                       }
                                </>)
                     }
                     </>
