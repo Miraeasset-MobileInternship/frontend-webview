@@ -1,4 +1,4 @@
-import react, {useState} from 'react';
+import react, {useEffect, useState} from 'react';
 import List from "@mui/material/List";
 import {ListItem, ListItemText, ListSubheader} from "@mui/material";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -13,6 +13,10 @@ import PriceLineChart from "../components/PriceLineChart";
 import {Link, useNavigate} from "react-router-dom";
 import StockNewsTypes from "../../../types/StockNewsTypes";
 import WatchedStockInfoTypes from "../../../types/WatchedStockInfoTypes";
+import detailInfoService from "../../../services/detailInfoService";
+import Loader from "../../../components/Loader";
+import ErrorView from "../components/ErrorView";
+import ZeroAnswerView from "../components/ZeroAnswerView";
 
 
 type Props = {
@@ -42,6 +46,51 @@ export default function HomeTab({setTabValue}:Props) {
         bgcolor: 'background.paper',
     };
 
+
+
+
+    //뉴스 관련
+    const [newsLoading, setNewsLoading] = useState(false);
+    const [newsErrorStatus, setNewsErrorStatus] = useState(false);
+    const [newsList, setNewsList] = useState<StockNewsTypes|null>(null);
+
+    //stockInfo(view카드)
+    const getNewsList =
+        (stockId: string) => {
+
+            setNewsLoading(true);
+            // 메인 페이지에서는 4개만
+            detailInfoService.getStockNews(stockId,"4")
+                .then( res => {
+
+                    setNewsLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setNewsList(res.data.result);
+                    }else{
+                        setNewsErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getNewsList(symbol)
+    },[]);
+
+
+
+
+
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
             <div style={{height: '400px', paddingTop: 20, paddingBottom: 60, backgroundColor: 'green'}}>
@@ -70,19 +119,55 @@ export default function HomeTab({setTabValue}:Props) {
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
-                <div>
-                    <List sx={style} component="nav" aria-label="mailbox folders">
-                        {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
-                            <div>
-                                <ListItem button>
-                                    <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
-                                        <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
-                                    </Link>
-                                </ListItem>
-                            </div>
-                        ))}
-                    </List>
-                </div>
+
+                <>
+                    {
+                        newsLoading ?
+                            (
+                                <Loader/>
+                            )
+                            :
+                            (
+                                <>
+                                    {
+                                        newsErrorStatus ?
+                                            (
+                                                <ErrorView/>
+                                            )
+                                            :
+                                            (
+                                                newsList &&
+                                                <>
+                                                    {
+                                                        newsList.totalData === 0 ?
+                                                            (
+                                                                <ZeroAnswerView/>
+                                                            )
+                                                            :
+                                                            (
+                                                                <>
+                                                                    <List sx={style} component="nav" aria-label="mailbox folders">
+                                                                        {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
+                                                                            <div>
+                                                                                <ListItem button>
+                                                                                    <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
+                                                                                        <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
+                                                                                    </Link>
+                                                                                </ListItem>
+                                                                            </div>
+                                                                        ))}
+                                                                    </List>
+                                                                </>
+                                                            )
+
+                                                    }
+                                                </>)
+                                    }
+                                </>
+                            )
+                    }
+                </>
+
             </div>
             <div style={{height: '300px', paddingTop: 5, paddingBottom: 50, backgroundColor: 'blue'}}>
                 <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
