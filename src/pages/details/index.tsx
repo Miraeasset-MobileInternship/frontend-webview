@@ -15,6 +15,8 @@ import CompanyInfoTab from "./tabs/CompanyInfoTab";
 import StockInfoTab from "./tabs/StockInfoTab";
 import detailInfoService from "../../services/detailInfoService";
 import {useNavigate} from "react-router-dom";
+import CircularProgress from '@mui/material/CircularProgress';
+import Loader from "../../components/Loader";
 
 
 const sections: sectionType[] = [
@@ -34,6 +36,7 @@ type sectionType = {
 export default function DetailPage() {
     const navigate = useNavigate();
 
+    const [cardLoading, setCardLoading] = useState(false);
     const [symbol, setSymbol] = useState("AAPL");
     //Tab
     const [value, setValue] = React.useState('0');
@@ -58,11 +61,11 @@ export default function DetailPage() {
     const getStockInfo =
         (stockId: string) => {
 
+                setCardLoading(true);
                 detailInfoService.getStockDetail(stockId)
                         .then( res => {
 
-                            console.log(res.data.status.status);
-
+                            setCardLoading(false);
                             if(res.data.status.status === "E000"){
                                 // @ts-ignore
                                 setStockInfo(res.data.result);
@@ -78,29 +81,34 @@ export default function DetailPage() {
             };
 
 
-
+    //리로드 시마다 1회만 실행
     useEffect(() => {
-        console.log("실");
-        console.log(symbol);
         getStockInfo(symbol);
     },[]);
 
     return (
         <div className="container">
             <div className="top-area">
-                <div className="stock-title">
                     {/*특정 div 내로 좁아지는 패딩을 넣고 싶을 땐 내부 div를 만들어서 넣어야함*/}
-                    <TitleText>{stockInfo?.stockTitle}</TitleText>
-                    <MarketStatusBox isOpen={stockInfo?.tagInfo.open}></MarketStatusBox>
-                    <div style={{backgroundColor: "red", paddingTop:3}}>
-                        <TypeTagBox text={stockInfo?.tagInfo.type}/>
-                        <TypeTagBox text={stockInfo?.tagInfo.market}/>
-                    </div>
-                </div>
-                {/*카드 뷰를 둘러싼 padding*/}
-                <div className="card-view">
-                    <MainCardView price={stockInfo?.price} changePrice={stockInfo?.changePrice} changePercent={stockInfo?.changePercent} currency={"미소"}/>
-                </div>
+                    {cardLoading ? (
+                        <Loader/>
+                        ) : (
+                        <>
+                            <div className="stock-title">
+                            <TitleText>{stockInfo?.stockTitle}</TitleText>
+                            <MarketStatusBox isOpen={stockInfo?.tagInfo.open}></MarketStatusBox>
+                            <div style={{backgroundColor: "red", paddingTop:3}}>
+                                <TypeTagBox text={stockInfo?.tagInfo.type}/>
+                                <TypeTagBox text={stockInfo?.tagInfo.market}/>
+                            </div>
+                            </div>
+                        {/*카드 뷰를 둘러싼 padding*/}
+                            <div className="card-view">
+                            <MainCardView price={stockInfo?.price} changePrice={stockInfo?.changePrice} changePercent={stockInfo?.changePercent} currency={"미소"}/>
+                            </div>
+                        </>
+
+                    )}
             </div>
             <div className="main-area">
                 <div className="tab-nav">
