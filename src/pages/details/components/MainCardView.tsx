@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 
 
 interface Props {
@@ -17,6 +18,20 @@ interface Props {
 
 
 export default function MainCardView({currency,price,changePrice,changePercent}:Props) {
+    const navigate = useNavigate();
+
+
+    const navigateToBuy = () => {
+        navigate("/buy");
+    }
+
+    const navigateToSell = () => {
+        navigate("/sell");
+    }
+
+
+
+
     return (
         <Card sx={{ minWidth: 150, height:'100%'}} style={{boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
             <CardContent sx={{height:'100%', padding:0.5}}>
@@ -44,11 +59,11 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
                 </div>
                 <div style={{display: "flex", flexDirection: 'row',
                     padding:7, backgroundColor:'blue', height: '35%'}}>
-                    <CustomBtn style={{backgroundColor: "#FEF8F8"}}>
+                    <CustomBtn style={{backgroundColor: "#FEF8F8"}} onClick={navigateToBuy}>
                         <ButtonText style={{color: "#D06464"}}>{"매수하기"}</ButtonText>
                     </CustomBtn>
                     <div style={{padding:5}}/>
-                    <CustomBtn style={{backgroundColor: "#EEF2FC"}}>
+                    <CustomBtn style={{backgroundColor: "#EEF2FC"}} onClick={navigateToSell}>
                         <ButtonText style={{color: "#5787DE"}}>{"매도하기"}</ButtonText>
                     </CustomBtn>
                 </div>
