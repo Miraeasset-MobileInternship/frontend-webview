@@ -122,12 +122,12 @@ export default function HomePage({setTabValue}:Props) {
                                     {w.price >= 0 ?
                                         (
                                             <>
-                                            <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
-                                                <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
-                                            </div>
-                                            <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
-                                                <RankPriceText style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
-                                            </div>
+                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
+                                                    <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
+                                                </div>
+                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
+                                                    <RankPriceText style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
+                                                </div>
                                             </>
                                         )
                                         :
