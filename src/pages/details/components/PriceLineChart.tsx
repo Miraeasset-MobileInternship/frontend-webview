@@ -95,11 +95,11 @@ export default function PriceLineChart ({symbol,period}:Props){
                                     stockGraphData &&
                                     <>
                                         <ResponsiveContainer>
-                                            <LineChart data={stockGraphData?.data} margin={{top: 5, right: 10, left: 10, bottom: 5}}>
+                                            <LineChart data={stockGraphData.data} margin={{top: 5, right: 10, left: 10, bottom: 5}}>
                                                 <XAxis dataKey="time" hide={true} type="number"
-                                                       domain={[stockGraphData!.dateInfo.minDate, stockGraphData!.dateInfo.maxDate]}/>
+                                                       domain={[stockGraphData.dateInfo.minDate, stockGraphData.dateInfo.maxDate]}/>
                                                 <YAxis dataKey="price" type="number"
-                                                       domain={[stockGraphData!.priceInfo.minPrice, stockGraphData!.priceInfo.maxPrice]}
+                                                       domain={[stockGraphData.priceInfo.minPrice, stockGraphData.priceInfo.maxPrice]}
                                                        hide={true}/>
                                                 <Tooltip
                                                     separator={""}
