@@ -43,35 +43,19 @@ export default function HomePage({setTabValue}:Props) {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: '400px', paddingTop: 5, paddingBottom: 60, backgroundColor: 'green'}}>
+            <div style={{height: '400px', paddingTop: 20, paddingBottom: 60, backgroundColor: 'green'}}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
-                        <TitleText>{'차트'}</TitleText>
+                        <TitleText>{'오늘 시세'}</TitleText>
                     </div>
                     <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('1')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
-                <div style={{height: '370px'}}>
+                <div style={{height: '370px', paddingTop: 25}}>
                     <div style={{height: "100%", display: 'flex', flexDirection: 'column'}}>
                         <div style={{height:"90%"}}>
                             <PriceLineChart period={period} />
-                        </div>
-                        <div style={{height:"10%"}}>
-                            <ToggleButtonGroup
-                                color="primary"
-                                value={period}
-                                exclusive
-                                onChange={handleChange}
-                                aria-label="Platform"
-                                fullWidth={true}
-                            >
-                                <ToggleButton value="1d">1일</ToggleButton>
-                                <ToggleButton value="5d">1주</ToggleButton>
-                                <ToggleButton value="3mo">3달</ToggleButton>
-                                <ToggleButton value="1y">1년</ToggleButton>
-                                <ToggleButton value="5y">5년</ToggleButton>
-                            </ToggleButtonGroup>
                         </div>
                     </div>
                 </div>

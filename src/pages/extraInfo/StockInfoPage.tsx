@@ -29,7 +29,7 @@ export default function StockInfoPage() {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+            <div style={{height: 'fit-content', paddingTop: 20, paddingBottom: 5, backgroundColor: 'green'}}>
                 <div style={{height: '30px',}}>
                     <TitleText>{'종목 상세'}</TitleText>
                 </div>
