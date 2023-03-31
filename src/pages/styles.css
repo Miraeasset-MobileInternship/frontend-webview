@@ -66,7 +66,7 @@
             "card-view";
 
     /*차지하는 공간*/
-    height: 25vh;
+    height: 30vh;
     width: 100vw;
 
 
@@ -80,7 +80,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    height: 35%;
+    height: 30%;
 
     /*앞부분 부터 시작*/
     justify-content: flex-start;
@@ -101,7 +101,8 @@
     grid-area: card-view;
 
     /*차지하는 공간*/
-    height: 65%;
+    height: 70%;
+    minHeight: 400;
     /*width: 100vw;*/
 
     /*패딩이 (외부가 아닌)내부로 사이즈 조절되도록! */
@@ -123,7 +124,7 @@
     grid-area: main-area;
 
     /*차지하는 공간 */
-    height: 75vh;
+    height: 70vh;
     width: 100vw;
 
     display: grid;
