@@ -1,4 +1,4 @@
-import react, {useState} from 'react';
+import react, {useEffect, useState} from 'react';
 import TrendPieChart from "../components/TrendPieChart";
 import styled from "styled-components";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -10,10 +10,58 @@ import List from "@mui/material/List";
 import {ListItem} from "@mui/material";
 import {ListItemText} from "@mui/material";
 import CompanyInfoTypes from "../../../types/CompanyInfoTypes";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import StockDetailInfoTypes from "../../../types/StockDetailInfoTypes";
+import detailInfoService from "../../../services/detailInfoService";
+import Loader from "../../../components/Loader";
+import ErrorView from "../components/ErrorView";
 
-export default function StockInfoTab() {
+
+interface Props {
+    symbol:string;
+}
+
+export default function StockInfoTab({symbol}:Props) {
+    const navigate = useNavigate();
+
+    //주식 종목 상세 관련
+    const [detailLoading, setDetailLoading] = useState(false);
+    const [detailErrorStatus, setDetailErrorStatus] = useState(false);
+    const [stockInfo, setStockInfo] = useState<StockDetailInfoTypes|null>(null);
+
+    //stockInfo(view카드)
+    const getStockDetailData =
+        (stockId: string) => {
+
+            setDetailLoading(true);
+            detailInfoService.getStockDetailData(stockId)
+                .then( res => {
+
+                    setDetailLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setStockInfo(res.data.result);
+                    }else{
+                        setDetailErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getStockDetailData(symbol)
+    },[]);
+
+
+
+
     //투자 트랜드
     const [period, setperiod] = useState('0m');
 
@@ -33,109 +81,140 @@ export default function StockInfoTab() {
                 <div style={{height: '30px',}}>
                     <TitleText>{'종목 상세'}</TitleText>
                 </div>
-                <div style={{padding: 10 ,backgroundColor: 'pink'}}>
-                    <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.exchangeName} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"Exchange name"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.region} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"Region"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.typeDisp} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"Type"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.financialCurrency} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"Currency"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.epsCurrentYear} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"ESP"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.averageDailyVolume10Day} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"10Day Average Volume"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.averageDailyVolume3Month} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red'}}
-                        >
-                            <ListItemText secondary={"3Month Average Volume"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
-                        >
-                            <ListItemText secondary={"52Weeks High"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
-                        >
-                            <ListItemText secondary={"52Weeks High Change"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
-                        >
-                            <ListItemText secondary={"52Weeks Low"}/>
-                        </ListItem>
-                        <ListItem
-                            disableGutters
-                            secondaryAction={
-                                <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
-                            }
-                            style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
-                        >
-                            <ListItemText secondary={"52Weeks Low Change"}/>
-                        </ListItem>
-                    </List>
-                </div>
+
+
+                <>
+                    {
+                        detailLoading ?
+                            (
+                                <Loader/>
+                            )
+                            :
+                            (
+                                <>
+                                    {
+                                        detailErrorStatus ?
+                                            (
+                                                <ErrorView/>
+                                            )
+                                            :
+                                            (
+                                                stockInfo &&
+
+                                                    <>
+                                                        <div style={{padding: 10 ,backgroundColor: 'pink'}}>
+                                                            <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.exchangeName} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"Exchange name"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.region} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"Region"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.typeDisp} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"Type"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.financialCurrency} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"Currency"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.epsCurrentYear} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"ESP"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.averageDailyVolume10Day} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"10Day Average Volume"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.averageDailyVolume3Month} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                >
+                                                                    <ListItemText secondary={"3Month Average Volume"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                                                                >
+                                                                    <ListItemText secondary={"52Weeks High"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                                                                >
+                                                                    <ListItemText secondary={"52Weeks High Change"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                                                                >
+                                                                    <ListItemText secondary={"52Weeks Low"}/>
+                                                                </ListItem>
+                                                                <ListItem
+                                                                    disableGutters
+                                                                    secondaryAction={
+                                                                        <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
+                                                                    }
+                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                                                                >
+                                                                    <ListItemText secondary={"52Weeks Low Change"}/>
+                                                                </ListItem>
+                                                            </List>
+                                                        </div>
+                                                    </>
+                                            )
+                                    }
+                                </>
+                            )
+                    }
+                </>
+
+
+
             </div>
             <div style={{height: '330px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'blue'}}>
                 <div style={{height: '30px',}}>

@@ -76,5 +76,18 @@ class detailInfoService {
         )
     }
 
+    //주식 종목 상세(52 주..등)
+    getStockDetailData(stockId:string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/stock-info", // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();
