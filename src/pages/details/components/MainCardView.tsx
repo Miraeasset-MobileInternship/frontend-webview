@@ -18,7 +18,7 @@ interface Props {
 
 export default function MainCardView({currency,price,changePrice,changePercent}:Props) {
     return (
-        <Card sx={{ minWidth: 150, height:'100%'}} style={{  boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
+        <Card sx={{ minWidth: 150, height:'100%'}} style={{boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
             <CardContent sx={{height:'100%', padding:0.5}}>
                 <div style={{height: '15%', backgroundColor:'red', padding: 1, display:"flex", alignItems:'center'}}>
                     <TitleText>{"오늘 주가"}</TitleText>
@@ -43,10 +43,14 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
                     </Typography>
                 </div>
                 <div style={{display: "flex", flexDirection: 'row',
-                    justifyContent:'center', alignItems:'center',
                     padding:7, backgroundColor:'blue', height: '35%'}}>
-                    <CustomBtn/>
-                    <CustomBtn/>
+                    <CustomBtn style={{backgroundColor: "#FEF8F8"}}>
+                        <ButtonText style={{color: "#D06464"}}>{"매수하기"}</ButtonText>
+                    </CustomBtn>
+                    <div style={{padding:5}}/>
+                    <CustomBtn style={{backgroundColor: "#EEF2FC"}}>
+                        <ButtonText style={{color: "#5787DE"}}>{"매도하기"}</ButtonText>
+                    </CustomBtn>
                 </div>
             </CardContent>
         </Card>
@@ -92,6 +96,20 @@ const TitleText = styled.text`
 const CustomBtn = styled.div`
   
     height: 100%;
+    border-radius: 12px;
     flex:1;
-    background-color: #D06464;
+  
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+`;
+
+
+const ButtonText = styled.text`
+  
+    font-size: 1.2em;
+
+    font-family: Pretendard;
+    font-weight: 500;
+    letter-spacing: 2px;
 `;
