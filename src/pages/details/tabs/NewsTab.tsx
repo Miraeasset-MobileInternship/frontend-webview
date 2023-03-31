@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
 
-import StockNewsTypes from "../../types/StockNewsTypes";
+import StockNewsTypes from "../../../types/StockNewsTypes";
 import {Link} from "react-router-dom";
 
 const style = {
@@ -14,7 +14,7 @@ const style = {
     bgcolor: 'background.paper',
 };
 
-export default function NewsPage() {
+export default function NewsTab() {
     return (
         <>
             <List sx={style} component="nav" aria-label="mailbox folders">

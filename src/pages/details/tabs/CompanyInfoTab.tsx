@@ -3,15 +3,15 @@ import List from "@mui/material/List";
 import {ListItem, ListItemText} from "@mui/material";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
-import TrendPieChart from "../extraInfo/components/TrendPieChart";
-import CardView from "../extraInfo/components/CardView";
+import TrendPieChart from "../components/TrendPieChart";
+import CardView from "../components/CardView";
 import * as React from "react";
-import CompanyInfoTypes from "../../types/CompanyInfoTypes";
+import CompanyInfoTypes from "../../../types/CompanyInfoTypes";
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
 
-export default function CompanyInfoPage() {
+export default function CompanyInfoTab() {
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
             <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>

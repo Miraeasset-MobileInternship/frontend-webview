@@ -1,4 +1,4 @@
-import StockDetailTypes from "../types/StockDetailTypes";
+import StockDetailTypes from "../../../types/StockDetailTypes";
 import styled, {css} from 'styled-components';
 import React from "react";
 import {useEffect} from "react";

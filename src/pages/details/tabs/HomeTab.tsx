@@ -3,16 +3,16 @@ import List from "@mui/material/List";
 import {ListItem, ListItemText, ListSubheader} from "@mui/material";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
-import TrendPieChart from "./extraInfo/components/TrendPieChart";
-import CardView from "./extraInfo/components/CardView";
+import TrendPieChart from "../components/TrendPieChart";
+import CardView from "../components/CardView";
 import * as React from "react";
 import styled from "styled-components";
-import SimilarStockTypes from "../types/SimilarStockTypes";
-import StockDetailInfoTypes from "../types/StockDetailInfoTypes";
-import PriceLineChart from "./chart/components/PriceLineChart";
-import {Link} from "react-router-dom";
-import StockNewsTypes from "../types/StockNewsTypes";
-import WatchedStockInfoTypes from "../types/WatchedStockInfoTypes";
+import SimilarStockTypes from "../../../types/SimilarStockTypes";
+import StockDetailInfoTypes from "../../../types/StockDetailInfoTypes";
+import PriceLineChart from "../components/PriceLineChart";
+import {Link, useNavigate} from "react-router-dom";
+import StockNewsTypes from "../../../types/StockNewsTypes";
+import WatchedStockInfoTypes from "../../../types/WatchedStockInfoTypes";
 
 
 type Props = {
@@ -20,7 +20,16 @@ type Props = {
 }
 
 
-export default function HomePage({setTabValue}:Props) {
+export default function HomeTab({setTabValue}:Props) {
+    const navigate = useNavigate();
+
+
+    const navigateToRanking = () => {
+        navigate("/ranking");
+    }
+
+
+
     //투자 트랜드
     const [period, setperiod] = useState('0m');
 
@@ -102,7 +111,7 @@ export default function HomePage({setTabValue}:Props) {
                     <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'최다 조회 종목'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('2')}>
+                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={navigateToRanking}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>

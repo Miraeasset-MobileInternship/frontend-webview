@@ -1,19 +1,19 @@
 import react, {useState} from 'react';
-import TrendPieChart from "./components/TrendPieChart";
+import TrendPieChart from "../components/TrendPieChart";
 import styled from "styled-components";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import * as React from "react";
-import SimilarStockTypes from "../../types/SimilarStockTypes";
-import CardView from "./components/CardView";
+import SimilarStockTypes from "../../../types/SimilarStockTypes";
+import CardView from "../components/CardView";
 import List from "@mui/material/List";
 import {ListItem} from "@mui/material";
 import {ListItemText} from "@mui/material";
-import CompanyInfoTypes from "../../types/CompanyInfoTypes";
+import CompanyInfoTypes from "../../../types/CompanyInfoTypes";
 import {Link} from "react-router-dom";
-import StockDetailInfoTypes from "../../types/StockDetailInfoTypes";
+import StockDetailInfoTypes from "../../../types/StockDetailInfoTypes";
 
-export default function StockInfoPage() {
+export default function StockInfoTab() {
     //투자 트랜드
     const [period, setperiod] = useState('0m');
 
