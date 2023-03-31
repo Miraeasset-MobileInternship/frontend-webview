@@ -7,6 +7,8 @@ const baseUrl = "http://m-crew.iptime.org:8001/api/v2/stock-detail"
 
 
 class detailInfoService {
+
+    //카드뷰에 써있는 상단 주식정보
     getStockDetail(stockId: string) {
         return axios.get<response>(
             baseUrl + "/" + stockId, // api 주소
@@ -18,5 +20,19 @@ class detailInfoService {
             } // header 정의
         )
     }
+
+    //주식 차트
+    getChartData(range:string, stockId: string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/chart?range=" + range, // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();

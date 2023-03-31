@@ -23,6 +23,7 @@ type Props = {
 export default function HomeTab({setTabValue}:Props) {
     const navigate = useNavigate();
 
+    const [symbol,setSymbol] = useState("AAPL");
 
     const navigateToRanking = () => {
         navigate("/ranking");
@@ -65,7 +66,7 @@ export default function HomeTab({setTabValue}:Props) {
                 <div style={{height: '370px', paddingTop: 25}}>
                     <div style={{height: "100%", display: 'flex', flexDirection: 'column'}}>
                         <div style={{height:"90%"}}>
-                            <PriceLineChart period={period} />
+                            <PriceLineChart period={"1d"} symbol={symbol}/>
                         </div>
                     </div>
                 </div>

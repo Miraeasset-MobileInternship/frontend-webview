@@ -21,7 +21,7 @@ export default function ChartTab() {
     return (
         <div style={{height: "100%", display: 'flex', flexDirection: 'column', overflowY: "hidden"}}>
             <div style={{height:"90%"}}>
-                <PriceLineChart period={period} />
+                <PriceLineChart period={period} symbol={"AAPL"}/>
             </div>
             <div style={{height:"10%"}}>
                 <ToggleButtonGroup

@@ -1,16 +1,58 @@
 
 import styled, {css} from 'styled-components';
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import {LineChart,Line, Tooltip, XAxis, YAxis, ResponsiveContainer} from "recharts";
 
 import StockPriceGraphData from "../../../types/StockPriceGraphData";
+import detailInfoService from "../../../services/detailInfoService";
+import {useNavigate} from "react-router-dom";
+import Loader from "../../../components/Loader";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 interface Props {
     period : string;
+    symbol:string;
 }
 
-export default function PriceLineChart ({period}:Props){
+export default function PriceLineChart ({symbol,period}:Props){
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+    const [errorStatus, setErrorStatus] = useState(false);
+    const [stockGraphData, setStockGraphData] = useState<StockPriceGraphData|null>(null);
+
+    //stockInfo(view카드)
+    const getGraphData =
+        (stockId: string) => {
+
+            setLoading(true);
+            detailInfoService.getChartData(period,stockId)
+                .then( res => {
+
+                    setLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        //@ts-ignore
+                        setStockGraphData(res.data.result);
+                    }else{
+                        setErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getGraphData(symbol)
+    },[period]);
+
+
 
     //second로 된 날짜 형식을 날짜 형식으로 리턴
     function toDate(second : number, period:string) {
@@ -31,23 +73,70 @@ export default function PriceLineChart ({period}:Props){
 
     }
 
+
+
     return (
-        <ResponsiveContainer>
-            <LineChart data={stockGraphData.data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
-                <XAxis dataKey="time" hide={true} type="number" domain={[stockGraphData.dateInfo.minDate, stockGraphData.dateInfo.maxDate]}/>
-                <YAxis dataKey="price" type="number" domain={[stockGraphData.priceInfo.minPrice, stockGraphData.priceInfo.maxPrice]} hide={true}/>
-                <Tooltip
-                    separator={""}
-                    formatter={(value,name,props) => [value,""]}
-                    labelFormatter={label => toDate(label, period)}
+        <>
+        {loading ?
+                (
+                    <Loader/>
+                )
+                :
+                (
+                    <>
+                    {
+                        errorStatus ?
+                            (
+                                <div style={{height:'100%',display:'flex',flexDirection:'column',
+                                    alignItems:'center',justifyContent:'center', backgroundColor:'blue'}}>
+                                    <ErrorOutlineIcon color="action" sx={{textAlign:'center', fontSize: '85px', padding:2}}/>
+                                    <ErrorText>{"요청한 작업에서 에러가 발생하였습니다."}</ErrorText>
+                                </div>
+                            )
+                            :
+                                (
+                                    stockGraphData &&
+                                    <>
+                                        <ResponsiveContainer>
+                                            <LineChart data={stockGraphData?.data} margin={{top: 5, right: 10, left: 10, bottom: 5}}>
+                                                <XAxis dataKey="time" hide={true} type="number"
+                                                       domain={[stockGraphData!.dateInfo.minDate, stockGraphData!.dateInfo.maxDate]}/>
+                                                <YAxis dataKey="price" type="number"
+                                                       domain={[stockGraphData!.priceInfo.minPrice, stockGraphData!.priceInfo.maxPrice]}
+                                                       hide={true}/>
+                                                <Tooltip
+                                                    separator={""}
+                                                    formatter={(value, name, props) => [value, ""]}
+                                                    labelFormatter={label => toDate(label, period)}
+                                                />
+                                                <Line type="linear" dataKey="price" stroke="#8884d8" dot={false} strokeWidth={2}/>
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </>
 
-
-                />
-                <Line type="linear" dataKey="price" stroke="#8884d8" dot={false} strokeWidth={2}/>
-            </LineChart>
-        </ResponsiveContainer>
-    );
+                                )
+                        }
+                    </>
+                )
+            }
+        </>
+    )
 }
+
+
+
+const ErrorText = styled.text`
+
+
+  font-size: 16px;
+
+  color: #A3A5A7;
+  text-align: center;
+  font-family: Pretendard;
+  font-weight: 400;
+  
+`;
+
 
 
 const stockGraphData: StockPriceGraphData = {
