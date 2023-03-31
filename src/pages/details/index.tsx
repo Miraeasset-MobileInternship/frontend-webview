@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MarketStatusBox from "./components/MarketStatusBox";
 import TypeTagBox from "./components/TypeTagBox";
 import MainCardView from "./components/MainCardView";
@@ -13,6 +13,8 @@ import ChartTab from "./tabs/ChartTab";
 import NewsTab from "./tabs/NewsTab";
 import CompanyInfoTab from "./tabs/CompanyInfoTab";
 import StockInfoTab from "./tabs/StockInfoTab";
+import detailInfoService from "../../services/detailInfoService";
+import {useNavigate} from "react-router-dom";
 
 
 const sections: sectionType[] = [
@@ -30,9 +32,13 @@ type sectionType = {
 
 
 export default function DetailPage() {
+    const navigate = useNavigate();
 
+    const [symbol, setSymbol] = useState("AAPL");
     //Tab
     const [value, setValue] = React.useState('0');
+
+    const [stockInfo, setStockInfo] = useState<StockDetailInfo|null>();
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
@@ -48,22 +54,52 @@ export default function DetailPage() {
     }
 
 
-    // @ts-ignore
+    //stockInfo(view카드)
+    const getStockInfo =
+        (stockId: string) => {
+
+                detailInfoService.getStockDetail(stockId)
+                        .then( res => {
+
+                            console.log(res.data.status.status);
+
+                            if(res.data.status.status === "E000"){
+                                // @ts-ignore
+                                setStockInfo(res.data.result);
+                            }else{
+                                navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                            }
+
+                        })
+                        .catch(reason => {
+                           console.log(reason);
+                            navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                        });
+            };
+
+
+
+    useEffect(() => {
+        console.log("실");
+        console.log(symbol);
+        getStockInfo(symbol);
+    },[]);
+
     return (
         <div className="container">
             <div className="top-area">
                 <div className="stock-title">
                     {/*특정 div 내로 좁아지는 패딩을 넣고 싶을 땐 내부 div를 만들어서 넣어야함*/}
-                    <TitleText>{stockInfo.stockTitle}</TitleText>
-                    <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
+                    <TitleText>{stockInfo?.stockTitle}</TitleText>
+                    <MarketStatusBox isOpen={stockInfo?.tagInfo.open}></MarketStatusBox>
                     <div style={{backgroundColor: "red", paddingTop:3}}>
-                        <TypeTagBox text={stockInfo.tagInfo.type}/>
-                        <TypeTagBox text={stockInfo.tagInfo.market}/>
+                        <TypeTagBox text={stockInfo?.tagInfo.type}/>
+                        <TypeTagBox text={stockInfo?.tagInfo.market}/>
                     </div>
                 </div>
                 {/*카드 뷰를 둘러싼 padding*/}
                 <div className="card-view">
-                    <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"}/>
+                    <MainCardView price={stockInfo?.price} changePrice={stockInfo?.changePrice} changePercent={stockInfo?.changePercent} currency={"미소"}/>
                 </div>
             </div>
             <div className="main-area">
@@ -115,19 +151,19 @@ export default function DetailPage() {
 
 
 
-const stockInfo: StockDetailInfo= {
-    symbol:"AAPL",
-    stockTitle: "Apple Inc.",
-    price: 126.37, //가격
-    changePrice: 5.20, //변동가격
-    changePercent: 0.1, //변동 퍼센트
-    tagInfo: {
-        type: "EQUITY",
-        market: "Nasdaq",
-        customPriceConfidence: "HIGH",
-        open: false,
-    },
-};
+// const stockInfo: StockDetailInfo= {
+//     symbol:"AAPL",
+//     stockTitle: "Apple Inc.",
+//     price: 126.37, //가격
+//     changePrice: 5.20, //변동가격
+//     changePercent: 0.1, //변동 퍼센트
+//     tagInfo: {
+//         type: "EQUITY",
+//         market: "Nasdaq",
+//         customPriceConfidence: "HIGH",
+//         open: false,
+//     },
+// };
 
 
 const ViewCard = styled.div`

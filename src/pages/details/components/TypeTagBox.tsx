@@ -5,7 +5,7 @@ import {useEffect} from "react";
 
 
 interface Props {
-    text : string;
+    text? : string;
 }
 
 
