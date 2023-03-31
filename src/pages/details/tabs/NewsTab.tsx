@@ -6,7 +6,12 @@ import Divider from '@mui/material/Divider';
 
 
 import StockNewsTypes from "../../../types/StockNewsTypes";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import CompanyInfoTypes from "../../../types/CompanyInfoTypes";
+import detailInfoService from "../../../services/detailInfoService";
+import Loader from "../../../components/Loader";
+import ErrorView from "../components/ErrorView";
 
 const style = {
     width: '100%',
@@ -14,20 +19,87 @@ const style = {
     bgcolor: 'background.paper',
 };
 
-export default function NewsTab() {
+
+interface Props {
+    symbol:string;
+}
+
+export default function NewsTab({symbol}:Props) {
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+    const [errorStatus, setErrorStatus] = useState(false);
+    const [newsList, setNewsList] = useState<StockNewsTypes|null>(null);
+
+    //stockInfo(view카드)
+    const getNewsList =
+        (stockId: string) => {
+
+            setLoading(true);
+            // 이 페이지에서는 all로 간다
+            detailInfoService.getStockNews(stockId,"all")
+                .then( res => {
+
+                    setLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setNewsList(res.data.result);
+                    }else{
+                        setErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getNewsList(symbol)
+    },[]);
+
+
+
+
     return (
         <>
-            <List sx={style} component="nav" aria-label="mailbox folders">
-                {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
-                    <div>
-                        <ListItem button>
-                            <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
-                                <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
-                            </Link>
-                        </ListItem>
-                    </div>
-                ))}
-            </List>
+        {
+            loading ?
+                (
+                    <Loader/>
+                )
+                :
+                (
+                    <>
+                    {
+                       errorStatus ?
+                           (
+                               <ErrorView/>
+                           )
+                           :
+                               (
+                                   newsList &&
+                                   <>
+                                   <List sx={style} component="nav" aria-label="mailbox folders">
+                                       {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
+                                           <div>
+                                               <ListItem button>
+                                                   <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
+                                                       <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
+                                                   </Link>
+                                               </ListItem>
+                                           </div>
+                                       ))}
+                                   </List>
+                               </>)
+                    }
+                    </>
+                )
+        }
         </>
     );
 }

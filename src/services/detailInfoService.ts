@@ -48,5 +48,19 @@ class detailInfoService {
         )
     }
 
+
+    //종목뉴스
+    getStockNews(stockId: string, num:string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/news?num="+num, // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();

@@ -38,7 +38,7 @@ export default function DetailPage() {
     const sections: sectionType[] = [
         { value: '1', component: <ChartTab/> },
         { value: '2', component: <StockInfoTab/> },
-        { value: '3', component: <NewsTab/> },
+        { value: '3', component: <NewsTab symbol={symbol}/> },
         { value: '4', component: <CompanyInfoTab symbol={symbol}/> },
     ];
 
