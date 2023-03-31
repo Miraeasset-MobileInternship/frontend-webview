@@ -15,6 +15,7 @@ import StockDetailInfoTypes from "../../../types/StockDetailInfoTypes";
 import detailInfoService from "../../../services/detailInfoService";
 import Loader from "../../../components/Loader";
 import ErrorView from "../components/ErrorView";
+import ZeroAnswerView from "../components/ZeroAnswerView";
 
 
 interface Props {
@@ -55,6 +56,35 @@ export default function StockInfoTab({symbol}:Props) {
 
 
 
+    //유사 종목 관련
+    const [similarLoading, setSimilarLoading] = useState(false);
+    const [similarErrorStatus, setSimilarErrorStatus] = useState(false);
+    const [similarStocks, setSimilarStocks] = useState<SimilarStockTypes|null>(null);
+
+    //stockInfo(view카드)
+    const getSimilarStock =
+        (stockId: string) => {
+
+            setSimilarLoading(true);
+            detailInfoService.getSimilarStock(stockId)
+                .then( res => {
+
+                    setSimilarLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setSimilarStocks(res.data.result);
+                    }else{
+                        setSimilarErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
 
 
     //투자 트랜드 관련
@@ -73,6 +103,7 @@ export default function StockInfoTab({symbol}:Props) {
     //리로드 시마다 1회만 실행
     useEffect(() => {
         getStockDetailData(symbol)
+        getSimilarStock(symbol)
     },[]);
 
 
@@ -242,14 +273,52 @@ export default function StockInfoTab({symbol}:Props) {
             </div>
             <div style={{height: '200px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
                 <div style={{height: '30px'}}>
-                    <TitleText>{similarStocks.stockTitle}{'와 유사한 종목'}</TitleText>
-                    <div style={{ overflowX: "scroll", overflowY: 'hidden', height: '170px', display: "flex",flexDirection: 'row', alignItems: "center"}}>
-                        {similarStocks.stockInfoList.map((s)=>(
-                            <div style={{paddingRight: 15}}>
-                                <CardView symbol={s.symbol} title={s.stockTitle} price={s.price} changePrice={s.changePrice} changePercent={s.changePercent}/>
-                            </div>
-                        ))}
-                    </div>
+                    <TitleText>{'유사한 종목'}</TitleText>
+
+
+                    <>
+                        {
+                            similarLoading ?
+                                (
+                                    <Loader/>
+                                )
+                                :
+                                (
+                                    <>
+                                        {
+                                            similarErrorStatus ?
+                                                (
+                                                    <ErrorView/>
+                                                )
+                                                :
+                                                (
+                                                    similarStocks &&
+                                                        <>
+                                                            {
+                                                                similarStocks.totalData === 0 ?
+                                                                    ( <ZeroAnswerView/>)
+                                                                    :
+                                                                        (
+                                                                            <>
+
+                                                                                <div style={{ overflowX: "scroll", overflowY: 'hidden', height: '170px', display: "flex",flexDirection: 'row', alignItems: "center"}}>
+                                                                                    {similarStocks.stockInfoList.map((s)=>(
+                                                                                        <div style={{paddingRight: 15}}>
+                                                                                            <CardView symbol={s.symbol} title={s.stockTitle} price={s.price} changePrice={s.changePrice} changePercent={s.changePercent}/>
+                                                                                        </div>
+                                                                                    ))}
+                                                                                </div>
+                                                                            </>
+
+                                                                        )
+                                                            }
+                                                        </>
+                                                )
+                                        }
+                                    </>
+                                )
+                        }
+                    </>
                 </div>
             </div>
         </div>

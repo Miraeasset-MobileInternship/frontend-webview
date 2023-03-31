@@ -103,5 +103,18 @@ class detailInfoService {
         )
     }
 
+
+    //유사종목
+    getSimilarStock(stockId:string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/similar", // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
 }
 export default new detailInfoService();
