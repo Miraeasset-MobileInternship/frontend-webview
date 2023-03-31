@@ -54,15 +54,10 @@ export default function StockInfoTab({symbol}:Props) {
         };
 
 
-    //리로드 시마다 1회만 실행
-    useEffect(() => {
-        getStockDetailData(symbol)
-    },[]);
 
 
 
-
-    //투자 트랜드
+    //투자 트랜드 관련
     const [period, setperiod] = useState('0m');
 
     const handleChange = (
@@ -73,6 +68,12 @@ export default function StockInfoTab({symbol}:Props) {
     };
 
 
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getStockDetailData(symbol)
+    },[]);
 
 
     return (
@@ -236,7 +237,7 @@ export default function StockInfoTab({symbol}:Props) {
                     </ToggleButtonGroup>
                 </div>
                 <div style={{height: '260px'}}>
-                    <TrendPieChart period={period}/>
+                    <TrendPieChart symbol={symbol} period={period}/>
                 </div>
             </div>
             <div style={{height: '200px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>

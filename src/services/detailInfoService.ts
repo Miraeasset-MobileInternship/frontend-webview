@@ -89,5 +89,19 @@ class detailInfoService {
         )
     }
 
+
+    //투자 트랜드 관련
+    getRecommendedTrend(stockId:string, period:string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/recommend-trend?period="+period, // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();

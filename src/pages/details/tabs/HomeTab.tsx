@@ -31,16 +31,6 @@ export default function HomeTab({setTabValue}:Props) {
 
 
 
-    //투자 트랜드
-    const [period, setperiod] = useState('0m');
-
-    const handleChange = (
-        event: React.MouseEvent<HTMLElement>,
-        newperiod: string,
-    ) => {
-        setperiod(newperiod);
-    };
-
     const showMoreView = (v:string) => {
         setTabValue(v);
     };
@@ -104,7 +94,7 @@ export default function HomeTab({setTabValue}:Props) {
                     </div>
                 </div>
                 <div style={{height: '270px'}}>
-                    <TrendPieChart period={period}/>
+                    <TrendPieChart symbol={symbol} period={"0m"}/>
                 </div>
             </div>
             <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>

@@ -1,31 +1,98 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 
 // @ts-ignore
 import {PieChart, ResponsiveContainer, Cell, Pie, PolarAngleAxis} from "recharts";
 import StockTrendTypes from "../../../types/StockTrendTypes";
+import {useNavigate} from "react-router-dom";
+import StockNewsTypes from "../../../types/StockNewsTypes";
+import detailInfoService from "../../../services/detailInfoService";
+import Loader from "../../../components/Loader";
+import ErrorView from "./ErrorView";
 
 interface Props {
+    symbol:string;
     period : string;
 }
 
-export default function TrendPieChart ({period}:Props){
+export default function TrendPieChart ({symbol, period}:Props){
+    const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
+    const [errorStatus, setErrorStatus] = useState(false);
+    const [data, setData] = useState<StockTrendTypes[]|null>(null);
+
+    //stockInfo(view카드)
+    const getRecommendTrend =
+        (stockId: string, period:string) => {
+
+            setLoading(true);
+            // 이 페이지에서는 all로 간다
+            detailInfoService.getRecommendedTrend(stockId,period)
+                .then( res => {
+
+                    setLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setData(res.data.result);
+                    }else{
+                        setErrorStatus(true);
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        getRecommendTrend(symbol,period)
+    },[period]);
 
 
     return (
-        <ResponsiveContainer>
-            <PieChart height={260}>
-                {/*dataKey: 써있는 값*/}
-                <Pie data={data} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
-                    {
-                        data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color}/>
-                        ))
-                    }
-                </Pie>
-                <PolarAngleAxis></PolarAngleAxis>
-            </PieChart>
-        </ResponsiveContainer>
+        <>
+            {
+                loading ?
+                    (
+                        <Loader/>
+                    )
+                    :
+                    (
+                        <>
+                            {
+                                errorStatus ?
+                                    (
+                                        <ErrorView/>
+                                    )
+                                    :
+                                    (
+                                        data &&
+                                            <>
+                                                <ResponsiveContainer>
+                                                    <PieChart height={260}>
+                                                        {/*dataKey: 써있는 값*/}
+                                                        <Pie data={data} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
+                                                            {
+                                                                data.map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={entry.color}/>
+                                                                ))
+                                                            }
+                                                        </Pie>
+                                                        <PolarAngleAxis></PolarAngleAxis>
+                                                    </PieChart>
+                                                </ResponsiveContainer>
+                                            </>
+                                    )
+                            }
+                        </>
+                    )
+            }
+        </>
     );
 }
 
