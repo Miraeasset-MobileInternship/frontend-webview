@@ -1,6 +1,6 @@
 import react, {useState} from 'react';
 import List from "@mui/material/List";
-import {ListItem, ListItemText} from "@mui/material";
+import {ListItem, ListItemText, ListSubheader} from "@mui/material";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import TrendPieChart from "./extraInfo/components/TrendPieChart";
@@ -12,6 +12,7 @@ import StockDetailInfoTypes from "../types/StockDetailInfoTypes";
 import PriceLineChart from "./chart/components/PriceLineChart";
 import {Link} from "react-router-dom";
 import StockNewsTypes from "../types/StockNewsTypes";
+import WatchedStockInfoTypes from "../types/WatchedStockInfoTypes";
 
 
 type Props = {
@@ -96,24 +97,87 @@ export default function HomePage({setTabValue}:Props) {
                     <TrendPieChart period={period}/>
                 </div>
             </div>
-            <div style={{height: '200px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
-                <div style={{height: '30px'}}>
-                    <TitleText>{similarStocks.stockTitle}{'와 유사한 종목'}</TitleText>
-                    <div style={{ overflowX: "scroll", overflowY: 'hidden', height: '170px', display: "flex",flexDirection: 'row', alignItems: "center"}}>
-                        {similarStocks.stockInfoList.map((s)=>(
-                            <div style={{paddingRight: 15}}>
-                                <CardView symbol={s.symbol} title={s.stockTitle} price={s.price} changePrice={s.changePrice} changePercent={s.changePercent}/>
-                            </div>
-                        ))}
+            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+                <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
+                    <div style={{justifyContent: 'flex-start', flex:6}}>
+                        <TitleText>{'최다 조회 종목'}</TitleText>
                     </div>
+                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('2')}>
+                        <DefaultText>{"더보기"}</DefaultText>
+                    </div>
+                </div>
+                <div style={{height: 'fit-content'}}>
+                    <List
+                        sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
+                    >
+                        {watchList.watchedStockInfoList.map((w)=>(
+                            <ListItem>
+                                <div style={{width: '100%', display:"flex", flexDirection:"row", alignItems: 'center'}}>
+                                    <div style={{flex:1, backgroundColor: 'red'}}>
+                                        <RankText>{w.rank}</RankText>
+                                    </div>
+                                    <div style={{flex:9, backgroundColor: 'blue'}}>
+                                        <RankTitleText>{w.stockTitle}</RankTitleText>
+                                    </div>
+                                    {w.price >= 0 ?
+                                        (
+                                            <>
+                                            <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
+                                                <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
+                                            </div>
+                                            <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
+                                                <RankPriceText style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
+                                            </div>
+                                            </>
+                                        )
+                                        :
+                                        (
+                                            <>
+                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
+                                                    <RankPriceText style={{color: "#5787DE"}}>{"-"}{w.changePrice}</RankPriceText>
+                                                </div>
+                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
+                                                    <RankPriceText style={{color: "#5787DE"}}>{w.changePercent}{"%"}</RankPriceText>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                </div>
+                            </ListItem>
+                        ))}
+                    </List>
                 </div>
             </div>
         </div>
     );
 }
 
+const RankText = styled.text`
 
+  
+    font-size: 20px;
 
+    font-family: Pretendard;
+    font-weight: 500;
+`;
+
+const RankTitleText = styled.text`
+
+  
+    font-size: 18px;
+
+    font-family: Pretendard;
+    font-weight: 400;
+`;
+
+const RankPriceText = styled.text`
+
+    text-align: right;
+    font-size: 16px;
+
+    font-family: Pretendard;
+    font-weight: 400;
+`;
 
 const TitleText = styled.text`
 
@@ -224,3 +288,53 @@ const newsList:StockNewsTypes = {
         },
     ]
 };
+
+
+
+const watchList : WatchedStockInfoTypes = {
+    "totalData": 5,
+    "watchedStockInfoList": [
+        {
+            "symbol": "NAAS",
+            "stockTitle": "NaaS Technology",
+            "price": 9.24,
+            "changePercent": 18.9,
+            "changePrice": 1.47,
+            "rank": 1
+        },
+        {
+            "symbol": "HNNMY",
+            "stockTitle": "HENNES & MAURITZ SPON ADR EACH ",
+            "price": 2.71,
+            "changePercent": 17.8,
+            "changePrice": 0.41,
+            "rank": 2
+        },
+        {
+            "symbol": "CXM",
+            "stockTitle": "Sprinklr",
+            "price": 12.79,
+            "changePercent": 17.6,
+            "changePrice": 1.91,
+            "rank": 3
+        },
+        {
+            "symbol": "FLNC",
+            "stockTitle": "Fluence Energy",
+            "price": 18.64,
+            "changePercent": 14.7,
+            "changePrice": 2.39,
+            "rank": 4
+        },
+        {
+            "symbol": "HSAI",
+            "stockTitle": "Hesai",
+            "price": 16.98,
+            "changePercent": 12.7,
+            "changePrice": 1.92,
+            "rank": 5
+        }
+    ]
+
+
+}
