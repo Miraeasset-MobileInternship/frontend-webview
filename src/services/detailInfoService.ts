@@ -62,5 +62,19 @@ class detailInfoService {
         )
     }
 
+
+    //최다 조회
+    getWatchList(count:number) {
+        return axios.get<response>(
+            baseUrl + "/watch-list?count=" +count, // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();
