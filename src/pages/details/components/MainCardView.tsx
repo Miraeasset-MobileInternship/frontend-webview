@@ -10,10 +10,10 @@ import {useNavigate} from "react-router-dom";
 
 
 interface Props {
-    price?:number;
-    changePrice?:number;
-    changePercent?:number;
-    currency?:string;
+    price:number;
+    changePrice:number;
+    changePercent:number;
+    currency:string;
 }
 
 
@@ -42,7 +42,7 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
                 <div style={{height: '30%', display:"flex", alignItems:'center',backgroundColor:'pink'}}>
                     <Typography variant="h5" component="div">
                         <MainText>{price}</MainText>
-                        {changePrice! > 0 ? (
+                        {changePrice > 0 ? (
                             <>
                                 <DefaultText style={{color: "#D06464"}}>{"+"}{changePrice}{currency}{"  "}</DefaultText>
                                 <DefaultText style={{color: "#D06464"}}>{"("}{changePercent}{"%)"}</DefaultText>

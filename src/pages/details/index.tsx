@@ -94,26 +94,35 @@ export default function DetailPage() {
     return (
         <div className="container">
             <div className="top-area">
-                    {/*특정 div 내로 좁아지는 패딩을 넣고 싶을 땐 내부 div를 만들어서 넣어야함*/}
-                    {cardLoading ? (
-                        <Loader/>
-                        ) : (
-                        <>
-                            <div className="stock-title">
-                            <TitleText>{stockInfo?.stockTitle}</TitleText>
-                            <MarketStatusBox isOpen={stockInfo?.tagInfo.open}></MarketStatusBox>
-                            <div style={{backgroundColor: "red", paddingTop:3}}>
-                                <TypeTagBox text={stockInfo?.tagInfo.type}/>
-                                <TypeTagBox text={stockInfo?.tagInfo.market}/>
-                            </div>
-                            </div>
-                        {/*카드 뷰를 둘러싼 padding*/}
-                            <div className="card-view">
-                            <MainCardView price={stockInfo?.price} changePrice={stockInfo?.changePrice} changePercent={stockInfo?.changePercent} currency={"미소"}/>
-                            </div>
-                        </>
 
-                    )}
+
+                <>
+                    {
+                        cardLoading ?
+                            (
+                                <Loader/>
+                            )
+                            :
+                            (
+                                stockInfo &&
+                                    <>
+                                        <div className="stock-title">
+                                            <TitleText>{stockInfo.stockTitle}</TitleText>
+                                            <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
+                                            <div style={{backgroundColor: "red", paddingTop:3}}>
+                                                <TypeTagBox text={stockInfo.tagInfo.type}/>
+                                                <TypeTagBox text={stockInfo.tagInfo.market}/>
+                                            </div>
+                                        </div>
+                                        {/*카드 뷰를 둘러싼 padding*/}
+                                        <div className="card-view">
+                                            <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"}/>
+                                        </div>
+                                    </>
+
+                            )
+                    }
+                </>
             </div>
             <div className="main-area">
                 <div className="tab-nav">
