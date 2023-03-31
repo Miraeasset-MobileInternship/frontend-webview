@@ -19,12 +19,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Loader from "../../components/Loader";
 
 
-const sections: sectionType[] = [
-    { value: '1', component: <ChartTab/> },
-    { value: '2', component: <StockInfoTab/> },
-    { value: '3', component: <NewsTab/> },
-    { value: '4', component: <CompanyInfoTab/> },
-];
+
 
 type sectionType = {
     value:string,
@@ -38,6 +33,16 @@ export default function DetailPage() {
 
     const [cardLoading, setCardLoading] = useState(false);
     const [symbol, setSymbol] = useState("AAPL");
+
+
+    const sections: sectionType[] = [
+        { value: '1', component: <ChartTab/> },
+        { value: '2', component: <StockInfoTab/> },
+        { value: '3', component: <NewsTab/> },
+        { value: '4', component: <CompanyInfoTab symbol={symbol}/> },
+    ];
+
+
     //Tab
     const [value, setValue] = React.useState('0');
 

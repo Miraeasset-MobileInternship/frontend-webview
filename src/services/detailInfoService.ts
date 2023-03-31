@@ -34,5 +34,19 @@ class detailInfoService {
         )
     }
 
+
+    //회사정보
+    getCompanyInfo(stockId: string) {
+        return axios.get<response>(
+            baseUrl + "/" + stockId + "/company-info", // api 주소
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            } // header 정의
+        )
+    }
+
 }
 export default new detailInfoService();

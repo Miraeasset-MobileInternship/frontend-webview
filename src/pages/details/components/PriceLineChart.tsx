@@ -9,6 +9,7 @@ import detailInfoService from "../../../services/detailInfoService";
 import {useNavigate} from "react-router-dom";
 import Loader from "../../../components/Loader";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import ErrorView from "./ErrorView";
 
 interface Props {
     period : string;
@@ -87,11 +88,7 @@ export default function PriceLineChart ({symbol,period}:Props){
                     {
                         errorStatus ?
                             (
-                                <div style={{height:'100%',display:'flex',flexDirection:'column',
-                                    alignItems:'center',justifyContent:'center', backgroundColor:'blue'}}>
-                                    <ErrorOutlineIcon color="action" sx={{textAlign:'center', fontSize: '85px', padding:2}}/>
-                                    <ErrorText>{"요청한 작업에서 에러가 발생하였습니다."}</ErrorText>
-                                </div>
+                                <ErrorView/>
                             )
                             :
                                 (
