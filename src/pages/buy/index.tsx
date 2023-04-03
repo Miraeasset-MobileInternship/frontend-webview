@@ -20,7 +20,7 @@ export default function BuyPage({symbol, studentId}:Props) {
 
     //
     const [amount,setAmount] = useState<number>(0);
-
+    const [price,setPrice] = useState<number>(0);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const handleTyping = (event:React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
         var num: number = +event.target.value;
@@ -42,6 +42,9 @@ export default function BuyPage({symbol, studentId}:Props) {
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
                         setBuyingCheck(res.data.result);
+
+                        // @ts-ignore
+                        setPrice(res.data.result.price);
                     }else{
                         //주식 가격정보를 못가져오면 그냥 에러
                         navigate("/error");
@@ -59,6 +62,49 @@ export default function BuyPage({symbol, studentId}:Props) {
     useEffect(() => {
         checkBuying(symbol,studentId);
     },[]);
+
+
+
+    //매수기능
+    const [buyLoading, setBuyLoading] = useState(false);
+    const buyingStocks =
+        () => {
+            setBuyLoading(true);
+
+
+            console.log(studentId);
+            console.log(symbol);
+            console.log(amount);
+            console.log(price);
+
+            // 이 페이지에서는 all로 간다
+            buyingStockService.buyingStock(studentId,symbol,amount,price)
+                .then( res => {
+
+                    setBuyLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        navigate("/success");
+                    }else if(res.data.status.status === "E903"){
+                        //돈이 부족해서 거래가 안되는 경우->에러 메세지에 표시
+                        setErrorMessage(res.data.status.message);
+                    }else{
+                        //다른 에러는 유저가 알필요 없는 에러(db등)
+                        console.log(res.data.status.status)
+                        console.log(res.data.status.message)
+                        console.log("backend error ")
+                        navigate("/error");
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    console.log("fronterror ")
+                    // navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
 
 
     //설명창
@@ -170,7 +216,7 @@ export default function BuyPage({symbol, studentId}:Props) {
                                 </div>
                             </div>
                             <div className="btn-area">
-                                <CustomBtn>
+                                <CustomBtn onClick={buyingStocks}>
                                     <ButtonText>{"매수하기"}</ButtonText>
                                 </CustomBtn>
                             </div>
