@@ -4,6 +4,10 @@ import styled from "styled-components";
 import {Button, Popover, TextField, Tooltip} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
+import detailInfoService from "../../services/detailInfoService";
+import buyingStockService from "../../services/buyingStockService";
+import {useNavigate} from "react-router-dom";
+import Loader from "../../components/Loader";
 
 interface Props {
     symbol:string;
@@ -12,6 +16,8 @@ interface Props {
 
 
 export default function BuyPage({symbol, studentId}:Props) {
+    const navigate = useNavigate();
+
     //
     const [amount,setAmount] = useState<number>(0);
 
@@ -20,6 +26,40 @@ export default function BuyPage({symbol, studentId}:Props) {
         var num: number = +event.target.value;
         setAmount(num);
     }
+
+    //buying check
+    const [loading, setLoading] = useState(true);
+    const [buyingCheck,setBuyingCheck] = useState<StockBuyingCheckTypes|null>(null);
+    const checkBuying =
+        (stockId: string, studentId:number) => {
+
+
+            // 이 페이지에서는 all로 간다
+            buyingStockService.checkBuying(stockId, studentId)
+                .then( res => {
+
+                    setLoading(false);
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        setBuyingCheck(res.data.result);
+                    }else{
+                        //주식 가격정보를 못가져오면 그냥 에러
+                        navigate("/error");
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+    //리로드 시마다 1회만 실행
+    useEffect(() => {
+        checkBuying(symbol,studentId);
+    },[]);
+
 
     //설명창
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -36,98 +76,108 @@ export default function BuyPage({symbol, studentId}:Props) {
 
 
 
-
-    
-
-
     return (
-        <div className="stock-container">
-            <div className="title-area">
-                <TitleText>{buyingCheck.stockTitle}</TitleText>
-            </div>
-            <div className="main-view-area">
-                <div style={{height: "50%"}}>
-                    <div style={{display:'flex', flexDirection:"column", paddingTop: 10, paddingBottom:10}}>
-                        <DefaultText>{"시장 현재가"}</DefaultText>
-                        <div style={{paddingTop:5}}>
-                            <TitleText>{buyingCheck.marketPrice}</TitleText>
-                            <DefaultText>{" "}{buyingCheck.currency}</DefaultText>
-                        </div>
-                    </div>
-                    <div style={{display:'flex', flexDirection:"column", paddingTop: 10, paddingBottom:10}}>
-                        <Typography
-                            aria-owns={open ? 'mouse-over-popover' : undefined}
-                            aria-haspopup="true"
-                            onMouseEnter={handlePopoverOpen}
-                            onMouseLeave={handlePopoverClose}
-                        >
-                            <DefaultText>{"구매 가능 가격"}</DefaultText>
-                        </Typography>
-                        <Popover
-                            id="mouse-over-popover"
-                            sx={{
-                                pointerEvents: 'none',
-                            }}
-                            open={open}
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            onClose={handlePopoverClose}
-                            disableRestoreFocus
-                        >
-                            <Typography sx={{ p: 1}}>소수점 이하만큼 수수료가 발생해요</Typography>
-                        </Popover>
-                        <div style={{paddingTop:5}}>
-                            <TitleText>{buyingCheck.price}</TitleText>
-                            <DefaultText>{" "}{buyingCheck.currency}</DefaultText>
-                        </div>
-                    </div>
-                    <div style={{height:'50%',display:"flex", flexDirection:'column',justifyContent:'center', alignItems:'center', }}>
-                        <TextField
-                            hiddenLabel
-                            id="outlined-number"
-                            type="number"
-                            placeholder="몇 개를 구매할까요?"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            onChange={handleTyping}
-                            style={{width: '100%', backgroundColor: '#FFF5F5'}}
-                            sx={{color:'red',
+        <>
+        {
+            loading ?
+                (
+                    <Loader/>
+                )
+                :
+                    (
 
-                                '& .MuiOutlinedInput-root ' :{
-                                    '& fieldset': {
-                                        border: '0px solid white',
-                                    },
-                                    '&:hover fieldset': {
-                                        border: '1px solid #FF484E',
-                                    },
-                                    '&.Mui-focused fieldset': {
-                                        border: '1px solid #FF484E',
-                                    },
-                                }
+                        buyingCheck &&
 
-                                }}
-                        />
-                        <div style={{display: 'flex', alignItems: 'flex-start', backgroundColor:'white', width:'100%'}}>
-                            <DefaultText style={{textAlign: 'left', padding:5, color: '#FF484E'}}>{errorMessage}</DefaultText>
+                        <div className="stock-container">
+                            <div className="title-area">
+                                <TitleText>{buyingCheck.stockTitle}</TitleText>
+                            </div>
+                            <div className="main-view-area">
+                                <div style={{height: "50%"}}>
+                                    <div style={{display:'flex', flexDirection:"column", paddingTop: 10, paddingBottom:10}}>
+                                        <DefaultText>{"시장 현재가"}</DefaultText>
+                                        <div style={{paddingTop:5}}>
+                                            <TitleText>{buyingCheck.marketPrice}</TitleText>
+                                            <DefaultText>{" "}{buyingCheck.currency}</DefaultText>
+                                        </div>
+                                    </div>
+                                    <div style={{display:'flex', flexDirection:"column", paddingTop: 10, paddingBottom:10}}>
+                                        <Typography
+                                            aria-owns={open ? 'mouse-over-popover' : undefined}
+                                            aria-haspopup="true"
+                                            onMouseEnter={handlePopoverOpen}
+                                            onMouseLeave={handlePopoverClose}
+                                        >
+                                            <DefaultText>{"구매 가능 가격"}</DefaultText>
+                                        </Typography>
+                                        <Popover
+                                            id="mouse-over-popover"
+                                            sx={{
+                                                pointerEvents: 'none',
+                                            }}
+                                            open={open}
+                                            anchorEl={anchorEl}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'left',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'left',
+                                            }}
+                                            onClose={handlePopoverClose}
+                                            disableRestoreFocus
+                                        >
+                                            <Typography sx={{ p: 1}}>소수점 이하만큼 수수료가 발생해요</Typography>
+                                        </Popover>
+                                        <div style={{paddingTop:5}}>
+                                            <TitleText>{buyingCheck.price}</TitleText>
+                                            <DefaultText>{" "}{buyingCheck.currency}</DefaultText>
+                                        </div>
+                                    </div>
+                                    <div style={{height:'50%',display:"flex", flexDirection:'column',justifyContent:'center', alignItems:'center', }}>
+                                        <TextField
+                                            hiddenLabel
+                                            id="outlined-number"
+                                            type="number"
+                                            placeholder="몇 개를 구매할까요?"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={handleTyping}
+                                            style={{width: '100%', backgroundColor: '#FFF5F5'}}
+                                            sx={{color:'red',
+
+                                                '& .MuiOutlinedInput-root ' :{
+                                                    '& fieldset': {
+                                                        border: '0px solid white',
+                                                    },
+                                                    '&:hover fieldset': {
+                                                        border: '1px solid #FF484E',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        border: '1px solid #FF484E',
+                                                    },
+                                                }
+
+                                            }}
+                                        />
+                                        <div style={{display: 'flex', alignItems: 'flex-start', backgroundColor:'white', width:'100%'}}>
+                                            <DefaultText style={{textAlign: 'left', padding:5, color: '#FF484E'}}>{errorMessage}</DefaultText>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div className="btn-area">
+                                <CustomBtn>
+                                    <ButtonText>{"매수하기"}</ButtonText>
+                                </CustomBtn>
+                            </div>
                         </div>
-                    </div>
-
-                </div>
-            </div>
-            <div className="btn-area">
-                <CustomBtn>
-                    <ButtonText>{"매수하기"}</ButtonText>
-                </CustomBtn>
-            </div>
-        </div>
+                    )
+        }
+        </>
     );
 }
 
