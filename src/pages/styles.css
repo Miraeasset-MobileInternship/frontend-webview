@@ -177,3 +177,49 @@
     /*background-color: #61dafb;*/
 
 }
+
+
+/*매수, 매도용 style*/
+
+.stock-container{
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.title-area{
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+
+}
+
+.main-view-area{
+    height: 75%;
+
+
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+
+    /*background-color: olive;*/
+}
+
+.btn-area{
+    height: 15%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+    padding-left:15px;
+    padding-right:15px;
+
+
+    /*background-color: aquamarine;*/
+}

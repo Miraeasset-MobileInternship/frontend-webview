@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
+// import './App.css';
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 
 
@@ -21,7 +21,7 @@ function App() {
         <Route path="/" element={<DetailPage/>}/>
         <Route path="/ranking" element={<RankPage/>}/>
         <Route path="/error" element={<ErrorPage/>}/>
-        <Route path="/buy" element={<BuyPage/>}/>
+        <Route path="/buy" element={<BuyPage symbol={"AAPL"} studentId={10}/>}/>
         <Route path="/sell" element={<SellPage/>}/>
       </Routes>
   );

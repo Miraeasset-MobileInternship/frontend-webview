@@ -38,141 +38,141 @@
 /*}*/
 
 
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+/*@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");*/
 
-.container {
-  display: grid;
-  grid-template-areas:
-            "top-area"
-            "none"
-            "main-area";
-
-
-  justify-content: center;
-  align-items: center;
+/*.container {*/
+/*  display: grid;*/
+/*  grid-template-areas:*/
+/*            "top-area"*/
+/*            "none"*/
+/*            "main-area";*/
 
 
-  height: 100vh;
-  max-width: 100vw;
-  /*background-color: red;*/
-
-}
-
-.top-area {
-  grid-area: top-area;
-
-  grid-template-areas:
-            "stock-title"
-            "card-view";
-
-  /*차지하는 공간*/
-  height: 25vh;
-  width: 100vw;
+/*  justify-content: center;*/
+/*  align-items: center;*/
 
 
-  /*background-color: #61dafb;*/
-}
+/*  height: 100vh;*/
+/*  max-width: 100vw;*/
+/*  !*background-color: red;*!*/
 
-.stock-title {
-  grid-area: stock-title;
+/*}*/
 
-  /*차지하는 공간*/
-  flex-direction: row;
-  flex-wrap: wrap;
+/*.top-area {*/
+/*  grid-area: top-area;*/
 
-  height: 35%;
+/*  grid-template-areas:*/
+/*            "stock-title"*/
+/*            "card-view";*/
 
-  /*앞부분 부터 시작*/
-  justify-content: flex-start;
-  align-items: center;
-
-  /*background-color: aliceblue;*/
-
-  box-sizing: border-box;
-  padding-left:15px;
-  padding-right:15px;
-  padding-top:8px;
-  padding-bottom:8px;
-
-}
-
-.card-view {
-
-  grid-area: card-view;
-
-  /*차지하는 공간*/
-  height: 65%;
-  /*width: 100vw;*/
-
-  /*패딩이 (외부가 아닌)내부로 사이즈 조절되도록! */
-  box-sizing: border-box;
-  padding-left:15px;
-  padding-right:15px;
-  padding-top:8px;
-  padding-bottom:8px;
-
-  justify-content: center;
-  align-items: center;
-
-  /*background-color: olive;*/
-
-}
+/*  !*차지하는 공간*!*/
+/*  height: 25vh;*/
+/*  width: 100vw;*/
 
 
-.main-area {
-  grid-area: main-area;
+/*  background-color: #61dafb;*/
+/*}*/
 
-  /*차지하는 공간 */
-  height: 75vh;
-  width: 100vw;
+/*.stock-title {*/
+/*  grid-area: stock-title;*/
 
-  display: grid;
-  grid-template-areas:
-            "tab-nav"
-            "scroll-view-area"
-;
+/*  !*차지하는 공간*!*/
+/*  flex-direction: row;*/
+/*  flex-wrap: wrap;*/
 
-  box-sizing: border-box;
-  padding-left:15px;
-  padding-right:15px;
-  padding-top:8px;
-  padding-bottom:8px;
+/*  height: 35%;*/
+
+/*  !*앞부분 부터 시작*!*/
+/*  justify-content: flex-start;*/
+/*  align-items: center;*/
+
+/*  background-color: aliceblue;*/
+
+/*  box-sizing: border-box;*/
+/*  padding-left:15px;*/
+/*  padding-right:15px;*/
+/*  padding-top:8px;*/
+/*  padding-bottom:8px;*/
+
+/*}*/
+
+/*.card-view {*/
+
+/*  grid-area: card-view;*/
+
+/*  !*차지하는 공간*!*/
+/*  height: 65%;*/
+/*  !*width: 100vw;*!*/
+
+/*  !*패딩이 (외부가 아닌)내부로 사이즈 조절되도록! *!*/
+/*  box-sizing: border-box;*/
+/*  padding-left:15px;*/
+/*  padding-right:15px;*/
+/*  padding-top:8px;*/
+/*  padding-bottom:8px;*/
+
+/*  justify-content: center;*/
+/*  align-items: center;*/
+
+/*  background-color: olive;*/
+
+/*}*/
 
 
-  /*background-color: aquamarine;*/
+/*.main-area {*/
+/*  grid-area: main-area;*/
 
-  /* tab nav랑 main쪽 div맞추는 용도 */
-  display: flex;
-  flex-direction: column;
-}
+/*  !*차지하는 공간 *!*/
+/*  height: 75vh;*/
+/*  width: 100vw;*/
 
+/*  display: grid;*/
+/*  grid-template-areas:*/
+/*            "tab-nav"*/
+/*            "scroll-view-area"*/
+/*;*/
 
-.tab-nav {
-  grid-area: tab-nav;
-
-  /*flex:1.3;*/
-
-  /*height : 는 내부에 들어간 tab bar 길이에 딱맞게 */
-  height: fit-content;
-
-  /*tab nav 내에서 스크롤이 가능하도록*/
-  overflow-x: scroll;
-  /* y축 스크롤은 불가능 -> height딱맞게*/
-  /*overflow-y: hidden;*/
+/*  box-sizing: border-box;*/
+/*  padding-left:15px;*/
+/*  padding-right:15px;*/
+/*  padding-top:8px;*/
+/*  padding-bottom:8px;*/
 
 
-  /*background-color: antiquewhite;*/
-}
+/*  !*background-color: aquamarine;*!*/
+
+/*  !* tab nav랑 main쪽 div맞추는 용도 *!*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
 
 
-.scroll-view-area {
+/*.tab-nav {*/
+/*  grid-area: tab-nav;*/
 
-  grid-area: scroll-view-area;
-  /* tab nav랑 main쪽 div맞추는 용도 */
-  flex: 10;
-  height: 100%;
+/*  !*flex:1.3;*!*/
 
-  overflow-y: scroll;
-  /*background-color: #61dafb;*/
+/*  !*height : 는 내부에 들어간 tab bar 길이에 딱맞게 *!*/
+/*  height: fit-content;*/
 
-}
+/*  !*tab nav 내에서 스크롤이 가능하도록*!*/
+/*  overflow-x: scroll;*/
+/*  !* y축 스크롤은 불가능 -> height딱맞게*!*/
+/*  !*overflow-y: hidden;*!*/
+
+
+/*  background-color: antiquewhite;*/
+/*}*/
+
+
+/*.scroll-view-area {*/
+
+/*  grid-area: scroll-view-area;*/
+/*  !* tab nav랑 main쪽 div맞추는 용도 *!*/
+/*  flex: 10;*/
+/*  height: 100%;*/
+
+/*  overflow-y: scroll;*/
+/*  background-color: #61dafb;*/
+
+/*}*/
