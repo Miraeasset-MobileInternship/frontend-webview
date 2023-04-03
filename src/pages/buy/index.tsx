@@ -3,7 +3,7 @@ import StockBuyingCheckTypes from "../../types/StockBuyingCheckTypes";
 import styled from "styled-components";
 import {Button, Popover, TextField, Tooltip} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 interface Props {
     symbol:string;
@@ -13,8 +13,13 @@ interface Props {
 
 export default function BuyPage({symbol, studentId}:Props) {
     //
-    const [amount,setAmount] = useState(0);
+    const [amount,setAmount] = useState<number>(0);
 
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const handleTyping = (event:React.ChangeEvent<HTMLTextAreaElement|HTMLInputElement>) => {
+        var num: number = +event.target.value;
+        setAmount(num);
+    }
 
     //설명창
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -28,6 +33,12 @@ export default function BuyPage({symbol, studentId}:Props) {
     };
 
     const open = Boolean(anchorEl);
+
+
+
+
+    
+
 
     return (
         <div className="stock-container">
@@ -86,6 +97,7 @@ export default function BuyPage({symbol, studentId}:Props) {
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            onChange={handleTyping}
                             style={{width: '100%', backgroundColor: '#FFF5F5'}}
                             sx={{color:'red',
 
@@ -104,7 +116,7 @@ export default function BuyPage({symbol, studentId}:Props) {
                                 }}
                         />
                         <div style={{display: 'flex', alignItems: 'flex-start', backgroundColor:'white', width:'100%'}}>
-                            <DefaultText style={{textAlign: 'left', padding:5, color: '#FF484E'}}>{"에러"}</DefaultText>
+                            <DefaultText style={{textAlign: 'left', padding:5, color: '#FF484E'}}>{errorMessage}</DefaultText>
                         </div>
                     </div>
 
