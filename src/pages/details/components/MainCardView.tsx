@@ -7,6 +7,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import StockSellingCheckTypes from "../../../types/StockSellingCheckTypes";
+import sellingStockService from "../../../services/sellingStockService";
 
 
 interface Props {
@@ -14,10 +17,11 @@ interface Props {
     changePrice:number;
     changePercent:number;
     currency:string;
+    sellAvailable:boolean;
 }
 
 
-export default function MainCardView({currency,price,changePrice,changePercent}:Props) {
+export default function MainCardView({currency,price,changePrice,changePercent,sellAvailable}:Props) {
     const navigate = useNavigate();
 
 
@@ -28,8 +32,6 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
     const navigateToSell = () => {
         navigate("/sell");
     }
-
-
 
 
 
@@ -64,9 +66,19 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
                         <ButtonText style={{color: "#D06464"}}>{"매수하기"}</ButtonText>
                     </CustomBtn>
                     <div style={{padding:5}}/>
-                    <CustomBtn style={{backgroundColor: "#EEF2FC"}} onClick={navigateToSell}>
-                        <ButtonText style={{color: "#5787DE"}}>{"매도하기"}</ButtonText>
-                    </CustomBtn>
+                    {sellAvailable ?
+                        (
+                            <CustomBtn style={{backgroundColor: "#EEF2FC"}} onClick={navigateToSell}>
+                                <ButtonText style={{color: "#5787DE"}}>{"매도하기"}</ButtonText>
+                            </CustomBtn>
+                        )
+                        :
+                            (
+                                <CustomBtn style={{backgroundColor: "#999999"}} >
+                                    <ButtonText style={{color: "#FFFFFF"}}>{"매도하기"}</ButtonText>
+                                </CustomBtn>
+                            )
+                    }
                 </div>
             </CardContent>
         </Card>

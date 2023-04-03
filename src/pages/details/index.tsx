@@ -17,6 +17,7 @@ import detailInfoService from "../../services/detailInfoService";
 import {useNavigate} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import Loader from "../../components/Loader";
+import sellingStockService from "../../services/sellingStockService";
 
 
 
@@ -31,7 +32,8 @@ type sectionType = {
 export default function DetailPage() {
     const navigate = useNavigate();
 
-    const [cardLoading, setCardLoading] = useState(false);
+    const [cardLoading, setCardLoading] = useState(true);
+    const [sellLoading, setSellLoading] = useState(true);
     const [symbol, setSymbol] = useState("AAPL");
 
 
@@ -56,7 +58,6 @@ export default function DetailPage() {
 
     const setTabValue = (index:string): void => {
 
-        console.log("click");
         setValue(index);
         console.log(value);
     }
@@ -65,12 +66,11 @@ export default function DetailPage() {
     //stockInfo(view카드)
     const getStockInfo =
         (stockId: string) => {
-
-                setCardLoading(true);
+                setCardLoading(true)
                 detailInfoService.getStockDetail(stockId)
                         .then( res => {
 
-                            setCardLoading(false);
+                            setCardLoading(false)
                             if(res.data.status.status === "E000"){
                                 // @ts-ignore
                                 setStockInfo(res.data.result);
@@ -86,19 +86,50 @@ export default function DetailPage() {
             };
 
 
+
+    const [sellAvailable, setSellAvailable] = useState(false);
+    const checkSelling =
+        (stockId: string, studentId:number) => {
+
+            setSellLoading(true)
+            // 이 페이지에서는 all로 간다
+            sellingStockService.checkSelling(stockId, studentId)
+                .then( res => {
+
+
+                    setSellLoading(false);
+                    if(res.data.status.status === "E000"){
+                        setSellAvailable(true);
+                    }else if(res.data.status.status === "E901"){
+                        //보유하지 않은 종목을 판매하려고 하는 경우 -> 버튼 disable해야할듯
+                        setSellAvailable(false);
+                    }
+                    else{
+                        //주식 가격정보를 못가져오면 그냥 에러
+                        navigate("/error");
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
+
+
+
     //리로드 시마다 1회만 실행
     useEffect(() => {
         getStockInfo(symbol);
+        checkSelling(symbol, 10);
     },[]);
 
     return (
         <div className="container">
             <div className="top-area">
-
-
                 <>
                     {
-                        cardLoading ?
+                        cardLoading&&sellLoading ?
                             (
                                 <Loader/>
                             )
@@ -116,7 +147,7 @@ export default function DetailPage() {
                                         </div>
                                         {/*카드 뷰를 둘러싼 padding*/}
                                         <div className="card-view">
-                                            <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"}/>
+                                            <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"} sellAvailable={sellAvailable}/>
                                         </div>
                                     </>
 
