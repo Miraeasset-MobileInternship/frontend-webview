@@ -145,7 +145,7 @@ export default function BuyPage({symbol, studentId}:Props) {
                                                 shrink: true,
                                             }}
                                             onChange={handleTyping}
-                                            style={{width: '100%', backgroundColor: '#FFF5F5'}}
+                                            style={{width: '100%', backgroundColor: '#FFF5F5', borderRadius: 12}}
                                             sx={{color:'red',
 
                                                 '& .MuiOutlinedInput-root ' :{
