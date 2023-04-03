@@ -50,7 +50,11 @@ export default function SellPage({symbol, studentId}:Props) {
                         setPrice(res.data.result.price);
                         // @ts-ignore
                         setErrorMessage("판매 가능한 최대 수량은 "+res.data.result.availableAmount +"개 입니다.")
-                    }else{
+                    }else if(res.data.status.status === "E901"){
+                        //보유하지 않은 종목을 판매하려고 하는 경우 -> 버튼 disable해야할듯
+                        navigate("/error");
+                    }
+                    else{
                         //주식 가격정보를 못가져오면 그냥 에러
                         navigate("/error");
                     }
@@ -67,6 +71,49 @@ export default function SellPage({symbol, studentId}:Props) {
     useEffect(() => {
         checkSelling(symbol,studentId);
     },[]);
+
+
+
+
+    //매도기능
+    const [sellLoading, setSellLoading] = useState(false);
+    const sellingStocks =
+        () => {
+            setSellLoading(true);
+
+
+            console.log(studentId);
+            console.log(symbol);
+            console.log(amount);
+            console.log(price);
+
+            // 이 페이지에서는 all로 간다
+            sellingStockService.sellingStock(studentId,symbol,amount,price)
+                .then( res => {
+
+                    setSellLoading(false);
+
+                    if(res.data.status.status === "E000"){
+                        // @ts-ignore
+                        navigate("/success");
+                    }else if(res.data.status.status === "E902"){
+                        //보유 수량보다 더 많이 판매하려고 하는 경우 막기
+                        setErrorMessage(res.data.status.message);
+                    }else{
+                        //다른 에러는 유저가 알필요 없는 에러(db등)
+                        console.log(res.data.status.status)
+                        console.log(res.data.status.message)
+                        console.log("backend error ")
+                        navigate("/error");
+                    }
+
+                })
+                .catch(reason => {
+                    console.log(reason);
+                    console.log("fronterror ")
+                    // navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                });
+        };
 
 
 
