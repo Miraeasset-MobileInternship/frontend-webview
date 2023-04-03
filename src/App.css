@@ -54,7 +54,7 @@
 
   height: 100vh;
   max-width: 100vw;
-  background-color: red;
+  /*background-color: red;*/
 
 }
 
@@ -70,7 +70,7 @@
   width: 100vw;
 
 
-  background-color: #61dafb;
+  /*background-color: #61dafb;*/
 }
 
 .stock-title {
@@ -86,7 +86,7 @@
   justify-content: flex-start;
   align-items: center;
 
-  background-color: aliceblue;
+  /*background-color: aliceblue;*/
 
   box-sizing: border-box;
   padding-left:15px;
@@ -114,7 +114,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: olive;
+  /*background-color: olive;*/
 
 }
 
@@ -139,7 +139,7 @@
   padding-bottom:8px;
 
 
-  background-color: aquamarine;
+  /*background-color: aquamarine;*/
 
   /* tab nav랑 main쪽 div맞추는 용도 */
   display: flex;
@@ -161,7 +161,7 @@
   /*overflow-y: hidden;*/
 
 
-  background-color: antiquewhite;
+  /*background-color: antiquewhite;*/
 }
 
 
@@ -173,6 +173,6 @@
   height: 100%;
 
   overflow-y: scroll;
-  background-color: #61dafb;
+  /*background-color: #61dafb;*/
 
 }

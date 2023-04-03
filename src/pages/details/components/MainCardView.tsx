@@ -34,13 +34,13 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
 
 
     return (
-        <Card sx={{ minWidth: 150, height:'100%'}} style={{boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
-            <CardContent sx={{height:'100%', padding:0.5}}>
-                <div style={{height: '15%', backgroundColor:'red', padding: 1, display:"flex", alignItems:'center'}}>
-                    <TitleText>{"오늘 주가"}</TitleText>
+        <Card sx={{ minWidth: 150, height:'100%'}} style={{boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12}}>
+            <CardContent sx={{height:'100%', padding:0.5, }}>
+                <div style={{height: '15%', padding: 1, display:"flex", alignItems:'center'}}>
+                    <TitleText style={{paddingLeft:7}}>{"오늘 주가"}</TitleText>
                 </div>
-                <div style={{height: '30%', display:"flex", alignItems:'center',backgroundColor:'pink'}}>
-                    <Typography variant="h5" component="div">
+                <div style={{height: '30%', display:"flex", alignItems:'center',}}>
+                    <Typography variant="h5" component="div" style={{paddingLeft:7}}>
                         <MainText>{price}</MainText>
                         {changePrice > 0 ? (
                             <>
@@ -59,7 +59,7 @@ export default function MainCardView({currency,price,changePrice,changePercent}:
                     </Typography>
                 </div>
                 <div style={{display: "flex", flexDirection: 'row',
-                    padding:7, backgroundColor:'blue', height: '35%'}}>
+                    padding:7, height: '35%'}}>
                     <CustomBtn style={{backgroundColor: "#FEF8F8"}} onClick={navigateToBuy}>
                         <ButtonText style={{color: "#D06464"}}>{"매수하기"}</ButtonText>
                     </CustomBtn>

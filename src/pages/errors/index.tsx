@@ -6,7 +6,7 @@ export default function ErrorPage() {
 
     return (
         <div style={{height:'100vh',display:'flex',flexDirection:'column',
-            alignItems:'center',justifyContent:'center', backgroundColor:'red'}}>
+            alignItems:'center',justifyContent:'center',}}>
             <ErrorOutlineIcon color="action" sx={{textAlign:'center', fontSize: '100px', padding:2}}/>
             <TitleText>{"요청한 작업에서 에러가 발생하였습니다."}</TitleText>
         </div>

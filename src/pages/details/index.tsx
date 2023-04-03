@@ -109,7 +109,7 @@ export default function DetailPage() {
                                         <div className="stock-title">
                                             <TitleText>{stockInfo.stockTitle}</TitleText>
                                             <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
-                                            <div style={{backgroundColor: "red", paddingTop:3}}>
+                                            <div style={{ paddingTop:3}}>
                                                 <TypeTagBox text={stockInfo.tagInfo.type}/>
                                                 <TypeTagBox text={stockInfo.tagInfo.market}/>
                                             </div>

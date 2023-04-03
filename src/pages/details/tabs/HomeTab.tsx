@@ -123,12 +123,12 @@ export default function HomeTab({setTabValue}:Props) {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: '400px', paddingTop: 20, paddingBottom: 60, backgroundColor: 'green'}}>
+            <div style={{height: '400px', paddingTop: 20, paddingBottom: 60,}}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'오늘 시세'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('1')}>
+                    <div style={{textAlign:'right', flex:1, }} onClick={() => showMoreView('1')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -140,12 +140,12 @@ export default function HomeTab({setTabValue}:Props) {
                     </div>
                 </div>
                 </div>
-            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 60, backgroundColor: 'blue'}}>
+            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 60, }}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'종목 뉴스'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('3')}>
+                    <div style={{textAlign:'right', flex:1, }} onClick={() => showMoreView('3')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -199,12 +199,12 @@ export default function HomeTab({setTabValue}:Props) {
                 </>
 
             </div>
-            <div style={{height: '300px', paddingTop: 5, paddingBottom: 50, backgroundColor: 'blue'}}>
+            <div style={{height: '300px', paddingTop: 5, paddingBottom: 50, }}>
                 <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'이달의 트랜드'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={() => showMoreView('2')}>
+                    <div style={{textAlign:'right', flex:1, }} onClick={() => showMoreView('2')}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -212,12 +212,12 @@ export default function HomeTab({setTabValue}:Props) {
                     <TrendPieChart symbol={symbol} period={"0m"}/>
                 </div>
             </div>
-            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+            <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, }}>
                 <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
                         <TitleText>{'최다 조회 종목'}</TitleText>
                     </div>
-                    <div style={{textAlign:'right', flex:1, backgroundColor:'red'}} onClick={navigateToRanking}>
+                    <div style={{textAlign:'right', flex:1, }} onClick={navigateToRanking}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
@@ -257,19 +257,19 @@ export default function HomeTab({setTabValue}:Props) {
                                                                         {watchList.watchedStockInfoList.map((w)=>(
                                                                             <ListItem>
                                                                                 <div style={{width: '100%', display:"flex", flexDirection:"row", alignItems: 'center'}}>
-                                                                                    <div style={{flex:1, backgroundColor: 'red'}}>
+                                                                                    <div style={{flex:1, }}>
                                                                                         <RankText>{w.rank}</RankText>
                                                                                     </div>
-                                                                                    <div style={{flex:9, backgroundColor: 'blue'}}>
+                                                                                    <div style={{flex:9, }}>
                                                                                         <RankTitleText>{w.stockTitle}</RankTitleText>
                                                                                     </div>
                                                                                     {w.price >= 0 ?
                                                                                         (
                                                                                             <>
-                                                                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
+                                                                                                <div style={{flex:3, textAlign:'right',}}>
                                                                                                     <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
                                                                                                 </div>
-                                                                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
+                                                                                                <div style={{flex:3, textAlign:'right',}}>
                                                                                                     <RankPriceText style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
                                                                                                 </div>
                                                                                             </>
@@ -277,10 +277,10 @@ export default function HomeTab({setTabValue}:Props) {
                                                                                         :
                                                                                         (
                                                                                             <>
-                                                                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'green'}}>
+                                                                                                <div style={{flex:3, textAlign:'right',}}>
                                                                                                     <RankPriceText style={{color: "#5787DE"}}>{"-"}{w.changePrice}</RankPriceText>
                                                                                                 </div>
-                                                                                                <div style={{flex:3, textAlign:'right',backgroundColor: 'purple'}}>
+                                                                                                <div style={{flex:3, textAlign:'right',}}>
                                                                                                     <RankPriceText style={{color: "#5787DE"}}>{w.changePercent}{"%"}</RankPriceText>
                                                                                                 </div>
                                                                                             </>

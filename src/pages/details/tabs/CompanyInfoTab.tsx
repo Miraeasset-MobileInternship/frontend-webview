@@ -80,11 +80,11 @@ export default function CompanyInfoTab({symbol}:Props) {
                                     companyInfo &&
                                         <>
                                             <div style={{height: '100%', overflowY : "scroll"}}>
-                                                <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+                                                <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, }}>
                                                     <div style={{height: '30px',}}>
                                                         <TitleText>{'기업 정보'}</TitleText>
                                                     </div>
-                                                    <div style={{padding: 10 ,backgroundColor: 'pink'}}>
+                                                    <div style={{padding: 10 ,}}>
                                                         <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
                                                             <ListItem
                                                                 key={companyInfo.address}
@@ -92,7 +92,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.address} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"Address"}/>
                                                             </ListItem>
@@ -102,7 +102,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.country} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"Country"}/>
                                                             </ListItem>
@@ -112,7 +112,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.phoneNumber} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"Contact"}/>
                                                             </ListItem>
@@ -122,7 +122,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.industry} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"Industry"}/>
                                                             </ListItem>
@@ -132,7 +132,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.sector} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"Sector"}/>
                                                             </ListItem>
@@ -142,7 +142,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.ceo} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content',}}
                                                             >
                                                                 <ListItemText secondary={"CEO"}/>
                                                             </ListItem>
@@ -152,7 +152,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                 secondaryAction={
                                                                     <ListItemText primary={companyInfo.employees} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content', }}
                                                             >
                                                                 <ListItemText secondary={"The number of Employees"}/>
                                                             </ListItem>
@@ -164,7 +164,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                                                         <ListItemText primary={companyInfo.website} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     </Link>
                                                                 }
-                                                                style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                style={{height: 'fit-content',}}
                                                             >
                                                                 <ListItemText secondary={"Website"}/>
                                                             </ListItem>

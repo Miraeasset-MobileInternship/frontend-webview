@@ -13,6 +13,6 @@ export default interface ResponseTypes {
         message:string;
     };
 
-    result: CompanyInfoTypes|SimilarStockTypes|StockDetailInfoTypes|StockDetailTypes|StockNewsTypes|StockTrendTypes|WatchedStockInfoTypes|null;
+    result?: CompanyInfoTypes|SimilarStockTypes|StockDetailInfoTypes|StockDetailTypes|StockNewsTypes|StockTrendTypes|WatchedStockInfoTypes|null;
 
 }

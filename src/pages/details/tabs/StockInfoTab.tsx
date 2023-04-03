@@ -109,7 +109,7 @@ export default function StockInfoTab({symbol}:Props) {
 
     return (
         <div style={{height: '100%', overflowY : "scroll"}}>
-            <div style={{height: 'fit-content', paddingTop: 20, paddingBottom: 5, backgroundColor: 'green'}}>
+            <div style={{height: 'fit-content', paddingTop: 20, paddingBottom: 5, }}>
                 <div style={{height: '30px',}}>
                     <TitleText>{'종목 상세'}</TitleText>
                 </div>
@@ -134,14 +134,14 @@ export default function StockInfoTab({symbol}:Props) {
                                                 stockInfo &&
 
                                                     <>
-                                                        <div style={{padding: 10 ,backgroundColor: 'pink'}}>
+                                                        <div style={{padding: 10 ,}}>
                                                             <List sx={{ width: '100%', bgcolor: 'background.paper', }}>
                                                                 <ListItem
                                                                     disableGutters
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.exchangeName} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content', }}
                                                                 >
                                                                     <ListItemText secondary={"Exchange name"}/>
                                                                 </ListItem>
@@ -150,7 +150,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.region} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content', }}
                                                                 >
                                                                     <ListItemText secondary={"Region"}/>
                                                                 </ListItem>
@@ -159,7 +159,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.typeDisp} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content', }}
                                                                 >
                                                                     <ListItemText secondary={"Type"}/>
                                                                 </ListItem>
@@ -168,7 +168,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.financialCurrency} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content', }}
                                                                 >
                                                                     <ListItemText secondary={"Currency"}/>
                                                                 </ListItem>
@@ -177,7 +177,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.epsCurrentYear} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content', }}
                                                                 >
                                                                     <ListItemText secondary={"ESP"}/>
                                                                 </ListItem>
@@ -186,7 +186,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.averageDailyVolume10Day} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content',}}
                                                                 >
                                                                     <ListItemText secondary={"10Day Average Volume"}/>
                                                                 </ListItem>
@@ -195,7 +195,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.averageDailyVolume3Month} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red'}}
+                                                                    style={{height: 'fit-content',}}
                                                                 >
                                                                     <ListItemText secondary={"3Month Average Volume"}/>
                                                                 </ListItem>
@@ -204,7 +204,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#D06464'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High"}/>
                                                                 </ListItem>
@@ -213,7 +213,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#D06464'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High Change"}/>
                                                                 </ListItem>
@@ -222,7 +222,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                                                                    style={{height: 'fit-content', color: '#5787DE'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low"}/>
                                                                 </ListItem>
@@ -231,7 +231,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', backgroundColor: 'red', color: '#5787DE'}}
+                                                                    style={{height: 'fit-content',color: '#5787DE'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low Change"}/>
                                                                 </ListItem>
@@ -248,11 +248,11 @@ export default function StockInfoTab({symbol}:Props) {
 
 
             </div>
-            <div style={{height: '330px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'blue'}}>
+            <div style={{height: '330px', paddingTop: 5, paddingBottom: 5, }}>
                 <div style={{height: '30px',}}>
                     <TitleText>{'최근 투자 트랜드'}</TitleText>
                 </div>
-                <div style={{height: '40px', padding:8, backgroundColor: 'red'}}>
+                <div style={{height: '40px', padding:8, }}>
                     <ToggleButtonGroup
                         color="primary"
                         value={period}
@@ -271,7 +271,7 @@ export default function StockInfoTab({symbol}:Props) {
                     <TrendPieChart symbol={symbol} period={period}/>
                 </div>
             </div>
-            <div style={{height: '200px', paddingTop: 5, paddingBottom: 5, backgroundColor: 'green'}}>
+            <div style={{height: '200px', paddingTop: 5, paddingBottom: 5, }}>
                 <div style={{height: '30px'}}>
                     <TitleText>{'유사한 종목'}</TitleText>
 
