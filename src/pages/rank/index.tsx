@@ -22,6 +22,15 @@ export default function RankPage() {
     const [errorStatus, setErrorStatus] = useState(false);
     const [watchList, setWatchList] = useState<WatchedStockInfoTypes|null>(null);
 
+
+    //해당 페이지로이동
+    const directToDetail = (symbol:string) => {
+
+        navigate("/"+symbol)
+        window.location.reload();
+
+    }
+
     //stockInfo(view카드)
     const getWatchList =
         () => {
@@ -59,7 +68,9 @@ export default function RankPage() {
             {
                 loading ?
                     (
-                        <Loader/>
+                        <div style={{height:'100vh'}}>
+                            <Loader/>
+                        </div>
                     )
                     :
                     (
@@ -67,7 +78,9 @@ export default function RankPage() {
                             {
                                 errorStatus ?
                                     (
-                                        <ErrorView/>
+                                        <div style={{height:'100vh'}}>
+                                            <ErrorView/>
+                                        </div>
                                     )
                                     :
                                     (
@@ -107,8 +120,9 @@ export default function RankPage() {
                                                                </ListItem>
                                                                <Divider />
                                                                {watchList.watchedStockInfoList.map((w)=>(
-                                                                   <><ListItem>
-                                                                       <div style={{width: '100%', display: "flex", flexDirection: "row", alignItems: 'center'}}>
+                                                                   <>
+                                                                       <ListItem>
+                                                                       <div onClick={(e) => directToDetail(w.symbol)}style={{width: '100%', display: "flex", flexDirection: "row", alignItems: 'center'}}>
                                                                            <div style={{flex: 2, textAlign: 'center', }}>
                                                                                <RankText>{w.rank}</RankText>
                                                                            </div>
@@ -124,7 +138,7 @@ export default function RankPage() {
                                                                                        </div>
                                                                                        <div style={{flex: 3, textAlign: 'right', }}>
                                                                                            <RankPriceText
-                                                                                               style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
+                                                                                               style={{color: "#D06464"}}>{"+"}{w.changePercent}{"%"}</RankPriceText>
                                                                                        </div>
                                                                                    </>
                                                                                )

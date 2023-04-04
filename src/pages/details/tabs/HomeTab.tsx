@@ -120,6 +120,13 @@ export default function HomeTab({symbol,setTabValue}:Props) {
 
 
 
+    const directToDetail = (symbol:string) => {
+
+        navigate("/"+symbol)
+        window.location.reload();
+
+    }
+
 
 
     return (
@@ -257,7 +264,7 @@ export default function HomeTab({symbol,setTabValue}:Props) {
                                                                     >
                                                                         {watchList.watchedStockInfoList.map((w)=>(
                                                                             <ListItem>
-                                                                                <div style={{width: '100%', display:"flex", flexDirection:"row", alignItems: 'center'}}>
+                                                                                <div onClick={(e) => directToDetail(w.symbol)} style={{width: '100%', display:"flex", flexDirection:"row", alignItems: 'center'}}>
                                                                                     <div style={{flex:1, }}>
                                                                                         <RankText>{w.rank}</RankText>
                                                                                     </div>
@@ -271,7 +278,7 @@ export default function HomeTab({symbol,setTabValue}:Props) {
                                                                                                     <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
                                                                                                 </div>
                                                                                                 <div style={{flex:3, textAlign:'right',}}>
-                                                                                                    <RankPriceText style={{color: "#D06464"}}>{w.changePercent}{"%"}</RankPriceText>
+                                                                                                    <RankPriceText style={{color: "#D06464"}}>{"+"}{w.changePercent}{"%"}</RankPriceText>
                                                                                                 </div>
                                                                                             </>
                                                                                         )
