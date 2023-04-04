@@ -93,18 +93,18 @@ export default function SellPage({studentId}:Props) {
 
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
-                        navigate("/stock-success");
+                        navigate("/"+symbol+"/stock-success");
                     }else if(res.data.status.status === "E902"){
                         //보유 수량보다 더 많이 판매하려고 하는 경우 막기
                         setErrorMessage(res.data.status.message);
                     }else{
-                        navigate("/stock-error");
+                        navigate("/"+symbol+"/stock-error");
                     }
 
                 })
                 .catch(reason => {
                     // console.log(reason);
-                    navigate("/stock-error"); //여기서 에러나면 그냥 에러페이지로
+                    navigate("/"+symbol+"/stock-error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 
@@ -128,9 +128,11 @@ export default function SellPage({studentId}:Props) {
     return (
         <>
             {
-                loading ?
+                loading||sellLoading ?
                     (
-                        <Loader/>
+                        <div style={{height:'100vh'}}>
+                            <Loader/>
+                        </div>
                     )
                     :
                     (

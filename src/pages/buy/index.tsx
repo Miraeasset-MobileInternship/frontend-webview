@@ -120,9 +120,11 @@ export default function BuyPage({studentId}:Props) {
     return (
         <>
         {
-            loading ?
+            loading||buyLoading ?
                 (
-                    <Loader/>
+                    <div style={{height:'100vh'}}>
+                        <Loader/>
+                    </div>
                 )
                 :
                     (
