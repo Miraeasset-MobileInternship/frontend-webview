@@ -88,20 +88,30 @@ export default function TrendPieChart ({symbol, period}:Props){
                                                                 :
                                                                 (
                                                                     graphData &&
+
                                                                     <>
-                                                                        <ResponsiveContainer>
-                                                                            <PieChart height={260}>
-                                                                                {/*dataKey: 써있는 값*/}
-                                                                                <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
-                                                                                    {
-                                                                                        data.map((entry, index) => (
-                                                                                            <Cell key={`cell-${index}`} fill={entry.color}/>
-                                                                                        ))
-                                                                                    }
-                                                                                </Pie>
-                                                                                <PolarAngleAxis></PolarAngleAxis>
-                                                                            </PieChart>
-                                                                        </ResponsiveContainer>
+                                                                        {
+                                                                            graphData.length===0 ?
+                                                                                (
+                                                                                    <ZeroAnswerView/>
+                                                                                )
+                                                                                :
+                                                                                    (
+                                                                                        <ResponsiveContainer>
+                                                                                            <PieChart height={260}>
+                                                                                                {/*dataKey: 써있는 값*/}
+                                                                                                <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
+                                                                                                    {
+                                                                                                        data.map((entry, index) => (
+                                                                                                            <Cell key={`cell-${index}`} fill={entry.color}/>
+                                                                                                        ))
+                                                                                                    }
+                                                                                                </Pie>
+                                                                                                <PolarAngleAxis></PolarAngleAxis>
+                                                                                            </PieChart>
+                                                                                        </ResponsiveContainer>
+                                                                                    )
+                                                                        }
                                                                     </>
                                                                 )
 
