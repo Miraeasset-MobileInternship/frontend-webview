@@ -164,19 +164,36 @@ export default function DetailPage() {
                             )
                             :
                             (
-                                stockInfo &&
+                                stockInfo&&currency &&
                                     <>
                                         <div className="stock-title">
-                                            <TitleText>{stockInfo.stockTitle}</TitleText>
-                                            <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
-                                            <div style={{ paddingTop:3}}>
-                                                <TypeTagBox text={stockInfo.tagInfo.type}/>
-                                                <TypeTagBox text={stockInfo.tagInfo.market}/>
-                                            </div>
+                                            {
+                                                stockInfo.stockTitle.length >= 20 ?
+                                                (
+                                                    <>
+                                                        <TitleText style={{fontSize:'2.8vh'}}>{stockInfo.stockTitle}</TitleText>
+                                                        <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
+                                                        <TypeTagBox text={stockInfo.tagInfo.type}/>
+                                                        <TypeTagBox text={stockInfo.tagInfo.market}/>
+                                                    </>
+                                                )
+                                                :
+                                                (
+                                                    <>
+                                                        <TitleText>{stockInfo.stockTitle}</TitleText>
+                                                        <MarketStatusBox isOpen={stockInfo.tagInfo.open}></MarketStatusBox>
+                                                        <div style={{paddingTop:5}}>
+                                                            <TypeTagBox text={stockInfo.tagInfo.type}/>
+                                                            <TypeTagBox text={stockInfo.tagInfo.market}/>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
                                         </div>
                                         {/*카드 뷰를 둘러싼 padding*/}
                                         <div className="card-view">
-                                            <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={"미소"} sellAvailable={sellAvailable}/>
+                                            <MainCardView price={stockInfo.price} changePrice={stockInfo.changePrice} changePercent={stockInfo.changePercent} currency={currency.currency} sellAvailable={sellAvailable}/>
                                         </div>
                                     </>
 
@@ -292,3 +309,7 @@ const TitleText = styled.text`
 
 
 
+const tmpCurrency:ClassCurrencyTypes = {
+    classId: -1,
+    currency: "",
+}
