@@ -72,10 +72,6 @@ export default function BuyPage({symbol, studentId}:Props) {
             setBuyLoading(true);
 
 
-            console.log(studentId);
-            console.log(symbol);
-            console.log(amount);
-            console.log(price);
 
             // 이 페이지에서는 all로 간다
             buyingStockService.buyingStock(studentId,symbol,amount,price)
@@ -85,23 +81,20 @@ export default function BuyPage({symbol, studentId}:Props) {
 
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
-                        navigate("/success");
+                        navigate("/stock-success");
                     }else if(res.data.status.status === "E903"){
                         //돈이 부족해서 거래가 안되는 경우->에러 메세지에 표시
                         setErrorMessage(res.data.status.message);
                     }else{
                         //다른 에러는 유저가 알필요 없는 에러(db등)
-                        console.log(res.data.status.status)
-                        console.log(res.data.status.message)
-                        console.log("backend error ")
-                        navigate("/error");
+                        navigate("/stock-error");
                     }
 
                 })
                 .catch(reason => {
-                    console.log(reason);
-                    console.log("fronterror ")
-                    // navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                    // console.log(reason);
+                    // console.log("fronterror ")
+                    navigate("/stock-error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 

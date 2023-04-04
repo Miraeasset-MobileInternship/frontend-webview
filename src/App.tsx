@@ -10,7 +10,8 @@ import RankPage from "./pages/rank";
 import ErrorPage from "./pages/errors";
 import BuyPage from "./pages/buy";
 import SellPage from "./pages/sell";
-import SuccessPage from "./pages/errors/success";
+import StockSuccessPage from "./pages/errors/stocks/success";
+import StockErrorPage from "./pages/errors/stocks/error";
 
 
 
@@ -22,9 +23,10 @@ function App() {
         <Route path="/" element={<DetailPage/>}/>
         <Route path="/ranking" element={<RankPage/>}/>
         <Route path="/error" element={<ErrorPage/>}/>
-        <Route path="/success" element={<SuccessPage/>}/>
         <Route path="/buy" element={<BuyPage symbol={"AAPL"} studentId={10}/>}/>
         <Route path="/sell" element={<SellPage symbol={"AAPL"} studentId={10}/>}/>
+        <Route path="/stock-success" element={<StockSuccessPage/>}/>
+        <Route path="/stock-error" element={<StockErrorPage/>}/>
       </Routes>
   );
 }

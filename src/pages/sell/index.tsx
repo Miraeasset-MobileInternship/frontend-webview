@@ -82,11 +82,6 @@ export default function SellPage({symbol, studentId}:Props) {
             setSellLoading(true);
 
 
-            console.log(studentId);
-            console.log(symbol);
-            console.log(amount);
-            console.log(price);
-
             // 이 페이지에서는 all로 간다
             sellingStockService.sellingStock(studentId,symbol,amount,price)
                 .then( res => {
@@ -95,23 +90,18 @@ export default function SellPage({symbol, studentId}:Props) {
 
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
-                        navigate("/success");
+                        navigate("/stock-success");
                     }else if(res.data.status.status === "E902"){
                         //보유 수량보다 더 많이 판매하려고 하는 경우 막기
                         setErrorMessage(res.data.status.message);
                     }else{
-                        //다른 에러는 유저가 알필요 없는 에러(db등)
-                        console.log(res.data.status.status)
-                        console.log(res.data.status.message)
-                        console.log("backend error ")
-                        navigate("/error");
+                        navigate("/stock-error");
                     }
 
                 })
                 .catch(reason => {
-                    console.log(reason);
-                    console.log("fronterror ")
-                    // navigate("/error"); //여기서 에러나면 그냥 에러페이지로
+                    // console.log(reason);
+                    navigate("/stock-error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 
@@ -209,10 +199,10 @@ export default function SellPage({symbol, studentId}:Props) {
                                                         border: '0px solid white',
                                                     },
                                                     '&:hover fieldset': {
-                                                        border: '1px solid #FF484E',
+                                                        border: '1px solid #026BFB',
                                                     },
                                                     '&.Mui-focused fieldset': {
-                                                        border: '1px solid #FF484E',
+                                                        border: '1px solid #026BFB',
                                                     },
                                                 }
 
@@ -226,7 +216,7 @@ export default function SellPage({symbol, studentId}:Props) {
                                 </div>
                             </div>
                             <div className="btn-area">
-                                <CustomBtn >
+                                <CustomBtn onClick={sellingStocks}>
                                     <ButtonText>{"매도하기"}</ButtonText>
                                 </CustomBtn>
                             </div>
@@ -237,34 +227,7 @@ export default function SellPage({symbol, studentId}:Props) {
     );
 }
 
-const CustomTextField = styled(TextField)`
-  & label.Mui-focused {
-    color: red;
-  }
 
-  & .MuiInput-underline:after {
-    borderBottomColor: green;
-  },
-  
-  
-  &. MuiOutlined-root {
-  &.fieldset {
-    border-color: red;
-  }
-}
-  
-  & .MuiOutlinedInput-root {
-    &.fieldset {
-      border-color: red;
-    }
-    &.Mui-focused fieldset {
-      border-color: white;
-    }
-    &:hover fieldset{
-      border-color: white;
-    }
-  }
-`;
 
 
 const TitleText = styled.text`

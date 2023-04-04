@@ -23,23 +23,23 @@ class sellingStockService {
 
 
 
-    // buyingStock(studentId:number, stockId:string, amount:number, price:number) {
-    //     return axios.post<response>(
-    //         baseUrl + "/buy", // api 주소
-    //         {
-    //             studentId: studentId,
-    //             stockId:stockId,
-    //             amount:amount,
-    //             price:price,
-    //         },
-    //         {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 "Accept": "application/json",
-    //             },
-    //         }, // header 정의
-    //     )
-    // }
+    sellingStock(studentId:number, stockId:string, amount:number, price:number) {
+        return axios.post<response>(
+            baseUrl + "/sell", // api 주소
+            {
+                studentId: studentId,
+                stockId:stockId,
+                amount:amount,
+                price:price,
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
+            }, // header 정의
+        )
+    }
 
 
 
