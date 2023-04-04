@@ -18,6 +18,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import Loader from "../../components/Loader";
 import sellingStockService from "../../services/sellingStockService";
+import classService from "../../services/classService";
+import ClassCurrencyTypes from "../../types/ClassCurrencyTypes";
 
 
 
@@ -66,15 +68,18 @@ export default function DetailPage() {
     };
 
 
+    //getCurrency
+    const [currency, setCurrency] = useState<ClassCurrencyTypes>();
+
 
     //stockInfo(view카드)
     const getStockInfo =
-        (stockId: string) => {
+        (stockId: string, classId:number) => {
                 setCardLoading(true)
                 detailInfoService.getStockDetail(stockId)
                         .then( res => {
 
-                            setCardLoading(false)
+                            // setCardLoading(false)
                             if(res.data.status.status === "E000"){
                                 // @ts-ignore
                                 setStockInfo(res.data.result);
@@ -87,7 +92,27 @@ export default function DetailPage() {
                            console.log(reason);
                             navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                         });
-            };
+
+
+
+                classService.getCurrency(classId)
+                    .then( res => {
+
+                        setCardLoading(false)
+                        if(res.data.status.status === "E000"){
+                            // @ts-ignore
+                            setCurrency(res.data.result);
+                        }else{
+                            setCurrency(tmpCurrency);
+                        }
+
+                    })
+                    .catch(reason => {
+                        console.log(reason);
+                        // navigate("/error"); //여기서 에러나면 크게 중요한거 아니니 그냥 무시하고 단위 안보여주기
+                    });
+
+        };
 
 
 
@@ -124,7 +149,7 @@ export default function DetailPage() {
 
     //리로드 시마다 1회만 실행
     useEffect(() => {
-        getStockInfo(symbol);
+        getStockInfo(symbol,4);
         checkSelling(symbol, 10);
     },[]);
 
