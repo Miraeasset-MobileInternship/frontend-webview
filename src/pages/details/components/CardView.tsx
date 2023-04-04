@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
 
 
 interface Props {
@@ -19,34 +20,44 @@ interface Props {
 
 
 export default function CardView({symbol,title,price,changePrice,changePercent}:Props) {
-    return (
-        <Card sx={{ minWidth: 160, maxHeight: 120 }} style={{  boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
-            <CardContent sx={{paddingTop:1, paddingBottom:1, paddingLeft:1.5}}>
-                <Typography color="text.primary" >
-                    <TitleText>{title}</TitleText>
-                </Typography>
-                <Typography variant="h5" component="div">
-                    <MainText>{price}</MainText>
-                </Typography>
-                <Typography sx={{ mb: 2 }} >
-                    {changePrice>0 ? (
-                        <>
-                            <DefaultText style={{color: "#D06464"}}>{"+"}{changePrice}{"  "}</DefaultText>
-                            <DefaultText style={{color: "#D06464"}}>{"("}{changePercent}{"%)"}</DefaultText>
-                        </>
-                    )
-                        :
-                    (
-                        <>
-                            <DefaultText style={{color: "#5787DE"}}>{"-"}{changePrice}</DefaultText>
-                            <DefaultText style={{color: "#5787DE"}}>{"("}{changePercent}{"%)"}</DefaultText>
-                        </>
-                    )
-                    }
+    const navigate = useNavigate();
 
-                </Typography>
-            </CardContent>
-        </Card>
+    const navigateToDetail = () => {
+        navigate("/"+symbol);
+        window.location.reload() //새로 고침해야 정보가 변환됨
+    }
+
+
+    return (
+        <div onClick={navigateToDetail}>
+            <Card sx={{ minWidth: 160, maxHeight: 120 }} style={{  boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
+                <CardContent sx={{paddingTop:1, paddingBottom:1, paddingLeft:1.5}}>
+                    <Typography color="text.primary" >
+                        <TitleText>{title}</TitleText>
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                        <MainText>{price}</MainText>
+                    </Typography>
+                    <Typography sx={{ mb: 2 }} >
+                        {changePrice>0 ? (
+                            <>
+                                <DefaultText style={{color: "#D06464"}}>{"+"}{changePrice}{"  "}</DefaultText>
+                                <DefaultText style={{color: "#D06464"}}>{"("}{changePercent}{"%)"}</DefaultText>
+                            </>
+                        )
+                            :
+                        (
+                            <>
+                                <DefaultText style={{color: "#5787DE"}}>{changePrice}</DefaultText>
+                                <DefaultText style={{color: "#5787DE"}}>{"("}{changePercent}{"%)"}</DefaultText>
+                            </>
+                        )
+                        }
+
+                    </Typography>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
 

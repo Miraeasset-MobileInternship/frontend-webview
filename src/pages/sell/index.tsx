@@ -6,18 +6,21 @@ import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 import detailInfoService from "../../services/detailInfoService";
 import buyingStockService from "../../services/buyingStockService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 import StockSellingCheckTypes from "../../types/StockSellingCheckTypes";
 import sellingStockService from "../../services/sellingStockService";
 
 interface Props {
-    symbol:string;
+
     studentId:number;
 }
 
 
-export default function SellPage({symbol, studentId}:Props) {
+export default function SellPage({studentId}:Props) {
+    const params = useParams();
+    const symbol:string = params.stockId as string;
+
     const navigate = useNavigate();
 
     //
@@ -287,10 +290,10 @@ const ButtonText = styled.text`
 
 
 
-const buyingCheck: StockBuyingCheckTypes  = {
-    "stockId": "AAPL",
-    "stockTitle": "Apple",
-    "marketPrice": "164.90",
-    "price": 165,
-    "currency": "꿈"
-}
+// const buyingCheck: StockBuyingCheckTypes  = {
+//     "stockId": "AAPL",
+//     "stockTitle": "Apple",
+//     "marketPrice": "164.90",
+//     "price": 165,
+//     "currency": "꿈"
+// }

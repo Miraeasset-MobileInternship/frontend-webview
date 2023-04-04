@@ -7,7 +7,11 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
-export default function ChartTab() {
+interface Props {
+    symbol:string;
+}
+
+export default function ChartTab({symbol}:Props) {
     const [period, setperiod] = useState('1d');
 
     const handleChange = (
@@ -21,7 +25,7 @@ export default function ChartTab() {
     return (
         <div style={{height: "100%", display: 'flex', flexDirection: 'column', overflowY: "hidden"}}>
             <div style={{height:"90%"}}>
-                <PriceLineChart period={period} symbol={"AAPL"}/>
+                <PriceLineChart period={period} symbol={symbol}/>
             </div>
             <div style={{height:"10%"}}>
                 <ToggleButtonGroup

@@ -338,61 +338,61 @@ const TitleText = styled.text`
 `;
 
 
+//
+// const similarStocks :SimilarStockTypes = {
+//         "totalData": 5,
+//         "stockTitle": "Apple Inc.",
+//         "stockInfoList": [
+//         {
+//             "symbol": "AMZN",
+//             "stockTitle": "Amazon.com, Inc.",
+//             "price": 100.25,
+//             "changePrice": 3.01,
+//             "changePercent": 3.1
+//         },
+//         {
+//             "symbol": "TSLA",
+//             "stockTitle": "Tesla, Inc.",
+//             "price": 193.88,
+//             "changePrice": -4.69,
+//             "changePercent": -2.5
+//         },
+//         {
+//             "symbol": "GOOG",
+//             "stockTitle": "Alphabet Inc.",
+//             "price": 101.9,
+//             "changePrice": 0.54,
+//             "changePercent": 0.5
+//         },
+//         {
+//             "symbol": "META",
+//             "stockTitle": "Meta Platforms, Inc.",
+//             "price": 205.35,
+//             "changePrice": 4.67,
+//             "changePercent": 2.3
+//         },
+//         {
+//             "symbol": "NFLX",
+//             "stockTitle": "Netflix, Inc.",
+//             "price": 332.03,
+//             "changePrice": 8.51,
+//             "changePercent": 2.6
+//         },
+//     ],
+// };
 
-const similarStocks :SimilarStockTypes = {
-        "totalData": 5,
-        "stockTitle": "Apple Inc.",
-        "stockInfoList": [
-        {
-            "symbol": "AMZN",
-            "stockTitle": "Amazon.com, Inc.",
-            "price": 100.25,
-            "changePrice": 3.01,
-            "changePercent": 3.1
-        },
-        {
-            "symbol": "TSLA",
-            "stockTitle": "Tesla, Inc.",
-            "price": 193.88,
-            "changePrice": -4.69,
-            "changePercent": -2.5
-        },
-        {
-            "symbol": "GOOG",
-            "stockTitle": "Alphabet Inc.",
-            "price": 101.9,
-            "changePrice": 0.54,
-            "changePercent": 0.5
-        },
-        {
-            "symbol": "META",
-            "stockTitle": "Meta Platforms, Inc.",
-            "price": 205.35,
-            "changePrice": 4.67,
-            "changePercent": 2.3
-        },
-        {
-            "symbol": "NFLX",
-            "stockTitle": "Netflix, Inc.",
-            "price": 332.03,
-            "changePrice": 8.51,
-            "changePercent": 2.6
-        },
-    ],
-};
 
-
-const stockInfo: StockDetailInfoTypes  = {
-    "exchangeName": "NasdaqGS",
-    "fiftyTwoWeekHigh": 178.49,
-    "fiftyTwoWeekLow": 124.17,
-    "fiftyTwoWeekHighChange": -17.720001,
-    "fiftyTwoWeekLowChange": 36.600006,
-    "epsCurrentYear": 5.97,
-    "typeDisp": "Equity",
-    "region": "US",
-    "financialCurrency": "USD",
-    "averageDailyVolume10Day": 67475750,
-    "averageDailyVolume3Month": 69210303
-}
+// const stockInfo: StockDetailInfoTypes  = {
+//     "exchangeName": "NasdaqGS",
+//     "fiftyTwoWeekHigh": 178.49,
+//     "fiftyTwoWeekLow": 124.17,
+//     "fiftyTwoWeekHighChange": -17.720001,
+//     "fiftyTwoWeekLowChange": 36.600006,
+//     "epsCurrentYear": 5.97,
+//     "typeDisp": "Equity",
+//     "region": "US",
+//     "financialCurrency": "USD",
+//     "averageDailyVolume10Day": 67475750,
+//     "averageDailyVolume3Month": 69210303
+// }
 

@@ -20,13 +20,13 @@ function App() {
 
   return (
       <Routes>
-        <Route path="/" element={<DetailPage/>}/>
+        <Route path="/:stockId" element={<DetailPage/>}/>
         <Route path="/ranking" element={<RankPage/>}/>
         <Route path="/error" element={<ErrorPage/>}/>
-        <Route path="/buy" element={<BuyPage symbol={"AAPL"} studentId={10}/>}/>
-        <Route path="/sell" element={<SellPage symbol={"AAPL"} studentId={10}/>}/>
-        <Route path="/stock-success" element={<StockSuccessPage/>}/>
-        <Route path="/stock-error" element={<StockErrorPage/>}/>
+        <Route path="/:stockId/buy" element={<BuyPage studentId={10}/>}/>
+        <Route path="/:stockId/sell" element={<SellPage studentId={10}/>}/>
+        <Route path="/:stockId/stock-success" element={<StockSuccessPage/>}/>
+        <Route path="/:stockId/stock-error" element={<StockErrorPage/>}/>
       </Routes>
   );
 }

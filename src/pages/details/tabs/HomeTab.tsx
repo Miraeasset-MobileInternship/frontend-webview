@@ -10,7 +10,7 @@ import styled from "styled-components";
 import SimilarStockTypes from "../../../types/SimilarStockTypes";
 import StockDetailInfoTypes from "../../../types/StockDetailInfoTypes";
 import PriceLineChart from "../components/PriceLineChart";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import StockNewsTypes from "../../../types/StockNewsTypes";
 import WatchedStockInfoTypes from "../../../types/WatchedStockInfoTypes";
 import detailInfoService from "../../../services/detailInfoService";
@@ -20,14 +20,15 @@ import ZeroAnswerView from "../components/ZeroAnswerView";
 
 
 type Props = {
+    symbol:string;
     setTabValue:(index:string) => void;
 }
 
 
-export default function HomeTab({setTabValue}:Props) {
-    const navigate = useNavigate();
+export default function HomeTab({symbol,setTabValue}:Props) {
+    const params = useParams();
 
-    const [symbol,setSymbol] = useState("AAPL");
+    const navigate = useNavigate();
 
     const navigateToRanking = () => {
         navigate("/ranking");
@@ -278,7 +279,7 @@ export default function HomeTab({setTabValue}:Props) {
                                                                                         (
                                                                                             <>
                                                                                                 <div style={{flex:3, textAlign:'right',}}>
-                                                                                                    <RankPriceText style={{color: "#5787DE"}}>{"-"}{w.changePrice}</RankPriceText>
+                                                                                                    <RankPriceText style={{color: "#5787DE"}}>{w.changePrice}</RankPriceText>
                                                                                                 </div>
                                                                                                 <div style={{flex:3, textAlign:'right',}}>
                                                                                                     <RankPriceText style={{color: "#5787DE"}}>{w.changePercent}{"%"}</RankPriceText>

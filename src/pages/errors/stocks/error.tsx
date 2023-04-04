@@ -1,14 +1,17 @@
 import * as React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function StockErrorPage() {
+    const params = useParams();
+    const symbol:string = params.stockId as string;
+
     const navigate = useNavigate();
 
 
     const navigateToMain = () => {
-        navigate("/");
+        navigate("/"+symbol);
     }
 
 

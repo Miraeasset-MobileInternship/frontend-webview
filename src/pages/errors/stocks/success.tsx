@@ -1,14 +1,16 @@
 import * as React from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function StockSuccessPage() {
+    const params = useParams();
+    const symbol:string = params.stockId as string;
     const navigate = useNavigate();
 
 
     const navigateToMain = () => {
-        navigate("/");
+        navigate("/"+symbol);
     }
 
 

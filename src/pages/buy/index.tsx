@@ -6,16 +6,18 @@ import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 import detailInfoService from "../../services/detailInfoService";
 import buyingStockService from "../../services/buyingStockService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 
 interface Props {
-    symbol:string;
     studentId:number;
 }
 
 
-export default function BuyPage({symbol, studentId}:Props) {
+export default function BuyPage({studentId}:Props) {
+    const params = useParams();
+    const symbol:string = params.stockId as string;
+
     const navigate = useNavigate();
 
     //
@@ -81,20 +83,20 @@ export default function BuyPage({symbol, studentId}:Props) {
 
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
-                        navigate("/stock-success");
+                        navigate("/"+symbol+"/stock-success");
                     }else if(res.data.status.status === "E903"){
                         //돈이 부족해서 거래가 안되는 경우->에러 메세지에 표시
                         setErrorMessage(res.data.status.message);
                     }else{
                         //다른 에러는 유저가 알필요 없는 에러(db등)
-                        navigate("/stock-error");
+                        navigate("/"+symbol+"/stock-error");
                     }
 
                 })
                 .catch(reason => {
                     // console.log(reason);
                     // console.log("fronterror ")
-                    navigate("/stock-error"); //여기서 에러나면 그냥 에러페이지로
+                    navigate("/"+symbol+"/stock-error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 
@@ -307,10 +309,10 @@ const ButtonText = styled.text`
 
 
 
-const buyingCheck: StockBuyingCheckTypes  = {
-    "stockId": "AAPL",
-    "stockTitle": "Apple",
-    "marketPrice": "164.90",
-    "price": 165,
-    "currency": "꿈"
-}
+// const buyingCheck: StockBuyingCheckTypes  = {
+//     "stockId": "AAPL",
+//     "stockTitle": "Apple",
+//     "marketPrice": "164.90",
+//     "price": 165,
+//     "currency": "꿈"
+// }

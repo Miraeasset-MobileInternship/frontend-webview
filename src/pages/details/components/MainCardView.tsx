@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useState} from "react";
 import StockSellingCheckTypes from "../../../types/StockSellingCheckTypes";
 import sellingStockService from "../../../services/sellingStockService";
@@ -22,15 +22,18 @@ interface Props {
 
 
 export default function MainCardView({currency,price,changePrice,changePercent,sellAvailable}:Props) {
+    const params = useParams();
+    const symbol:string = params.stockId as string;
+
     const navigate = useNavigate();
 
 
     const navigateToBuy = () => {
-        navigate("/buy");
+        navigate("/"+symbol+"/buy");
     }
 
     const navigateToSell = () => {
-        navigate("/sell");
+        navigate("/"+symbol+"/sell");
     }
 
 
@@ -53,7 +56,7 @@ export default function MainCardView({currency,price,changePrice,changePercent,s
                             :
                         (
                             <>
-                                <DefaultText style={{color: "#5787DE"}}>{"-"}{changePrice}{currency}{"  "}</DefaultText>
+                                <DefaultText style={{color: "#5787DE"}}>{changePrice}{currency}{"  "}</DefaultText>
                                 <DefaultText style={{color: "#5787DE"}}>{"("}{changePercent}{"%)"}</DefaultText>
                             </>
                         )

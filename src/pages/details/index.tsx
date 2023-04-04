@@ -14,7 +14,7 @@ import NewsTab from "./tabs/NewsTab";
 import CompanyInfoTab from "./tabs/CompanyInfoTab";
 import StockInfoTab from "./tabs/StockInfoTab";
 import detailInfoService from "../../services/detailInfoService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import CircularProgress from '@mui/material/CircularProgress';
 import Loader from "../../components/Loader";
 import sellingStockService from "../../services/sellingStockService";
@@ -30,15 +30,25 @@ type sectionType = {
 
 
 export default function DetailPage() {
+    // link에서 symbol을 가져오기
+    const params = useParams();
+    const symbol:string = params.stockId as string;
+
+
     const navigate = useNavigate();
 
     const [cardLoading, setCardLoading] = useState(true);
     const [sellLoading, setSellLoading] = useState(true);
-    const [symbol, setSymbol] = useState("AAPL");
 
+    const setTabValue = (index:string): void => {
+
+        setValue(index);
+        console.log(value);
+    }
 
     const sections: sectionType[] = [
-        { value: '1', component: <ChartTab/> },
+        { value: '0', component: <HomeTab setTabValue={setTabValue} symbol={symbol}/>},
+        { value: '1', component: <ChartTab symbol={symbol}/> },
         { value: '2', component: <StockInfoTab symbol={symbol}/> },
         { value: '3', component: <NewsTab symbol={symbol}/> },
         { value: '4', component: <CompanyInfoTab symbol={symbol}/> },
@@ -55,12 +65,6 @@ export default function DetailPage() {
         // console.log(value);
     };
 
-
-    const setTabValue = (index:string): void => {
-
-        setValue(index);
-        console.log(value);
-    }
 
 
     //stockInfo(view카드)
@@ -182,17 +186,11 @@ export default function DetailPage() {
                 </div>
                 <div className="scroll-view-area">
                     {
-                        value === '0' ? (
-                                <HomeTab setTabValue={setTabValue}/>
-                            )
-                            :
-                            (
                                 <div style={{height: '100%'}}>
                                     {sections.map((s) => (
                                         s.value === value ? (s.component):(<div/>)
                                     ))}
                                 </div>
-                            )
                     }
 
                 </div>
