@@ -82,11 +82,12 @@
 
     height: 30%;
 
+
     /*앞부분 부터 시작*/
     justify-content: flex-start;
     align-items: center;
 
-    /*background-color: aliceblue;*/
+    background-color: aliceblue;
 
     box-sizing: border-box;
     padding-left:15px;

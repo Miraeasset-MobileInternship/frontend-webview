@@ -9,6 +9,8 @@ import StockNewsTypes from "../../../types/StockNewsTypes";
 import detailInfoService from "../../../services/detailInfoService";
 import Loader from "../../../components/Loader";
 import ErrorView from "./ErrorView";
+import ZeroAnswerView from "./ZeroAnswerView";
+import NotSupportView from "./NotSupportView";
 
 interface Props {
     symbol:string;
@@ -20,7 +22,8 @@ export default function TrendPieChart ({symbol, period}:Props){
 
     const [loading, setLoading] = useState(false);
     const [errorStatus, setErrorStatus] = useState(false);
-    const [data, setData] = useState<StockTrendTypes[]|null>(null);
+    const [notSupportStatus, setNotSupportStatus] = useState(false);
+    const [graphData, setGraphData] = useState<StockTrendTypes[]|null>(null);
 
     //stockInfo(view카드)
     const getRecommendTrend =
@@ -35,10 +38,14 @@ export default function TrendPieChart ({symbol, period}:Props){
 
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
-                        setData(res.data.result);
+                        setGraphData(res.data.result);
+                    }
+                    else if(res.data.status.status === "E904"){
+                        setNotSupportStatus(true);
                     }else{
                         setErrorStatus(true);
                     }
+
 
                 })
                 .catch(reason => {
@@ -71,22 +78,35 @@ export default function TrendPieChart ({symbol, period}:Props){
                                     )
                                     :
                                     (
-                                        data &&
-                                            <>
-                                                <ResponsiveContainer>
-                                                    <PieChart height={260}>
-                                                        {/*dataKey: 써있는 값*/}
-                                                        <Pie data={data} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
-                                                            {
-                                                                data.map((entry, index) => (
-                                                                    <Cell key={`cell-${index}`} fill={entry.color}/>
-                                                                ))
-                                                            }
-                                                        </Pie>
-                                                        <PolarAngleAxis></PolarAngleAxis>
-                                                    </PieChart>
-                                                </ResponsiveContainer>
-                                            </>
+                                                    <>
+                                                        {
+                                                            notSupportStatus ?
+
+                                                                (
+                                                                    <NotSupportView/>
+                                                                )
+                                                                :
+                                                                (
+                                                                    graphData &&
+                                                                    <>
+                                                                        <ResponsiveContainer>
+                                                                            <PieChart height={260}>
+                                                                                {/*dataKey: 써있는 값*/}
+                                                                                <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
+                                                                                    {
+                                                                                        data.map((entry, index) => (
+                                                                                            <Cell key={`cell-${index}`} fill={entry.color}/>
+                                                                                        ))
+                                                                                    }
+                                                                                </Pie>
+                                                                                <PolarAngleAxis></PolarAngleAxis>
+                                                                            </PieChart>
+                                                                        </ResponsiveContainer>
+                                                                    </>
+                                                                )
+
+                                                        }
+                                                    </>
                                     )
                             }
                         </>

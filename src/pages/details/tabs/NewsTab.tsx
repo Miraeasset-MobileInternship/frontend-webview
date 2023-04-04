@@ -13,6 +13,7 @@ import detailInfoService from "../../../services/detailInfoService";
 import Loader from "../../../components/Loader";
 import ErrorView from "../components/ErrorView";
 import ZeroAnswerView from "../components/ZeroAnswerView";
+import NotSupportView from "../components/NotSupportView";
 
 const style = {
     width: '100%',
@@ -30,6 +31,7 @@ export default function NewsTab({symbol}:Props) {
 
     const [loading, setLoading] = useState(false);
     const [errorStatus, setErrorStatus] = useState(false);
+    const [notSupportStatus, setNotSupportStatus] = useState(false);
     const [newsList, setNewsList] = useState<StockNewsTypes|null>(null);
 
     //stockInfo(view카드)
@@ -46,7 +48,10 @@ export default function NewsTab({symbol}:Props) {
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
                         setNewsList(res.data.result);
-                    }else{
+                    }else if(res.data.status.status === "E904"){
+                        setNotSupportStatus(true);
+                    }
+                    else{
                         setErrorStatus(true);
                     }
 
@@ -83,32 +88,44 @@ export default function NewsTab({symbol}:Props) {
                            )
                            :
                                (
-                                   newsList &&
-                                   <>
-                                       {
-                                           newsList.totalData === 0 ?
+                                    <>
+                                   {
+                                       notSupportStatus ?
+                                           (
+                                               <NotSupportView/>
+                                           )
+                                            :
                                                (
-                                                   <ZeroAnswerView/>
-                                               )
-                                               :
-                                                   (
-                                                       <>
-                                                           <List sx={style} component="nav" aria-label="mailbox folders">
-                                                               {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
-                                                                   <div>
-                                                                       <ListItem button>
-                                                                           <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
-                                                                               <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
-                                                                           </Link>
-                                                                       </ListItem>
-                                                                   </div>
-                                                               ))}
-                                                           </List>
-                                                       </>
-                                                   )
+                                                   newsList &&
+                                                   <>
+                                                       {
+                                                           newsList.totalData === 0 ?
+                                                               (
+                                                                   <ZeroAnswerView/>
+                                                               )
+                                                               :
+                                                               (
+                                                                   <>
+                                                                       <List sx={style} component="nav" aria-label="mailbox folders">
+                                                                           {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
+                                                                               <div>
+                                                                                   <ListItem button>
+                                                                                       <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
+                                                                                           <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
+                                                                                       </Link>
+                                                                                   </ListItem>
+                                                                               </div>
+                                                                           ))}
+                                                                       </List>
+                                                                   </>
+                                                               )
 
-                                       }
-                               </>)
+                                                       }
+                                                   </>
+                                               )
+                                   }
+                                   </>
+                               )
                     }
                     </>
                 )

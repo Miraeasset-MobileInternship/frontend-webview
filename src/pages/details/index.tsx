@@ -168,7 +168,7 @@ export default function DetailPage() {
                                     <>
                                         <div className="stock-title">
                                             {
-                                                stockInfo.stockTitle.length >= 20 ?
+                                                stockInfo.stockTitle.length >= 18 ?
                                                 (
                                                     <>
                                                         <TitleText style={{fontSize:'2.8vh'}}>{stockInfo.stockTitle}</TitleText>

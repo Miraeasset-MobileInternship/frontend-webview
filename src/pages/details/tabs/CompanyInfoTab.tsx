@@ -15,6 +15,7 @@ import Loader from "../../../components/Loader";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ErrorPage from "../../errors";
 import ErrorView from "../components/ErrorView";
+import ZeroAnswerView from "../components/ZeroAnswerView";
 
 interface Props {
     symbol:string;
@@ -42,6 +43,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                         // @ts-ignore
                         setCompanyInfo(res.data.result);
                     }else{
+                        console.log(res.data.status.status)
                         setErrorStatus(true);
                     }
 
@@ -73,7 +75,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                         {
                             errorStatus ?
                             (
-                                <ErrorView/>
+                                <ZeroAnswerView/>
                             )
                             :
                                 (

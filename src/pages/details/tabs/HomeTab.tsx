@@ -17,6 +17,7 @@ import detailInfoService from "../../../services/detailInfoService";
 import Loader from "../../../components/Loader";
 import ErrorView from "../components/ErrorView";
 import ZeroAnswerView from "../components/ZeroAnswerView";
+import NotSupportView from "../components/NotSupportView";
 
 
 type Props = {
@@ -53,6 +54,7 @@ export default function HomeTab({symbol,setTabValue}:Props) {
     //뉴스 관련
     const [newsLoading, setNewsLoading] = useState(false);
     const [newsErrorStatus, setNewsErrorStatus] = useState(false);
+    const [notSupportStatus, setNotSupportStatus] = useState(false);
     const [newsList, setNewsList] = useState<StockNewsTypes|null>(null);
 
     //stockInfo(view카드)
@@ -69,7 +71,10 @@ export default function HomeTab({symbol,setTabValue}:Props) {
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
                         setNewsList(res.data.result);
-                    }else{
+                    }else if(res.data.status.status === "E904"){
+                        setNotSupportStatus(true);
+                    }
+                    else{
                         setNewsErrorStatus(true);
                     }
 
@@ -174,32 +179,44 @@ export default function HomeTab({symbol,setTabValue}:Props) {
                                             )
                                             :
                                             (
-                                                newsList &&
                                                 <>
                                                     {
-                                                        newsList.totalData === 0 ?
+                                                        notSupportStatus ?
                                                             (
-                                                                <ZeroAnswerView/>
+                                                                <NotSupportView/>
                                                             )
                                                             :
                                                             (
+                                                                newsList &&
                                                                 <>
-                                                                    <List sx={style} component="nav" aria-label="mailbox folders">
-                                                                        {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
-                                                                            <div>
-                                                                                <ListItem button>
-                                                                                    <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
-                                                                                        <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
-                                                                                    </Link>
-                                                                                </ListItem>
-                                                                            </div>
-                                                                        ))}
-                                                                    </List>
+                                                                    {
+                                                                        newsList.totalData === 0 ?
+                                                                            (
+                                                                                <ZeroAnswerView/>
+                                                                            )
+                                                                            :
+                                                                            (
+                                                                                <>
+                                                                                    <List sx={style} component="nav" aria-label="mailbox folders">
+                                                                                        {newsList.stockNewsList.map((news: { link: string; title:string; date: string; }) => (
+                                                                                            <div>
+                                                                                                <ListItem button>
+                                                                                                    <Link to={`${news.link}`} style={{ textDecoration: "none" , color: 'black'}}>
+                                                                                                        <ListItemText primary={news.title} secondary={news.date} style={{fontFamily: 'Pretendard'}}/>
+                                                                                                    </Link>
+                                                                                                </ListItem>
+                                                                                            </div>
+                                                                                        ))}
+                                                                                    </List>
+                                                                                </>
+                                                                            )
+
+                                                                    }
                                                                 </>
                                                             )
-
                                                     }
-                                                </>)
+                                                </>
+                                            )
                                     }
                                 </>
                             )
