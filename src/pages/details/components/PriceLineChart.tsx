@@ -11,6 +11,7 @@ import Loader from "../../../components/Loader";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import ErrorView from "./ErrorView";
 import {forEach} from "lodash";
+import NotSupportView from "./NotSupportView";
 
 interface Props {
     period : string;
@@ -22,6 +23,7 @@ export default function PriceLineChart ({symbol,period}:Props){
 
     const [loading, setLoading] = useState(false);
     const [errorStatus, setErrorStatus] = useState(false);
+    const [notSupportedStatus, setNotSupportedStatus] = useState(false);
     const [stockGraphData, setStockGraphData] = useState<StockPriceGraphData|null>(null);
     const [lineColor, setLineColor] = useState("#026BFB");
 
@@ -39,7 +41,10 @@ export default function PriceLineChart ({symbol,period}:Props){
                         //@ts-ignore
                         setStockGraphData(res.data.result);
 
-                    }else{
+                    }else if(res.data.status.status === "E904"){
+                        setNotSupportedStatus(true);
+                    }
+                    else{
                         setErrorStatus(true);
                     }
 
@@ -108,25 +113,39 @@ export default function PriceLineChart ({symbol,period}:Props){
                             )
                             :
                                 (
-                                    stockGraphData &&
                                     <>
-                                        <ResponsiveContainer>
-                                            <LineChart data={stockGraphData.data} margin={{top: 5, right: 10, left: 10, bottom: 5}}>
-                                                <XAxis dataKey="time" hide={true} type="number"
-                                                       domain={[stockGraphData.dateInfo.minDate, stockGraphData.dateInfo.maxDate]}/>
-                                                <YAxis dataKey="price" type="number"
-                                                       domain={[stockGraphData.priceInfo.minPrice, stockGraphData.priceInfo.maxPrice]}
-                                                       hide={true}/>
-                                                <Tooltip
-                                                    separator={""}
-                                                    formatter={(value, name, props) => [value, ""]}
-                                                    labelFormatter={label => toDate(label, period)}
-                                                />
-                                                <Line type="linear" dataKey="price" stroke={lineColor} dot={false} strokeWidth={2}/>
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    </>
+                                    {
+                                        notSupportedStatus ?
 
+                                            (
+                                                <NotSupportView/>
+                                            )
+                                            :
+                                                (
+
+                                                        stockGraphData &&
+                                                        <>
+                                                            <ResponsiveContainer>
+                                                                <LineChart data={stockGraphData.data} margin={{top: 5, right: 10, left: 10, bottom: 5}}>
+                                                                    <XAxis dataKey="time" hide={true} type="number"
+                                                                    domain={[stockGraphData.dateInfo.minDate, stockGraphData.dateInfo.maxDate]}/>
+                                                                    <YAxis dataKey="price" type="number"
+                                                                    domain={[stockGraphData.priceInfo.minPrice, stockGraphData.priceInfo.maxPrice]}
+                                                                    hide={true}/>
+                                                                    <Tooltip
+                                                                    separator={""}
+                                                                    formatter={(value, name, props) => [value, ""]}
+                                                                    labelFormatter={label => toDate(label, period)}
+                                                                    />
+                                                                    <Line type="linear" dataKey="price" stroke={lineColor} dot={false} strokeWidth={2}/>
+                                                                </LineChart>
+                                                            </ResponsiveContainer>
+                                                        </>
+
+
+                                                )
+                                    }
+                                  </>
                                 )
                         }
                     </>
