@@ -83,7 +83,10 @@ export default function DetailPage() {
                             if(res.data.status.status === "E000"){
                                 // @ts-ignore
                                 setStockInfo(res.data.result);
-                            }else{
+                            }else if(res.data.status.status === "E905"){
+                                navigate("/not-exist");
+                            }
+                            else{
                                 navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                             }
 

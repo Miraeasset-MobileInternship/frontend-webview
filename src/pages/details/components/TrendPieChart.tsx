@@ -102,7 +102,7 @@ export default function TrendPieChart ({symbol, period}:Props){
                                                                                                 {/*dataKey: 써있는 값*/}
                                                                                                 <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
                                                                                                     {
-                                                                                                        data.map((entry, index) => (
+                                                                                                        graphData.map((entry, index) => (
                                                                                                             <Cell key={`cell-${index}`} fill={entry.color}/>
                                                                                                         ))
                                                                                                     }
@@ -127,21 +127,21 @@ export default function TrendPieChart ({symbol, period}:Props){
 }
 
 
-const data : StockTrendTypes[] = [
-    {
-        "id": "Strong Buy",
-        "value": 11,
-        "color": "#F56C3B"
-    },
-    {
-        "id": "Buy",
-        "value": 21,
-        "color": "#FEF0EB"
-    },
-    {
-        "id": "Hold",
-        "value": 6,
-        "color": "#E9E9E9"
-    }
-
-]
+// const data : StockTrendTypes[] = [
+//     {
+//         "id": "Strong Buy",
+//         "value": 11,
+//         "color": "#F56C3B"
+//     },
+//     {
+//         "id": "Buy",
+//         "value": 21,
+//         "color": "#FEF0EB"
+//     },
+//     {
+//         "id": "Hold",
+//         "value": 6,
+//         "color": "#E9E9E9"
+//     }
+//
+// ]

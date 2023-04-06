@@ -204,7 +204,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#FF484E'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High"}/>
                                                                 </ListItem>
@@ -213,7 +213,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#FF484E'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High Change"}/>
                                                                 </ListItem>
@@ -222,7 +222,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#5787DE'}}
+                                                                    style={{height: 'fit-content', color: '#026BFB'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low"}/>
                                                                 </ListItem>
@@ -231,7 +231,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content',color: '#5787DE'}}
+                                                                    style={{height: 'fit-content',color: '#026BFB'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low Change"}/>
                                                                 </ListItem>

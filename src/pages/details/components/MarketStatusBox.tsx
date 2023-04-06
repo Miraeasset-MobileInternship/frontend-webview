@@ -38,7 +38,7 @@ const TextBox = styled.div<Props>`
   margin-left: 10px;
   
 
-  background-color: ${props => (props.isOpen ? "#FEF0EB":"#E9F3FF")};
+  background-color: ${props => (props.isOpen ? "#FFF5F5":"#F2FAFF")};
 
 
 `;
@@ -52,7 +52,7 @@ const TagText = styled.text<Props>`
   padding-right: 5px;
   font-size: 1.5vh;
 
-  color: ${(props) => (props.isOpen ? ('#F56C3B'):('#83BBF8'))};
+  color: ${(props) => (props.isOpen ? ('#FF484E'):('#026BFB'))};
 
 
 `;

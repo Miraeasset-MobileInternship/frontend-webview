@@ -32,29 +32,44 @@ export default function CardView({symbol,title,price,changePrice,changePercent}:
         <div onClick={navigateToDetail}>
             <Card sx={{ minWidth: 160, maxHeight: 120 }} style={{  boxShadow: "0px 0px 5px 1px rgba(103, 105, 106, 0.25)", borderRadius: 12,}}>
                 <CardContent sx={{paddingTop:1, paddingBottom:1, paddingLeft:1.5}}>
-                    <Typography color="text.primary" >
-                        <TitleText>{title}</TitleText>
-                    </Typography>
-                    <Typography variant="h5" component="div">
-                        <MainText>{price}</MainText>
-                    </Typography>
-                    <Typography sx={{ mb: 2 }} >
-                        {changePrice>0 ? (
-                            <>
-                                <DefaultText style={{color: "#D06464"}}>{"+"}{changePrice}{"  "}</DefaultText>
-                                <DefaultText style={{color: "#D06464"}}>{"("}{changePercent}{"%)"}</DefaultText>
-                            </>
-                        )
-                            :
-                        (
-                            <>
-                                <DefaultText style={{color: "#5787DE"}}>{changePrice}</DefaultText>
-                                <DefaultText style={{color: "#5787DE"}}>{"("}{changePercent}{"%)"}</DefaultText>
-                            </>
-                        )
-                        }
+                    {
+                        title.length>=20 ?
+                            (
+                                <>
+                                    <Typography color="text.primary" >
+                                        <TitleText style={{fontSize:12,flexWrap:'wrap',wordWrap: 'break-word'}}>{title}</TitleText>
+                                    </Typography>
 
-                    </Typography>
+                                </>
+                            )
+                            :
+                                (
+                                    <>
+                                        <Typography color="text.primary" >
+                                            <TitleText style={{flexWrap:'wrap',wordWrap: 'break-word'}}>{title}</TitleText>
+                                        </Typography>
+                                    </>
+                                )
+                    }
+                        <Typography variant="h5" component="div">
+                            <MainText>{price}</MainText>
+                        </Typography>
+                        <Typography sx={{ mb: 2 }} >
+                            {changePrice>0 ? (
+                                    <div>
+                                        <DefaultText style={{color: "#FF484E"}}>{"+"}{changePrice}{"  "}</DefaultText>
+                                        <DefaultText style={{color: "#FF484E"}}>{"("}{changePercent}{"%)"}</DefaultText>
+                                    </div>
+                                )
+                                :
+                                (
+                                    <div >
+                                        <DefaultText style={{color: "#026BFB"}}>{changePrice}</DefaultText>
+                                        <DefaultText style={{color: "#026BFB"}}>{"("}{changePercent}{"%)"}</DefaultText>
+                                    </div>
+                                )
+                            }
+                        </Typography>
                 </CardContent>
             </Card>
         </div>
@@ -65,7 +80,7 @@ const DefaultText = styled.text`
 
     //height: 100vh;
 
-    color: red;
+    //color: red;
 
     font-size: 13px;
 
