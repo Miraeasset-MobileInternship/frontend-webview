@@ -55,11 +55,10 @@ export default function TrendPieChart ({symbol, period}:Props){
         };
 
 
-    //리로드 시마다 1회만 실행
+
     useEffect(() => {
         getRecommendTrend(symbol,period)
     },[period]);
-
 
     return (
         <>
@@ -88,20 +87,30 @@ export default function TrendPieChart ({symbol, period}:Props){
                                                                 :
                                                                 (
                                                                     graphData &&
+
                                                                     <>
-                                                                        <ResponsiveContainer>
-                                                                            <PieChart height={260}>
-                                                                                {/*dataKey: 써있는 값*/}
-                                                                                <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
-                                                                                    {
-                                                                                        data.map((entry, index) => (
-                                                                                            <Cell key={`cell-${index}`} fill={entry.color}/>
-                                                                                        ))
-                                                                                    }
-                                                                                </Pie>
-                                                                                <PolarAngleAxis></PolarAngleAxis>
-                                                                            </PieChart>
-                                                                        </ResponsiveContainer>
+                                                                        {
+                                                                            graphData.length===0 ?
+                                                                                (
+                                                                                    <ZeroAnswerView/>
+                                                                                )
+                                                                                :
+                                                                                    (
+                                                                                        <ResponsiveContainer>
+                                                                                            <PieChart height={260}>
+                                                                                                {/*dataKey: 써있는 값*/}
+                                                                                                <Pie data={graphData} cx="50%" cy="50%" outerRadius={90} dataKey="value" label={(data) => (data.id)}>
+                                                                                                    {
+                                                                                                        graphData.map((entry, index) => (
+                                                                                                            <Cell key={`cell-${index}`} fill={entry.color}/>
+                                                                                                        ))
+                                                                                                    }
+                                                                                                </Pie>
+                                                                                                <PolarAngleAxis></PolarAngleAxis>
+                                                                                            </PieChart>
+                                                                                        </ResponsiveContainer>
+                                                                                    )
+                                                                        }
                                                                     </>
                                                                 )
 
@@ -117,21 +126,21 @@ export default function TrendPieChart ({symbol, period}:Props){
 }
 
 
-const data : StockTrendTypes[] = [
-    {
-        "id": "Strong Buy",
-        "value": 11,
-        "color": "#F56C3B"
-    },
-    {
-        "id": "Buy",
-        "value": 21,
-        "color": "#FEF0EB"
-    },
-    {
-        "id": "Hold",
-        "value": 6,
-        "color": "#E9E9E9"
-    }
-
-]
+// const data : StockTrendTypes[] = [
+//     {
+//         "id": "Strong Buy",
+//         "value": 11,
+//         "color": "#F56C3B"
+//     },
+//     {
+//         "id": "Buy",
+//         "value": 21,
+//         "color": "#FEF0EB"
+//     },
+//     {
+//         "id": "Hold",
+//         "value": 6,
+//         "color": "#E9E9E9"
+//     }
+//
+// ]

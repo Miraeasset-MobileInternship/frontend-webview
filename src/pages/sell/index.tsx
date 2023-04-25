@@ -10,16 +10,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
 import StockSellingCheckTypes from "../../types/StockSellingCheckTypes";
 import sellingStockService from "../../services/sellingStockService";
-
-interface Props {
-
-    studentId:number;
-}
+import Header from "../../components/Header";
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 
-export default function SellPage({studentId}:Props) {
+export default function SellPage() {
     const params = useParams();
     const symbol:string = params.stockId as string;
+    const studentId = Number(localStorage.getItem("studentId"));
 
     const navigate = useNavigate();
 
@@ -94,7 +92,7 @@ export default function SellPage({studentId}:Props) {
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
                         navigate("/"+symbol+"/stock-success");
-                    }else if(res.data.status.status === "E902"){
+                    }else if(res.data.status.status === "E902" || res.data.status.status === "E906"){
                         //보유 수량보다 더 많이 판매하려고 하는 경우 막기
                         setErrorMessage(res.data.status.message);
                     }else{
@@ -127,6 +125,7 @@ export default function SellPage({studentId}:Props) {
 
     return (
         <>
+
             {
                 loading||sellLoading ?
                     (
@@ -140,7 +139,8 @@ export default function SellPage({studentId}:Props) {
                         sellingCheck &&
 
                         <div className="stock-container">
-                            <div className="title-area">
+                            <div className="title-area" style={{display:'flex', flexDirection:'column'}}>
+                                <Header/>
                                 <TitleText>{sellingCheck.stockTitle}</TitleText>
                             </div>
                             <div className="main-view-area">
@@ -159,7 +159,10 @@ export default function SellPage({studentId}:Props) {
                                             onMouseEnter={handlePopoverOpen}
                                             onMouseLeave={handlePopoverClose}
                                         >
-                                            <DefaultText>{"판매 가능 가격"}</DefaultText>
+                                            <div style={{display:"flex", flexDirection:"row", alignItems:'center'}}>
+                                                <DefaultText>{"판매 가능 가격"}</DefaultText>
+                                                <HelpOutlineIcon sx={{color: '#026BFB', fontSize:"20px", paddingBottom:'2px'}}/>
+                                            </div>
                                         </Typography>
                                         <Popover
                                             id="mouse-over-popover"

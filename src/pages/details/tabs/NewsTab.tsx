@@ -57,7 +57,7 @@ export default function NewsTab({symbol}:Props) {
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };

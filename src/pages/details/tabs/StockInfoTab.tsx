@@ -108,7 +108,7 @@ export default function StockInfoTab({symbol}:Props) {
 
 
     return (
-        <div style={{height: '100%', overflowY : "scroll"}}>
+        <div className="detail-page-scroll">
             <div style={{height: 'fit-content', paddingTop: 20, paddingBottom: 5, }}>
                 <div style={{height: '30px',}}>
                     <TitleText>{'종목 상세'}</TitleText>
@@ -204,7 +204,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHigh} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#FF484E'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High"}/>
                                                                 </ListItem>
@@ -213,7 +213,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekHighChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#D06464'}}
+                                                                    style={{height: 'fit-content', color: '#FF484E'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks High Change"}/>
                                                                 </ListItem>
@@ -222,7 +222,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLow} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content', color: '#5787DE'}}
+                                                                    style={{height: 'fit-content', color: '#026BFB'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low"}/>
                                                                 </ListItem>
@@ -231,7 +231,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                     secondaryAction={
                                                                         <ListItemText primary={stockInfo.fiftyTwoWeekLowChange} sx={{width: '60vw', flexWrap:'wrap',wordWrap: 'break-word', textAlign:'right'}} />
                                                                     }
-                                                                    style={{height: 'fit-content',color: '#5787DE'}}
+                                                                    style={{height: 'fit-content',color: '#026BFB'}}
                                                                 >
                                                                     <ListItemText secondary={"52Weeks Low Change"}/>
                                                                 </ListItem>
@@ -280,7 +280,9 @@ export default function StockInfoTab({symbol}:Props) {
                         {
                             similarLoading ?
                                 (
-                                    <Loader/>
+                                    <div style={{display:'flex', justifyContent:'center', alignItems:'center', padding:30}}>
+                                        <Loader/>
+                                    </div>
                                 )
                                 :
                                 (
@@ -301,7 +303,7 @@ export default function StockInfoTab({symbol}:Props) {
                                                                         (
                                                                             <>
 
-                                                                                <div style={{ overflowX: "scroll", overflowY: 'hidden', height: '170px', display: "flex",flexDirection: 'row', alignItems: "center"}}>
+                                                                                <div className="similar-scroll">
                                                                                     {similarStocks.stockInfoList.map((s)=>(
                                                                                         <div style={{paddingRight: 15}}>
                                                                                             <CardView symbol={s.symbol} title={s.stockTitle} price={s.price} changePrice={s.changePrice} changePercent={s.changePercent}/>

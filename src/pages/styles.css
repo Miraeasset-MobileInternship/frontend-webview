@@ -87,7 +87,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    background-color: aliceblue;
+    /*background-color: aliceblue;*/
 
     box-sizing: border-box;
     padding-left:15px;
@@ -179,6 +179,40 @@
 
 }
 
+.scroll-view-area::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+
+/* 모든 탭 스크롤 */
+.detail-page-scroll {
+
+    height: 100%;
+    overflow-y: scroll;
+
+}
+
+.detail-page-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* 유사 종목 스크롤 */
+.similar-scroll {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 170px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.similar-scroll::-webkit-scrollbar {
+    display: none;
+}
+
 
 /*매수, 매도용 style*/
 
@@ -223,4 +257,64 @@
 
 
     /*background-color: aquamarine;*/
+}
+
+/*메인화면에 있는 버튼*/
+
+.rank-btn {
+
+    margin-right: 5px;
+
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #E5E4E1;
+
+    color: #84888B;
+    font-weight: 300;
+
+}
+
+.rank-btn-select {
+
+    margin-right: 5px;
+
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #F58220;
+    color: white;
+    font-weight: 700;
+
+
+}
+
+.rank-btn-scroll {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    padding-top: 5px;
+}
+
+.rank-btn-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+
+.rank-scroll {
+    height: fit-content;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
+.rank-scroll::-webkit-scrollbar {
+    display: none;
 }

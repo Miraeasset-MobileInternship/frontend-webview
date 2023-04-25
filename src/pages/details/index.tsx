@@ -20,6 +20,7 @@ import Loader from "../../components/Loader";
 import sellingStockService from "../../services/sellingStockService";
 import classService from "../../services/classService";
 import ClassCurrencyTypes from "../../types/ClassCurrencyTypes";
+import Header from "../../components/Header";
 
 
 
@@ -35,6 +36,8 @@ export default function DetailPage() {
     // link에서 symbol을 가져오기
     const params = useParams();
     const symbol:string = params.stockId as string;
+    const classId = Number(localStorage.getItem("classId"));
+    const studentId = Number(localStorage.getItem("studentId"));
 
 
     const navigate = useNavigate();
@@ -83,7 +86,10 @@ export default function DetailPage() {
                             if(res.data.status.status === "E000"){
                                 // @ts-ignore
                                 setStockInfo(res.data.result);
-                            }else{
+                            }else if(res.data.status.status === "E905"){
+                                navigate("/not-exist");
+                            }
+                            else{
                                 navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                             }
 
@@ -149,11 +155,15 @@ export default function DetailPage() {
 
     //리로드 시마다 1회만 실행
     useEffect(() => {
-        getStockInfo(symbol,4);
-        checkSelling(symbol, 10);
+        getStockInfo(symbol,classId);
+        checkSelling(symbol,studentId);
     },[]);
 
+
+
+
     return (
+        <>
         <div className="container">
             <div className="top-area">
                 <>
@@ -238,6 +248,7 @@ export default function DetailPage() {
                 </div>
             </div>
         </div>
+            </>
     );
 }
 
@@ -310,6 +321,6 @@ const TitleText = styled.text`
 
 
 const tmpCurrency:ClassCurrencyTypes = {
-    classId: -1,
+    classId: Number(localStorage.getItem("classId")),
     currency: "",
 }

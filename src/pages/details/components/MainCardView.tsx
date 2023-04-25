@@ -46,18 +46,18 @@ export default function MainCardView({currency,price,changePrice,changePercent,s
                 </div>
                 <div style={{height: '30%', display:"flex", alignItems:'center',}}>
                     <Typography variant="h5" component="div" style={{paddingLeft:7}}>
-                        <MainText>{price}{" "}</MainText>
+                        <MainText style={{paddingRight:10}}>{price}{currency}</MainText>
                         {changePrice >= 0 ? (
                             <>
-                                <DefaultText style={{color: "#D06464"}}>{" +"}{changePrice}{currency}{"  "}</DefaultText>
-                                <DefaultText style={{color: "#D06464"}}>{" ("}{changePercent}{"%)"}</DefaultText>
+                                <DefaultText style={{color: "#FF484E"}}>{" +"}{changePrice}{"  "}</DefaultText>
+                                <DefaultText style={{color: "#FF484E"}}>{" ("}{changePercent}{"%)"}</DefaultText>
                             </>
                         )
                             :
                         (
                             <>
-                                <DefaultText style={{color: "#5787DE"}}>{changePrice}{currency}{"  "}</DefaultText>
-                                <DefaultText style={{color: "#5787DE"}}>{" ("}{changePercent}{"%)"}</DefaultText>
+                                <DefaultText style={{color: "#026BFB"}}>{changePrice}{"  "}</DefaultText>
+                                <DefaultText style={{color: "#026BFB"}}>{" ("}{changePercent}{"%)"}</DefaultText>
                             </>
                         )
                         }
@@ -65,14 +65,14 @@ export default function MainCardView({currency,price,changePrice,changePercent,s
                 </div>
                 <div style={{display: "flex", flexDirection: 'row',
                     padding:7, height: '35%'}}>
-                    <CustomBtn style={{backgroundColor: "#FEF8F8"}} onClick={navigateToBuy}>
-                        <ButtonText style={{color: "#D06464"}}>{"매수하기"}</ButtonText>
+                    <CustomBtn style={{backgroundColor: "#FFF5F5"}} onClick={navigateToBuy}>
+                        <ButtonText style={{color: "#FF484E"}}>{"매수하기"}</ButtonText>
                     </CustomBtn>
                     <div style={{padding:5}}/>
                     {sellAvailable ?
                         (
-                            <CustomBtn style={{backgroundColor: "#EEF2FC"}} onClick={navigateToSell}>
-                                <ButtonText style={{color: "#5787DE"}}>{"매도하기"}</ButtonText>
+                            <CustomBtn style={{backgroundColor: "#F2FAFF"}} onClick={navigateToSell}>
+                                <ButtonText style={{color: "#026BFB"}}>{"매도하기"}</ButtonText>
                             </CustomBtn>
                         )
                         :

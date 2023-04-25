@@ -16,8 +16,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -29,8 +30,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -43,8 +45,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -57,22 +60,24 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
 
     //최다 조회
-    getWatchList(count:number) {
+    getWatchList(count:number, type:string) {
         return axios.get<response>(
-            baseUrl + "/watch-list?count=" +count, // api 주소
+            baseUrl + "/watch-list?count=" +count+"&strIds="+type, // api 주소
             {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -84,8 +89,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -98,8 +104,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -112,8 +119,9 @@ class detailInfoService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 }

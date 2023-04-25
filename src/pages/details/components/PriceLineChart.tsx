@@ -69,9 +69,9 @@ export default function PriceLineChart ({symbol,period}:Props){
 
         // @ts-ignore
         if(stockGraphData?.data[0].price <= stockGraphData?.data[len].price){
-            setLineColor("#D06464")
+            setLineColor("#FF484E")
         }else{
-            setLineColor("#7E9FC3");
+            setLineColor("#026BFB");
         }
     },[stockGraphData]);
 
