@@ -16,8 +16,9 @@ class sellingStockService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
-            } // header 정의
+            }, // header 정의
         )
     }
 
@@ -36,6 +37,7 @@ class sellingStockService {
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
+                    "Authorization": `${localStorage.getItem("accessToken")}`,
                 },
             }, // header 정의
         )

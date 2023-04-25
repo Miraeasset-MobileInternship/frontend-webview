@@ -43,13 +43,13 @@ export default function CompanyInfoTab({symbol}:Props) {
                         // @ts-ignore
                         setCompanyInfo(res.data.result);
                     }else{
-                        console.log(res.data.status.status)
+                        // console.log(res.data.status.status)
                         setErrorStatus(true);
                     }
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
@@ -81,7 +81,7 @@ export default function CompanyInfoTab({symbol}:Props) {
                                 (
                                     companyInfo &&
                                         <>
-                                            <div style={{height: '100%', overflowY : "scroll"}}>
+                                            <div className="detail-page-scroll">
                                                 <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, }}>
                                                     <div style={{height: '30px',}}>
                                                         <TitleText>{'기업 정보'}</TitleText>

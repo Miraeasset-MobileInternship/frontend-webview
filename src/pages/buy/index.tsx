@@ -8,15 +8,17 @@ import detailInfoService from "../../services/detailInfoService";
 import buyingStockService from "../../services/buyingStockService";
 import {useNavigate, useParams} from "react-router-dom";
 import Loader from "../../components/Loader";
-
-interface Props {
-    studentId:number;
-}
+import Header from "../../components/Header";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 
-export default function BuyPage({studentId}:Props) {
+
+
+export default function BuyPage() {
     const params = useParams();
     const symbol:string = params.stockId as string;
+    const studentId:number = Number(localStorage.getItem("studentId"));
+
 
     const navigate = useNavigate();
 
@@ -54,7 +56,7 @@ export default function BuyPage({studentId}:Props) {
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
@@ -84,10 +86,11 @@ export default function BuyPage({studentId}:Props) {
                     if(res.data.status.status === "E000"){
                         // @ts-ignore
                         navigate("/"+symbol+"/stock-success");
-                    }else if(res.data.status.status === "E903"){
-                        //돈이 부족해서 거래가 안되는 경우->에러 메세지에 표시
+                    }else if(res.data.status.status === "E903" || res.data.status.status === "E906"){
+                        //돈이 부족해서 거래가 안되는 경우 or 0개 이하 매매 ->에러 메세지에 표시
                         setErrorMessage(res.data.status.message);
-                    }else{
+                    }
+                    else{
                         //다른 에러는 유저가 알필요 없는 에러(db등)
                         navigate("/"+symbol+"/stock-error");
                     }
@@ -130,9 +133,9 @@ export default function BuyPage({studentId}:Props) {
                     (
 
                         buyingCheck &&
-
                         <div className="stock-container">
-                            <div className="title-area">
+                            <div className="title-area" style={{display:'flex', flexDirection:'column'}}>
+                                <Header/>
                                 <TitleText>{buyingCheck.stockTitle}</TitleText>
                             </div>
                             <div className="main-view-area">
@@ -151,7 +154,10 @@ export default function BuyPage({studentId}:Props) {
                                             onMouseEnter={handlePopoverOpen}
                                             onMouseLeave={handlePopoverClose}
                                         >
-                                            <DefaultText>{"구매 가능 가격"}</DefaultText>
+                                            <div style={{display:"flex", flexDirection:"row", alignItems:'center'}}>
+                                                <DefaultText>{"구매 가능 가격"}</DefaultText>
+                                                <HelpOutlineIcon sx={{color: '#FF484E', fontSize:"20px", paddingBottom:'2px'}}/>
+                                            </div>
                                         </Typography>
                                         <Popover
                                             id="mouse-over-popover"

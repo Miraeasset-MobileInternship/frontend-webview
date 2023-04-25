@@ -18,6 +18,7 @@ import Loader from "../../../components/Loader";
 import ErrorView from "../components/ErrorView";
 import ZeroAnswerView from "../components/ZeroAnswerView";
 import NotSupportView from "../components/NotSupportView";
+import Tab from "@mui/material/Tab";
 
 
 type Props = {
@@ -80,13 +81,46 @@ export default function HomeTab({symbol,setTabValue}:Props) {
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 
 
-    //최다 조회 종목
+
+
+    // watchlist
+    //랭킹 버튼
+    const items = [
+        {
+            title: 'GAINER',
+            type: 'day_gainers',
+        },
+        {
+            title: 'LOSER',
+            type: 'day_losers',
+        },
+        {
+            title: 'ACTIVE',
+            type: 'most_actives',
+        },
+        {
+            title: 'TECH',
+            type: 'growth_technology_stocks',
+        },
+        {
+            title: 'UNDERVALUED',
+            type: 'undervalued_growth_stocks',
+        },
+    ];
+
+    const [select, setSelect] = useState<string>('day_gainers');
+
+    const handleClick = (type: string) => {
+        setSelect(type);
+    };
+
+
     const [rankLoading, setRankLoading] = useState(false);
     const [rankErrorStatus, setRankErrorStatus] = useState(false);
     const [watchList, setWatchList] = useState<WatchedStockInfoTypes|null>(null);
@@ -95,9 +129,11 @@ export default function HomeTab({symbol,setTabValue}:Props) {
     const getWatchList =
         () => {
 
+            // console.log(select)
+
             setRankLoading(true);
             // 여기서는 5위까지만 보여주기
-            detailInfoService.getWatchList(5)
+            detailInfoService.getWatchList(5, select)
                 .then( res => {
 
                     setRankLoading(false);
@@ -111,19 +147,25 @@ export default function HomeTab({symbol,setTabValue}:Props) {
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
 
 
+
+    useEffect(() => {
+
+        getWatchList();
+
+    },[select])
+
     //리로드 시마다 1회만 실행
     useEffect(() => {
+
         getNewsList(symbol)
         getWatchList()
     },[]);
-
-
 
     const directToDetail = (symbol:string) => {
 
@@ -133,9 +175,8 @@ export default function HomeTab({symbol,setTabValue}:Props) {
     }
 
 
-
     return (
-        <div style={{height: '100%', overflowY : "scroll"}}>
+        <div className="detail-page-scroll">
             <div style={{height: '400px', paddingTop: 20, paddingBottom: 60,}}>
                 <div style={{height: '30px', display: "flex", flexDirection: "row"}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
@@ -240,20 +281,32 @@ export default function HomeTab({symbol,setTabValue}:Props) {
             <div style={{height: 'fit-content', paddingTop: 5, paddingBottom: 5, }}>
                 <div style={{height: '30px',  display: "flex",flexDirection:'row'}}>
                     <div style={{justifyContent: 'flex-start', flex:6}}>
-                        <TitleText>{'최다 조회 종목'}</TitleText>
+                        <TitleText>{'오늘의 종목 순위'}</TitleText>
                     </div>
                     <div style={{textAlign:'right', flex:1, }} onClick={navigateToRanking}>
                         <DefaultText>{"더보기"}</DefaultText>
                     </div>
                 </div>
-
+                <div className="rank-btn-scroll">
+                    {items.map((item, index) => (
+                        <div
+                            key={index}
+                            onClick={() => handleClick(item.type)} 		      // type 받아 set함수에 넣어준다
+                            className={`${select === item.type ? 'rank-btn-select' : 'rank-btn'}`} // 클릭하면 select클래스가 추가
+                        >
+                                {item.title}
+                        </div>
+                    ))}
+                </div>
 
 
                 <>
                     {
                         rankLoading ?
                             (
-                                <Loader/>
+                                <div style={{padding:30}}>
+                                    <Loader/>
+                                </div>
                             )
                             :
                             (
@@ -288,7 +341,7 @@ export default function HomeTab({symbol,setTabValue}:Props) {
                                                                                     <div style={{flex:9, }}>
                                                                                         <RankTitleText>{w.stockTitle}</RankTitleText>
                                                                                     </div>
-                                                                                    {w.price >= 0 ?
+                                                                                    {w.changePrice >= 0 ?
                                                                                         (
                                                                                             <>
                                                                                                 <div style={{flex:3, textAlign:'right',}}>
@@ -386,6 +439,9 @@ const DefaultText = styled.text`
     text-align: center;
 
 `;
+
+
+
 
 // const similarStocks :SimilarStockTypes = {
 //     "totalData": 5,

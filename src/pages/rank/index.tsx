@@ -12,9 +12,51 @@ import detailInfoService from "../../services/detailInfoService";
 import ErrorView from "../details/components/ErrorView";
 import Loader from "../../components/Loader";
 import ZeroAnswerView from "../details/components/ZeroAnswerView";
+import Header from "../../components/Header";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import HomeTab from "../details/tabs/HomeTab";
+import ChartTab from "../details/tabs/ChartTab";
+import StockInfoTab from "../details/tabs/StockInfoTab";
+import NewsTab from "../details/tabs/NewsTab";
+import CompanyInfoTab from "../details/tabs/CompanyInfoTab";
+import StockDetailInfo from "../../types/StockDetailTypes";
 
+
+
+type rankType = {
+    value:string,
+    type:string,
+    contents:string,
+
+}
 
 export default function RankPage() {
+    const sections: rankType[] = [
+        { value: '0', type: 'day_gainers', contents: '직전날 종가 대비 변동가 상위 종목'},
+        { value: '1', type: 'day_losers', contents: '직전날 종가 대비 변동가 하위 종목'},
+        { value: '2', type: 'most_actives' , contents: '오늘 거래량 상위 종목'},
+        { value: '3', type: 'growth_technology_stocks', contents: '매출 및 수익증가율이 25%이상인 기술 관련 종목 '},
+        { value: '4', type: 'undervalued_large_caps', contents: '저평가된 잠재력있는 대형주'},
+        { value: '5', type: 'undervalued_growth_stocks', contents: '실적 성장률이 25%를 상회하고 PE와 PEG 비율이 상대적으로 낮은 종목'},
+    ];
+
+    //Tab
+    const [value, setValue] = React.useState('0');
+    const [type, setType] = React.useState('day_gainers');
+    const [contents, setContents] = React.useState('직전날 종가 대비 변동가 상위 종목');
+
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+        setValue(newValue);
+
+        // @ts-ignore
+        setType(sections.at(Number(value)).type)
+
+    };
+
+
+
 
     const navigate = useNavigate();
 
@@ -37,7 +79,7 @@ export default function RankPage() {
 
             setLoading(true);
             // 이 페이지에서는 all로 간다
-            detailInfoService.getWatchList(100)
+            detailInfoService.getWatchList(100,type)
                 .then( res => {
 
                     setLoading(false);
@@ -51,7 +93,7 @@ export default function RankPage() {
 
                 })
                 .catch(reason => {
-                    console.log(reason);
+                    // console.log(reason);
                     navigate("/error"); //여기서 에러나면 그냥 에러페이지로
                 });
         };
@@ -59,119 +101,221 @@ export default function RankPage() {
 
     //리로드 시마다 1회만 실행
     useEffect(() => {
+        // console.log("타입이 변경되었습니다. "+type)
         getWatchList()
-    },[]);
+    },[type]);
+
+
+    useEffect(() => {
+        // console.log("value가 변경되었습니다. "+value)
+        // @ts-ignore
+        setType(sections.at(Number(value)).type)
+        // @ts-ignore
+        setContents(sections.at(Number(value)).contents)
+    },[value]);
+
 
 
     return (
         <>
-            {
-                loading ?
+        { loading ?
+                (
+                    <div style={{height: '100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <Loader/>
+                    </div>
+                )
+                :
                     (
-                        <div style={{height:'100vh'}}>
-                            <Loader/>
-                        </div>
-                    )
-                    :
-                    (
-                        <>
-                            {
-                                errorStatus ?
-                                    (
-                                        <div style={{height:'100vh'}}>
-                                            <ErrorView/>
-                                        </div>
-                                    )
-                                    :
-                                    (
-                                        watchList &&
+    <>
+        <Header/>
+        {
+            <>
+                {
+                    errorStatus ?
+                        (
+                            <div style={{height: '100vh'}}>
+                                <ErrorView/>
+                            </div>
+                        )
+                        :
+                        (
+                            watchList &&
+                            <>
+                                {
+                                    watchList.totalData === 0 ?
+                                        (
+                                            <ZeroAnswerView/>
+                                        )
+                                        :
+                                        (
                                             <>
-                                        {
-                                           watchList.totalData === 0 ?
-                                               (
-                                                   <ZeroAnswerView/>
-                                               )
-                                               :
-                                                   (
-                                               <>
-                                                   <div style={{height: "100%", display: 'flex', flexDirection: 'column', overflowY: "hidden"}}>
-                                                       <div style={{height: '30px',}}>
-                                                           <TitleText>{'상승가 인기 종목 순위'}</TitleText>
-                                                       </div>
-                                                       <div style={{height: 'fit-content'}}>
-                                                           <List
-                                                               sx={{ width: '100%', maxWidth: '100%', bgcolor: 'background.paper' }}
-                                                           >
-                                                               <ListItem>
-                                                                   <div style={{width: '100%', display:"flex", flexDirection:"row", alignItems: 'center'}}>
-                                                                       <div style={{flex:2, }}>
-                                                                           <RankTitleText>{"순위"}</RankTitleText>
-                                                                       </div>
-                                                                       <div style={{flex:9, }}>
-                                                                           <RankTitleText>{"종목명"}</RankTitleText>
-                                                                       </div>
-                                                                       <div style={{flex:3, textAlign:'right',}}>
-                                                                           <RankTitleText>{"현재가"}</RankTitleText>
-                                                                       </div>
-                                                                       <div style={{flex:3, textAlign:'right',}}>
-                                                                           <RankTitleText>{"등락률"}</RankTitleText>
-                                                                       </div>
-                                                                   </div>
-                                                               </ListItem>
-                                                               <Divider />
-                                                               {watchList.watchedStockInfoList.map((w)=>(
-                                                                   <>
-                                                                       <ListItem>
-                                                                       <div onClick={(e) => directToDetail(w.symbol)}style={{width: '100%', display: "flex", flexDirection: "row", alignItems: 'center'}}>
-                                                                           <div style={{flex: 2, textAlign: 'center', }}>
-                                                                               <RankText>{w.rank}</RankText>
-                                                                           </div>
-                                                                           <div style={{flex: 9,}}>
-                                                                               <RankTitleText>{w.stockTitle}</RankTitleText>
-                                                                           </div>
-                                                                           {w.price >= 0 ?
-                                                                               (
-                                                                                   <>
-                                                                                       <div style={{flex: 3, textAlign: 'right', }}>
-                                                                                           <RankPriceText
-                                                                                               style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
-                                                                                       </div>
-                                                                                       <div style={{flex: 3, textAlign: 'right', }}>
-                                                                                           <RankPriceText
-                                                                                               style={{color: "#D06464"}}>{"+"}{w.changePercent}{"%"}</RankPriceText>
-                                                                                       </div>
-                                                                                   </>
-                                                                               )
-                                                                               :
-                                                                               (
-                                                                                   <>
-                                                                                       <div style={{flex: 3, textAlign: 'right', }}>
-                                                                                           <RankPriceText
-                                                                                               style={{color: "#5787DE"}}>{w.changePrice}</RankPriceText>
-                                                                                       </div>
-                                                                                       <div style={{flex: 3, textAlign: 'right',}}>
-                                                                                           <RankPriceText
-                                                                                               style={{color: "#5787DE"}}>{w.changePercent}{"%"}</RankPriceText>
-                                                                                       </div>
-                                                                                   </>
-                                                                               )}
-                                                                       </div>
-                                                                   </ListItem><Divider/></>
-                                                               ))}
-                                                           </List>
-                                                       </div>
-                                                   </div>
-                                               </>
-                                                   )
-                                        }
-                                        </>
+                                                <div style={{
+                                                    height: "100%",
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    overflowY: "hidden"
+                                                }}>
+                                                    <div style={{height: '30px'}}>
+                                                        <TitleText style={{
+                                                            paddingLeft: 15,
+                                                            paddingTop: 5
+                                                        }}>{'오늘의 종목 순위'}</TitleText>
+                                                    </div>
+                                                    <div style={{overflowX: "scroll"}}>
+                                                        <Box>
+                                                            <Tabs
+                                                                value={value}
+                                                                onChange={handleChange}
+                                                                variant="scrollable"
+                                                                scrollButtons={false}
+                                                                textColor={'inherit'}
+                                                                TabIndicatorProps={{
+                                                                    style: {
+                                                                        backgroundColor: "black",
+                                                                        fontFamily: 'Pretendard'
+                                                                    }
+                                                                }}
+                                                                defaultValue='0'
+                                                            >
+                                                                <Tab label="DAY GAINERS" value='0'/>
+                                                                <Tab label="DAY LOSERS" value='1'/>
+                                                                <Tab label="MOST ACTIVES" value='2'/>
+                                                                <Tab label="GROWTH TECH" value='3'/>
+                                                                <Tab label="UNDERVALUED CAPS" value='4'/>
+                                                                <Tab label="UNDERVALUED STOCKS" value='5'/>
+                                                            </Tabs>
+                                                        </Box>
+                                                    </div>
+                                                    <div style={{padding: 10}}>
+                                                        <DefaultText>{contents}</DefaultText>
+                                                    </div>
+                                                    <div className="rank-scroll">
 
-                                    )
-                            }
-                        </>
-                    )
-            }
-        </>
+                                                        {
+                                                            loading ?
+
+                                                                (
+                                                                    <div style={{height: '80vh'}}>
+                                                                        <Loader/>
+                                                                    </div>
+                                                                )
+                                                                :
+                                                                (
+                                                                    <List
+                                                                        sx={{
+                                                                            width: '100%',
+                                                                            maxWidth: '100%',
+                                                                            bgcolor: 'background.paper'
+                                                                        }}
+                                                                    >
+                                                                        <ListItem>
+                                                                            <div style={{
+                                                                                width: '100%',
+                                                                                display: "flex",
+                                                                                flexDirection: "row",
+                                                                                alignItems: 'center'
+                                                                            }}>
+                                                                                <div style={{flex: 2,}}>
+                                                                                    <RankTitleText>{"순위"}</RankTitleText>
+                                                                                </div>
+                                                                                <div style={{flex: 9,}}>
+                                                                                    <RankTitleText>{"종목명"}</RankTitleText>
+                                                                                </div>
+                                                                                <div style={{
+                                                                                    flex: 3,
+                                                                                    textAlign: 'right',
+                                                                                }}>
+                                                                                    <RankTitleText>{"등락가"}</RankTitleText>
+                                                                                </div>
+                                                                                <div style={{
+                                                                                    flex: 3,
+                                                                                    textAlign: 'right',
+                                                                                }}>
+                                                                                    <RankTitleText>{"등락률"}</RankTitleText>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ListItem>
+                                                                        <Divider/>
+                                                                        {watchList.watchedStockInfoList.map((w) => (
+                                                                            <>
+                                                                                <ListItem>
+                                                                                    <div
+                                                                                        onClick={(e) => directToDetail(w.symbol)}
+                                                                                        style={{
+                                                                                            width: '100%',
+                                                                                            display: "flex",
+                                                                                            flexDirection: "row",
+                                                                                            alignItems: 'center'
+                                                                                        }}>
+                                                                                        <div style={{
+                                                                                            flex: 2,
+                                                                                            textAlign: 'center',
+                                                                                        }}>
+                                                                                            <RankText>{w.rank}</RankText>
+                                                                                        </div>
+                                                                                        <div style={{flex: 9,}}>
+                                                                                            <RankTitleText>{w.stockTitle}</RankTitleText>
+                                                                                        </div>
+                                                                                        {w.changePrice >= 0 ?
+                                                                                            (
+                                                                                                <>
+                                                                                                    <div style={{
+                                                                                                        flex: 3,
+                                                                                                        textAlign: 'right',
+                                                                                                    }}>
+                                                                                                        <RankPriceText
+                                                                                                            style={{color: "#D06464"}}>{"+"}{w.changePrice}</RankPriceText>
+                                                                                                    </div>
+                                                                                                    <div style={{
+                                                                                                        flex: 3,
+                                                                                                        textAlign: 'right',
+                                                                                                    }}>
+                                                                                                        <RankPriceText
+                                                                                                            style={{color: "#D06464"}}>{"+"}{w.changePercent}{"%"}</RankPriceText>
+                                                                                                    </div>
+                                                                                                </>
+                                                                                            )
+                                                                                            :
+                                                                                            (
+                                                                                                <>
+                                                                                                    <div style={{
+                                                                                                        flex: 3,
+                                                                                                        textAlign: 'right',
+                                                                                                    }}>
+                                                                                                        <RankPriceText
+                                                                                                            style={{color: "#5787DE"}}>{w.changePrice}</RankPriceText>
+                                                                                                    </div>
+                                                                                                    <div style={{
+                                                                                                        flex: 3,
+                                                                                                        textAlign: 'right',
+                                                                                                    }}>
+                                                                                                        <RankPriceText
+                                                                                                            style={{color: "#5787DE"}}>{w.changePercent}{"%"}</RankPriceText>
+                                                                                                    </div>
+                                                                                                </>
+                                                                                            )}
+                                                                                    </div>
+                                                                                </ListItem><Divider/></>
+                                                                        ))}
+                                                                    </List>
+                                                                )
+                                                        }
+
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )
+                                }
+                            </>
+
+                        )
+                }
+            </>
+        }
+    </>
+)
+}
+</>
     );
 }
 
@@ -179,13 +323,28 @@ const TitleText = styled.text`
 
 
     height: 100vh;
-
+    width: 100%;
     font-size: 23px;
 
     font-family: Pretendard;
     font-weight: 700;
 `;
 
+const DefaultText = styled.text`
+
+    //height: 100vh;
+  
+    font-size: 15px;
+
+    font-family: Pretendard;
+    font-weight: 300;
+
+
+    color : #67696A;
+    letter-spacing: 0.20000000298023224px;
+
+
+`;
 
 // const watchList : WatchedStockInfoTypes = {
 //     "totalData": 100,

@@ -1,7 +1,6 @@
 import StockDetailTypes from "../../../types/StockDetailTypes";
 import styled, {css} from 'styled-components';
 import React from "react";
-import {useEffect} from "react";
 
 
 interface Props{
@@ -14,16 +13,18 @@ interface Props{
 export default function MarketStatusBox ({isOpen}:Props){
 
     const text = isOpen ? "OPEN" : "CLOSED";
-    const backgroundColor = isOpen ? '#F56C3B': '#83BBF8';
+    const color = isOpen ? '#FFF5F5': '#F2FAFF';
+    const textColor = isOpen ? '#FF484E': '#026BFB';
 
     return (
-        <TextBox isOpen>
-            <TagText isOpen>{text}</TagText>
+        <TextBox style={{backgroundColor: color}}>
+            <TagText style={{color: textColor}}>{text}</TagText>
         </TextBox>
     );
 }
 
 const TextBox = styled.div<Props>`
+  margin-right: 5px;
   
   display: inline-block;
   

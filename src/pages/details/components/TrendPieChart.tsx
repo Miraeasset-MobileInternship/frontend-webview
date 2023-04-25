@@ -55,11 +55,10 @@ export default function TrendPieChart ({symbol, period}:Props){
         };
 
 
-    //리로드 시마다 1회만 실행
+
     useEffect(() => {
         getRecommendTrend(symbol,period)
     },[period]);
-
 
     return (
         <>

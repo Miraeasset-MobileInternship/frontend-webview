@@ -37,7 +37,7 @@ export default function CardView({symbol,title,price,changePrice,changePercent}:
                             (
                                 <>
                                     <Typography color="text.primary" >
-                                        <TitleText style={{fontSize:12,flexWrap:'wrap',wordWrap: 'break-word'}}>{title}</TitleText>
+                                        <TitleText style={{fontSize:12,flexWrap:'wrap',wordWrap: 'break-word', wordBreak: 'break-all'}}>{title}</TitleText>
                                     </Typography>
 
                                 </>
@@ -46,7 +46,7 @@ export default function CardView({symbol,title,price,changePrice,changePercent}:
                                 (
                                     <>
                                         <Typography color="text.primary" >
-                                            <TitleText style={{flexWrap:'wrap',wordWrap: 'break-word'}}>{title}</TitleText>
+                                            <TitleText style={{flexWrap:'wrap',wordWrap: 'break-word', wordBreak: 'break-all'}}>{title}</TitleText>
                                         </Typography>
                                     </>
                                 )
