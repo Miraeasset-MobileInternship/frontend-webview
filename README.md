@@ -1,17 +1,21 @@
-# M-Class React WebView
-This page belongs to the Frontend (WebView) repository of the M-CLASS project.
-You can find the other project repositories below:
-[M-Class Backend](https://github.com/Miraeasset-MobileInternship/backend) : Backend of M-Class with SpringBoot
+# M-Class React WebView 
+This page belongs to the Frontend (WebView) repository of the M-CLASS project. <br/>
+You can find the other project repositories below: <br/>
+[M-Class Backend](https://github.com/Miraeasset-MobileInternship/backend) : Backend of M-Class with SpringBoot <br/>
 
+<br/><br/>
 
 ## Overview
 
 M-Class is a full-stack fintech education app designed to help teenagers experience simulated banking and stock investment in a classroom environment.
 The app digitises a classroom-based economic education model where students use class currency, manage assets, and learn basic financial concepts through practical activities.
 
+<br/><br/>
+
 ## Background & Problem
 In some classroom-based financial education programs, students use class currency and assigned roles to learn economic activities. However, these activities are often managed manually, which makes it difficult to track assets, transactions, and investment learning progress.
 This project aimed to digitise the process and provide students with a more interactive way to learn banking and stock investment concepts.
+<br/><br/>
 
 
 ## Overall Project Tech Stack
@@ -27,6 +31,7 @@ This project aimed to digitise the process and provide students with a more inte
 | UI / Design | ![Figma](https://img.shields.io/badge/Figma-Design-coral?style=flat-square&logo=figma&logoColor=white) | Participated in planning/design |
 > Note: The iOS native wrapper was implemented by another team member. I was responsible for the React WebView screens and the Spring Boot backend.
 
+<br/><br/>
 
 ## WebView Frontend Tech Stack
 
@@ -38,12 +43,15 @@ This project aimed to digitise the process and provide students with a more inte
 ![Recharts](https://img.shields.io/badge/Recharts-2.5.0-darkseagreen?style=flat-square)
 ![Victory](https://img.shields.io/badge/Victory-36.6.8-mediumaquamarine?style=flat-square)
 
+<br/><br/>
 
 ## Architecture
-![SystemArchitecture](./public/assets/서비스구조도.png)
+![SystemArchitecture](./public/서비스구조도.png)
 
 The app used an iOS native wrapper with React-based WebView screens for stock-related flows.
 The React WebView communicated with the Spring Boot backend through REST APIs. The backend handled authentication, student data, banking features, simulated trading flows, and stock information. MySQL was used for relational data, Redis was used for token management, and Yahoo Finance API was used for stock-related data.
+
+<br/><br/>
 
 ## Web Frontend Features
 
@@ -70,8 +78,7 @@ The React WebView communicated with the Spring Boot backend through REST APIs. T
 - Implemented layouts designed for an iOS WebView environment
 - Adjusted UI components for mobile screen constraints
 
-
-## Demo
+<br/><br/>
 
 ## Demo
 
@@ -100,11 +107,16 @@ The React WebView communicated with the Spring Boot backend through REST APIs. T
   <img src="./public/news.gif" alt="News Demo" width="300" />
 </p>
 
+<br/><br/>
+
 ## Project status
 
 This repository focuses on the React WebView part of the original M-Class project.
 The original project was built as an internship project and was not publicly deployed. The iOS native wrapper is not included in this repository. Some backend API and database setup may be required to run the full flow locally.
 For portfolio purposes, this README focuses on the WebView screens I implemented, their user flows, and how they connected with the backend APIs.
+
+
+<br/><br/>
 
 ## How to Run
 
@@ -128,4 +140,4 @@ npm start
 ```
 
 ### 4. The app will run at http://localhost:3000
-Note: All screens require the Spring Boot backend and yahoo finance API to display full functionality.
+> Note: All screens require the Spring Boot backend and yahoo finance API to display full functionality.
