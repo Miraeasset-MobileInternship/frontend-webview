@@ -1,4 +1,7 @@
 # M-Class React WebView
+This page belongs to the Frontend (WebView) repository of the M-CLASS project.
+You can find the other project repositories below:
+[M-Class Backend](https://github.com/Miraeasset-MobileInternship/backend) : Backend of M-Class with SpringBoot
 
 
 ## Overview
@@ -10,8 +13,6 @@ The app digitises a classroom-based economic education model where students use 
 In some classroom-based financial education programs, students use class currency and assigned roles to learn economic activities. However, these activities are often managed manually, which makes it difficult to track assets, transactions, and investment learning progress.
 This project aimed to digitise the process and provide students with a more interactive way to learn banking and stock investment concepts.
 
-
-## Overall Project Tech Stack
 
 ## Overall Project Tech Stack
 
@@ -39,7 +40,7 @@ This project aimed to digitise the process and provide students with a more inte
 
 
 ## Architecture
-이미지
+![SystemArchitecture](./public/assets/서비스구조도.png)
 
 The app used an iOS native wrapper with React-based WebView screens for stock-related flows.
 The React WebView communicated with the Spring Boot backend through REST APIs. The backend handled authentication, student data, banking features, simulated trading flows, and stock information. MySQL was used for relational data, Redis was used for token management, and Yahoo Finance API was used for stock-related data.
@@ -72,6 +73,33 @@ The React WebView communicated with the Spring Boot backend through REST APIs. T
 
 ## Demo
 
+## Demo
+
+### Buy & Sell
+
+<p align="center">
+  <img src="./public/buy.gif" alt="Buy Demo" width="250" />
+  <img src="./public/sell.gif" alt="Sell Demo" width="250" />
+</p>
+
+### Stock Detail View
+
+<p align="center">
+  <img src="./public/home.gif" alt="Stock Detail Demo" width="300" />
+</p>
+
+### Chart View
+
+<p align="center">
+  <img src="./public/chart.gif" alt="Chart Demo" width="300" />
+</p>
+
+### News View
+
+<p align="center">
+  <img src="./public/news.gif" alt="News Demo" width="300" />
+</p>
+
 ## Project status
 
 This repository focuses on the React WebView part of the original M-Class project.
@@ -91,12 +119,13 @@ cd frontend-webview
 
 ```bash
 npm install
+```
 
 ### 3. Start the development server
 
 ```bash
-npm start 
+npm start
+```
 
 ### 4. The app will run at http://localhost:3000
-
 Note: All screens require the Spring Boot backend and yahoo finance API to display full functionality.
