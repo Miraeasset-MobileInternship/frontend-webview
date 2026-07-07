@@ -46,7 +46,7 @@ This project aimed to digitise the process and provide students with a more inte
 <br/><br/>
 
 ## Architecture
-![SystemArchitecture](./public/서비스구조도.png)
+![SystemArchitecture](./public/systemArc.png)
 
 The app used an iOS native wrapper with React-based WebView screens for stock-related flows.
 The React WebView communicated with the Spring Boot backend through REST APIs. The backend handled authentication, student data, banking features, simulated trading flows, and stock information. MySQL was used for relational data, Redis was used for token management, and Yahoo Finance API was used for stock-related data.
